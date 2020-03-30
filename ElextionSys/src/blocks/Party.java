@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Party {
 	private String name;
 	private LocalDate creationDate;
-
+	private String wingDirect;
 	enum wing {
 		right, left, center
 	};
@@ -14,16 +14,27 @@ public class Party {
 	private Citizen[] representatives;
 	private int numOfRepresentatives;
 	private int numOfRepresentativesLogic;
-
-	public Party(String name) {
+	public void setWing(String choose)
+	{
+		
+	}
+	public Party(String name,String wing) {
 		this.name = name;
+		this.wingDirect=wing;
 		this.creationDate = LocalDate.now();
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
 		this.representatives = new Citizen[numOfRepresentativesLogic];
 
 	}
+	
 
+	public String getWingDirect() {
+		return wingDirect;
+	}
+	public void setWingDirect(String wingDirect) {
+		this.wingDirect = wingDirect;
+	}
 	public Party(Party copy) {
 		this.name = copy.name;
 		this.creationDate = copy.creationDate;

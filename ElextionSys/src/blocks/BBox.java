@@ -14,6 +14,14 @@ public class BBox {
 	private int numOfCitizenWhoVoteLogic;
 	private int citVotedLogic;
 
+	public static int getId() {
+		return id-3;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
 	public BBox(String adress) {
 		this.adress = adress;
 		this.thisId = id;
@@ -84,7 +92,7 @@ public class BBox {
 		for (Citizen citizen : allowedToVoteHere) {
 			if (citizen != null) {
 
-				buf.append(citizen.toString()+"\n");
+				buf.append(citizen.toString() + "\n");
 			}
 		}
 		return buf.toString();

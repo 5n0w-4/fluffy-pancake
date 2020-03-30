@@ -9,7 +9,39 @@ public class Citizen {
 	private Party underParty;
 	private boolean underQuarantine;
 	private boolean protectionGear;
+	public int getId() {
+		return id;
+	}
+
 	private boolean isVoting;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setBirthYear(int birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public void setBallotBox(BBox ballotBox) {
+		this.ballotBox = ballotBox;
+	}
+
+	public void setUnderParty(Party underParty) {
+		this.underParty = underParty;
+	}
+
+	public void setUnderQuarantine(boolean underQuarantine) {
+		this.underQuarantine = underQuarantine;
+	}
+
+	public void setProtectionGear(boolean protectionGear) {
+		this.protectionGear = protectionGear;
+	}
 
 	public Citizen(Citizen voter) {
 		this(voter.name, voter.id, voter.birthYear, voter.underParty, voter.underQuarantine, voter.protectionGear,
@@ -19,7 +51,9 @@ public class Citizen {
 			this.ballotBox = new BBox(voter.ballotBox);
 		}
 	}
-
+	public Citizen() {
+		
+	}
 	public Citizen(String name, int id, int birthYear, Party underParty, boolean underQuarantine,
 			boolean protectionGear, boolean isVoting) {
 		this.name = name;

@@ -20,9 +20,9 @@ public class Elections {
 		this.numOfCitizen = 0;
 		this.numOfBBOx = 0;
 		this.numOfPartys = 0;
-		this.numOfCitizenLogic = 1;
-		this.numOfBBOxLogic = 1;
-		this.numOfPartysLogic = 1;
+		this.numOfCitizenLogic = 1000;
+		this.numOfBBOxLogic = 10;
+		this.numOfPartysLogic = 5;
 		this.electoralPad = new Citizen[numOfCitizenLogic];
 		this.partys = new Party[numOfPartysLogic];
 		this.ballotBoxes = new BBox[numOfBBOxLogic];
@@ -51,7 +51,7 @@ public class Elections {
 
 	public void startPartys() {
 		for (int i = 0; i < 3; i++) {
-			addNewParty("Party " + i);
+			addNewParty("Party " + i, "");
 		}
 	}
 
@@ -66,6 +66,17 @@ public class Elections {
 			return true;
 		}
 		return false;
+	}
+
+	public int getBboxId(String adress) {
+		for (int i = 0; i < ballotBoxes.length; i++)
+			if (ballotBoxes[i].getAdress().equals(adress))
+				return ballotBoxes[i].getId();
+		return 0;
+	}
+
+	{
+
 	}
 
 	public BBox getBox(int type) { // coronaBox 1 armyBox 2 bBox 0
@@ -83,14 +94,14 @@ public class Elections {
 		return null;
 	}
 
-	public void addNewParty(String name) {
+	public void addNewParty(String name, String wing) {
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
-			partys[numOfPartys] = new Party(name);
+			partys[numOfPartys] = new Party(name, wing);
 			numOfPartys++;
 		} else {
 			numOfPartysLogic *= 2;
 			partys = Arrays.copyOf(partys, numOfPartysLogic);
-			addNewParty(name);
+			addNewParty(name, wing);
 		}
 	}
 
@@ -115,7 +126,7 @@ public class Elections {
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox) {
 
-				buf.append(bBox.showVoters()+"\n");
+				buf.append(bBox.showVoters() + "\n");
 			}
 		}
 		return buf.toString();
@@ -151,6 +162,31 @@ public class Elections {
 		}
 	}
 
+	public void addNewBBox(int type, BBox other) { // coronaBox 1 armyBox 2 bBox 0
+		if (checkCapacity(numOfBBOx, numOfBBOxLogic)) {
+
+			switch (type) {
+			case 1:
+				CoronaBox cBox = new CoronaBox(other.getAdress());
+				ballotBoxes[numOfBBOx] = cBox;
+				break;
+			case 2:
+				ArmyBox aBox = new ArmyBox(other.getAdress());
+				ballotBoxes[numOfBBOx] = aBox;
+				break;
+			case 0:
+				BBox bBox = new BBox(other.getAdress());
+				ballotBoxes[numOfBBOx] = bBox;
+				break;
+			}
+			numOfBBOx++;
+		} else {
+			numOfBBOxLogic *= 2;// working with this ref so didnt create a func
+			ballotBoxes = Arrays.copyOf(ballotBoxes, numOfBBOxLogic);
+			addNewBBox(type, other.getAdress());
+		}
+	}
+
 	public void placeCitInBox(Citizen subj) {
 		if (subj.getHealthStatus()) {
 			getBox(1).addToBox(subj);
@@ -162,17 +198,42 @@ public class Elections {
 		}
 	}
 
-	public void addCitizen(Citizen subj) {
+	public boolean addCitizen(Citizen subj) {
+		if (subj.getName() == null || subj.getName().equals(""))
+			return false;
 		if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
 			Citizen tempCit = new Citizen(subj);
 			electoralPad[numOfCitizen] = tempCit;
 			placeCitInBox(tempCit);
 			numOfCitizen++;
+			return true;
 		} else {
 			numOfCitizenLogic *= 2; // working with this ref so didnt create a func
 			electoralPad = Arrays.copyOf(electoralPad, numOfCitizenLogic);
 			addCitizen(subj);
+			return true;
 		}
+
+	}
+
+	public boolean addCitizenGroup(Citizen[] subj) {
+		if (!checkCapacity(numOfCitizen, numOfCitizenLogic))
+			return false;
+		int i = 0;
+		while (i < subj.length) {
+			if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
+				if (electoralPad[numOfCitizen] == null) {
+					Citizen tempCit = new Citizen(subj[i]);
+					electoralPad[numOfCitizen] = tempCit;
+					placeCitInBox(tempCit);
+					numOfCitizen++;
+					i++;
+				}
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public Citizen addCitizen(String name, int id, int birthYear, BBox ballotBox, Party underParty,
@@ -189,7 +250,15 @@ public class Elections {
 			numOfCitizenLogic *= 2;// working with this ref so didnt create a func
 			electoralPad = Arrays.copyOf(electoralPad, numOfCitizenLogic);
 			return addCitizen(name, id, birthYear, ballotBox, underParty, underQuarantine, protectionGear, activeVoter);
-			
+
+		}
+	}
+
+	public void showOnesDetails(int id) {
+		for (int i = 0; i < electoralPad.length; i++) {
+			if (id == electoralPad[i].getId())
+				System.out.println(electoralPad[i].toString());
+
 		}
 	}
 }
