@@ -71,7 +71,7 @@ public class Party {
 	public String toString() {
 		return "Party [name=" + name + ", creationDate=" + creationDate.toString() + ", representatives="
 				+ Arrays.toString(representatives) + ", numOfRepresentatives=" + numOfRepresentatives
-				+ ", numOfRepresentativesLogic=" + numOfRepresentativesLogic + "]";
+				+ ", numOfRepresentativesLogic=" + numOfRepresentativesLogic +" ,wingDirect="+wingDirect+ "]";
 	}
 
 }

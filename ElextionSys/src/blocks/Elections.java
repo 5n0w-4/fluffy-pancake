@@ -75,10 +75,6 @@ public class Elections {
 		return 0;
 	}
 
-	{
-
-	}
-
 	public BBox getBox(int type) { // coronaBox 1 armyBox 2 bBox 0
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof CoronaBox && type == 1) {
@@ -94,7 +90,9 @@ public class Elections {
 		return null;
 	}
 
-	public void addNewParty(String name, String wing) {
+	public boolean addNewParty(String name, String wing) {
+		if (name.length()==0 || wing.length() == 0)
+			return false;
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
 			partys[numOfPartys] = new Party(name, wing);
 			numOfPartys++;
@@ -103,6 +101,15 @@ public class Elections {
 			partys = Arrays.copyOf(partys, numOfPartysLogic);
 			addNewParty(name, wing);
 		}
+		return true;
+	}
+
+	public int getNumOfPartys() {
+		return numOfPartys;
+	}
+
+	public Party[] getPartys() {
+		return partys;
 	}
 
 	public String showAllBBox() {
