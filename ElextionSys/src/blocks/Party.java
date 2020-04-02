@@ -7,6 +7,7 @@ public class Party {
 	private String name;
 	private LocalDate creationDate;
 	private String wingDirect;
+
 	enum wing {
 		right, left, center
 	};
@@ -14,27 +15,41 @@ public class Party {
 	private Citizen[] representatives;
 	private int numOfRepresentatives;
 	private int numOfRepresentativesLogic;
-	public void setWing(String choose)
-	{
-		
+
+	public void setWing(String choose) {
+
 	}
-	public Party(String name,String wing) {
+
+	public boolean addNominee(Citizen someOne) {
+		if (numOfRepresentatives < numOfRepresentativesLogic) {
+			representatives[numOfRepresentatives] = new Citizen(someOne);
+			return true;
+		}
+		return false;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Party(String name, String wing) {
 		this.name = name;
-		this.wingDirect=wing;
+		this.wingDirect = wing;
 		this.creationDate = LocalDate.now();
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
 		this.representatives = new Citizen[numOfRepresentativesLogic];
 
 	}
-	
 
 	public String getWingDirect() {
 		return wingDirect;
 	}
+
 	public void setWingDirect(String wingDirect) {
 		this.wingDirect = wingDirect;
 	}
+
 	public Party(Party copy) {
 		this.name = copy.name;
 		this.creationDate = copy.creationDate;
@@ -71,7 +86,7 @@ public class Party {
 	public String toString() {
 		return "Party [name=" + name + ", creationDate=" + creationDate.toString() + ", representatives="
 				+ Arrays.toString(representatives) + ", numOfRepresentatives=" + numOfRepresentatives
-				+ ", numOfRepresentativesLogic=" + numOfRepresentativesLogic +" ,wingDirect="+wingDirect+ "]";
+				+ ", numOfRepresentativesLogic=" + numOfRepresentativesLogic + " ,wingDirect=" + wingDirect + "]";
 	}
 
 }

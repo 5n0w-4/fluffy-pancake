@@ -9,6 +9,7 @@ public class Citizen {
 	private Party underParty;
 	private boolean underQuarantine;
 	private boolean protectionGear;
+
 	public int getId() {
 		return id;
 	}
@@ -51,9 +52,11 @@ public class Citizen {
 			this.ballotBox = new BBox(voter.ballotBox);
 		}
 	}
+
 	public Citizen() {
-		
+
 	}
+
 	public Citizen(String name, int id, int birthYear, Party underParty, boolean underQuarantine,
 			boolean protectionGear, boolean isVoting) {
 		this.name = name;
@@ -114,6 +117,10 @@ public class Citizen {
 		if (underQuarantine != other.underQuarantine)
 			return false;
 		return true;
+	}
+
+	public Party getUnderParty() {
+		return underParty;
 	}
 
 	@Override

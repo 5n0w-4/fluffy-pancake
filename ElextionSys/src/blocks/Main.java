@@ -27,15 +27,14 @@ public class Main {
 		test[5] = new Citizen("moti", 6, 1975, Halicud, false, true, false);
 
 		// nominees
-		Citizen nominee0 = new Citizen("Bibi", 7, 1949, Halicud, false, true, true);
-		Citizen nominee1 = new Citizen("Gidon Saar", 8, 1966, Halicud, false, true, true);
+		Citizen[] test2 = new Citizen[6];
+		test2[0] = new Citizen("Bibi", 7, 1949, Halicud, false, true, true);
+		test2[1] = new Citizen("Gidon Saar", 8, 1966, Halicud, false, true, true);
+		test2[2] = new Citizen("Beni Gantz", 9, 1959, Kahol, false, true, true);
+		test2[3] = new Citizen("Gabi Ashkenazi", 10, 1954, Kahol, false, true, true);
+		test2[4] = new Citizen("Avigdor Liberman", 11, 1958, Home, false, true, true);
+		test2[5] = new Citizen("Amir Peretz", 12, 1952, Haavoda, false, true, true);
 
-		Citizen nominee2 = new Citizen("Beni Gantz", 9, 1959, Kahol, false, true, true);
-		Citizen nominee3 = new Citizen("Gabi Ashkenazi", 10, 1954, Kahol, false, true, true);
-
-		Citizen nominee4 = new Citizen("Avigdor Liberman", 11, 1958, Home, false, true, true);
-
-		Citizen niminee5 = new Citizen("Amir Peretz", 12, 1952, Haavoda, false, true, true);
 		// Ballot boxes
 
 		BBox northTlv = new BBox("mivtza kadesh 38");
@@ -51,8 +50,13 @@ public class Main {
 		elect.addNewBBox(2, Hakiria);
 
 		// adding citizens
-		System.out.println(elect.addCitizenGroup(test));
-
+		elect.addCitizenGroup(test);
+		elect.addCitizenGroup(test2);
+		/*
+		 * System.out.println(elect.addCitizenGroup(test));
+		 * System.out.println(elect.addCitizenGroup(test2));
+		 * System.out.println(elect.showAllVoters());
+		 */
 		boolean ok = true;
 		do {
 			System.out.println("hi! welcome (again) to this period of ellections," + "\n"
@@ -67,6 +71,7 @@ public class Main {
 			System.out.println("8- time to elect!");
 			System.out.println("9- show results ");
 			System.out.println("10- exit menu");
+			System.out.println("\n" + "\n" + "\n");
 
 			option = scan.next();
 
@@ -151,7 +156,7 @@ public class Main {
 				}
 
 			case "3":// adding party
-			
+
 				System.out.println("adding new party:" + "\n" + " choose wing direction for your party please" + "\n"
 						+ "1- right" + "\n" + "2- center" + "\n" + "3- left");
 				check = scan.next().charAt(0);
@@ -166,21 +171,45 @@ public class Main {
 					option = "left";
 					break;
 				}
-					
-				
-					System.out.println();
-					System.out.println("adding new party:" + "\n" + " enter name for your party please");
-					
-					if(elect.addNewParty(scan.next(), option)) {
-						System.out.println("\n"+"party added successfully!"+"  party details:"+"\n"+elect.getPartys()[(elect.getNumOfPartys()-1)].toString());
-					System.out.println();}
-					else {
-						System.out.println("oops something went wrong");
-					}
-					continue;
-			
-			case "4":// adding nominee
 
+				System.out.println();
+				System.out.println("adding new party:" + "\n" + " enter name for your party please");
+
+				if (elect.addNewParty(scan.next(), option)) {
+					System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
+							+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
+					System.out.println();
+				} else {
+					System.out.println("oops something went wrong");
+				}
+				continue;
+
+			case "4":// adding nominee
+				System.out
+						.println("hi, here you can add yourself to our nominies list" + "\n" + "please enter your id:");
+				int tempId = scan.nextInt();
+				if (elect.findNominee(tempId) >= 0) {
+					int tempIndex = elect.findNominee(tempId);
+					System.out.println(elect.getElectoralPad()[tempIndex].toString());
+					System.out.println("\n" + "\n" + "hello again! please confirn your details:" + "\n" + "1- confirm"
+							+ "\n" + "2- not my details");
+					check = scan.next().charAt(0);
+					switch (check) {
+					case '1':
+
+						if (elect.getElectoralPad()[tempIndex].getUnderParty()
+								.addNominee(elect.getElectoralPad()[tempIndex]))
+							System.out.println("great, Citizen id: " + tempId + " has been added to "
+									+ elect.getElectoralPad()[tempIndex].getUnderParty().getName() + " nominies list");
+						break;
+					case '2':
+						System.out.println("sorry, please try again");
+						break;
+					}
+				} else {
+					System.out.println(
+							"your id is not on our system," + "\n" + "please add yourself to our system first.");
+				}
 				break;
 			case "5":// show all BBox details
 

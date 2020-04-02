@@ -12,6 +12,11 @@ public class Elections {
 	private int numOfBBOx;
 	private int numOfPartys;
 	private int numOfCitizenLogic;
+
+	public Citizen[] getElectoralPad() {
+		return electoralPad;
+	}
+
 	private int numOfBBOxLogic;
 	private int numOfPartysLogic;
 
@@ -91,7 +96,7 @@ public class Elections {
 	}
 
 	public boolean addNewParty(String name, String wing) {
-		if (name.length()==0 || wing.length() == 0)
+		if (name.length() == 0 || wing.length() == 0)
 			return false;
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
 			partys[numOfPartys] = new Party(name, wing);
@@ -267,5 +272,14 @@ public class Elections {
 				System.out.println(electoralPad[i].toString());
 
 		}
+	}
+
+	public int findNominee(int id) { // find nominee,if exist, returns the index where he's stored in electroPad,
+										// else return -1
+		for (int i = 0; i < electoralPad.length; i++) {
+			if (electoralPad[i].getId() == id)
+				return i;
+		}
+		return -1;
 	}
 }
