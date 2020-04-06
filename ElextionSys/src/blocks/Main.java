@@ -151,7 +151,7 @@ public class Main {
 					continue;
 				case '2':
 					System.out.println("enter citizen id please:");
-					elect.showOnesDetails(scan.nextInt());
+					elect.showOnesDetails(scan.nextInt(),elect.getElectoralPad().length);
 					continue;
 				}
 
@@ -188,8 +188,8 @@ public class Main {
 				System.out
 						.println("hi, here you can add yourself to our nominies list" + "\n" + "please enter your id:");
 				int tempId = scan.nextInt();
-				if (elect.findNominee(tempId) >= 0) {
-					int tempIndex = elect.findNominee(tempId);
+				if (elect.findCitOrNominee(tempId) >= 0) {
+					int tempIndex = elect.findCitOrNominee(tempId);
 					System.out.println(elect.getElectoralPad()[tempIndex].toString());
 					System.out.println("\n" + "\n" + "hello again! please confirn your details:" + "\n" + "1- confirm"
 							+ "\n" + "2- not my details");
@@ -212,17 +212,53 @@ public class Main {
 				}
 				break;
 			case "5":// show all BBox details
-
+				System.out.println(elect.showAllBBox()+"\n"+"\n");
 				break;
 			case "6":// show all citizens details
-
+				System.out.println(elect.showAllVoters());
 				break;
 			case "7":// show all parties details
-
+				System.out.println(elect.showAllPartys());
 				break;
 			case "8":// electing
-
-				break;
+				System.out.println("hello! it's elections time:" +"\n"+"first enter your id please:");
+				tempId=scan.nextInt();
+				System.out.println("hi! you can check your details on our system bellow:"+"\n");
+				elect.showOnesDetails(tempId,elect.getElectoralPad().length);
+				System.out.println("please confirm your details:"+"\n"+"1- confirm"+"\n"+"2- something wrong");
+				check = scan.next().charAt(0);
+				switch (check) {
+				case '1':
+					System.out.println();
+					if(elect.getElectoralPad()[elect.findCitOrNominee(tempId)].getHealthStatus())
+					{
+						Shiba.addToBox(elect.getElectoralPad()[elect.findCitOrNominee(tempId)]);
+						System.out.println("you were put at Shiba's corona box due to your medical condition");
+						System.out.println();
+					}
+					else {
+						elect.placeCitInBox(elect.getElectoralPad()[elect.findCitOrNominee(tempId)]);
+						System.out.println("your ballot box is:  "+ elect.getElectoralPad()[elect.findCitOrNominee(tempId)].getBBoxAdress());
+					}
+					System.out.println("allright!, now please choose the party you vote to:"+"\n"+"1- Halicud"+"\n"+"Kahol Lavan"+"\n"+"3- israel beitenu"+"\n"+"4-Haavoda");
+					check = scan.next().charAt(0);
+					switch (check) {
+					case '1':
+						;
+						
+						break;
+					case '2':
+						option = "center";
+						break;
+					case '3':
+						option = "left";
+						break;
+					}
+					break;
+				case '2':
+					System.out.println("sorry, please try again, check your id number you insert");
+					break;
+				}
 			case "9":// show results
 
 				break;

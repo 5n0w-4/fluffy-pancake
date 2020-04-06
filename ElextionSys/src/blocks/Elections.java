@@ -200,9 +200,10 @@ public class Elections {
 	}
 
 	public void placeCitInBox(Citizen subj) {
-		if (subj.getHealthStatus()) {
+		/*if (subj.getHealthStatus()) {
 			getBox(1).addToBox(subj);
 		}
+		*/
 		if (subj.getAge() >= 18 && subj.getAge() <= 21) {
 			getBox(2).addToBox(subj);
 		} else {
@@ -266,15 +267,16 @@ public class Elections {
 		}
 	}
 
-	public void showOnesDetails(int id) {
-		for (int i = 0; i < electoralPad.length; i++) {
-			if (id == electoralPad[i].getId())
-				System.out.println(electoralPad[i].toString());
+	public void showOnesDetails(int id, int size) {
 
-		}
+		if (size == 0)
+			System.out.println();
+		if (id == electoralPad[size - 1].getId())
+			System.out.println(electoralPad[size - 1].toString());
+		showOnesDetails(id, size - 1);
 	}
 
-	public int findNominee(int id) { // find nominee,if exist, returns the index where he's stored in electroPad,
+	public int findCitOrNominee(int id) { // find nominee,if exist, returns the index where he's stored in electroPad,
 										// else return -1
 		for (int i = 0; i < electoralPad.length; i++) {
 			if (electoralPad[i].getId() == id)
@@ -282,4 +284,6 @@ public class Elections {
 		}
 		return -1;
 	}
+
+
 }

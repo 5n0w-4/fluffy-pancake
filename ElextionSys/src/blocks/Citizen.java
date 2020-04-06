@@ -23,7 +23,10 @@ public class Citizen {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	public String getBBoxAdress()
+	{
+		return ballotBox.getAdress();
+	}
 	public void setBirthYear(int birthYear) {
 		this.birthYear = birthYear;
 	}
