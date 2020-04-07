@@ -3,7 +3,7 @@ package blocks;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class Party {
+public class Party  {
 	private String name;
 	private LocalDate creationDate;
 	private String wingDirect;
@@ -12,20 +12,33 @@ public class Party {
 		right, left, center
 	};
 
-	private Citizen[] representatives;
+	private Representative[] representatives;
 	private int numOfRepresentatives;
 	private int numOfRepresentativesLogic;
 
 	public void setWing(String choose) {
 
 	}
-
-	public boolean addNominee(Citizen someOne) {
-		if (numOfRepresentatives < numOfRepresentativesLogic) {
-			representatives[numOfRepresentatives] = new Citizen(someOne);
-			return true;
+	
+	public int compareName(String other) {
+		if (this.name.compareTo(other)==0) {
+			return 1;
 		}
-		return false;
+		return 0;
+	}
+	
+	
+
+	public void addRep(Citizen someOne) {
+		if (numOfRepresentatives < numOfRepresentativesLogic) {
+			representatives[numOfRepresentatives] = new Representative(someOne);
+			numOfRepresentatives++;
+		}
+		else {
+			numOfRepresentativesLogic *= 2;
+			representatives = Arrays.copyOf(representatives, numOfRepresentativesLogic);
+			addRep(someOne);
+		}
 	}
 
 	public String getName() {
@@ -38,7 +51,7 @@ public class Party {
 		this.creationDate = LocalDate.now();
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
-		this.representatives = new Citizen[numOfRepresentativesLogic];
+		this.representatives = new Representative[numOfRepresentativesLogic];
 
 	}
 
@@ -59,7 +72,7 @@ public class Party {
 	}
 
 	public void addRepresentative(Citizen subj) {
-		representatives[numOfRepresentatives] = subj;
+		representatives[numOfRepresentatives] = (Representative)subj;
 		numOfRepresentatives++;
 	}
 

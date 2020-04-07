@@ -6,15 +6,12 @@ public class Citizen {
 	private int id;
 	private int birthYear;
 	private BBox ballotBox;
-	private Party underParty;
 	private boolean underQuarantine;
 	private boolean protectionGear;
 
 	public int getId() {
 		return id;
 	}
-
-	private boolean isVoting;
 
 	public void setName(String name) {
 		this.name = name;
@@ -32,10 +29,6 @@ public class Citizen {
 		this.ballotBox = ballotBox;
 	}
 
-	public void setUnderParty(Party underParty) {
-		this.underParty = underParty;
-	}
-
 	public void setUnderQuarantine(boolean underQuarantine) {
 		this.underQuarantine = underQuarantine;
 	}
@@ -44,49 +37,39 @@ public class Citizen {
 		this.protectionGear = protectionGear;
 	}
 
+	public BBox getBBox() {
+		return this.ballotBox;
+	}
+
+	public int getBirthYear() {
+		return this.birthYear;
+	}
+
+	public boolean getQStatus() {
+		return this.underQuarantine;
+	}
+
 	public Citizen(Citizen voter) {
-		this(voter.name, voter.id, voter.birthYear, voter.underParty, voter.underQuarantine, voter.protectionGear,
-				voter.isVoting);
-		if (voter.ballotBox != null) {
-
-			this.ballotBox = new BBox(voter.ballotBox);
-		}
+		this(voter.getName(), voter.getId(), voter.getBirthYear(), voter.getQStatus(), voter.getProtectionStatus());
+		this.ballotBox = voter.getBBox();
 	}
 
-	public Citizen() {
-
-	}
-
-	public Citizen(String name, int id, int birthYear, Party underParty, boolean underQuarantine,
-			boolean protectionGear, boolean isVoting) {
+	public Citizen(String name, int id, int birthYear, boolean underQuarantine, boolean protectionGear) {
 		this.name = name;
 		this.id = id;
 		this.birthYear = birthYear;
 		this.ballotBox = null;
-		this.underParty = underParty;
 		this.underQuarantine = underQuarantine;
 		this.protectionGear = protectionGear;
-		this.isVoting = isVoting;
+
 	}
 
 	public String getName() {
 		return this.name;
 	}
 
-	public void setIsVoting(boolean status) {
-		isVoting = status;
-	}
-
-	public boolean getIsVoting() {
-		return isVoting;
-	}
-
 	public int getAge() {
 		return 2020 - birthYear;
-	}
-
-	public void setParty(Party party) {
-		this.underParty = party;
 	}
 
 	public boolean getHealthStatus() {
@@ -112,22 +95,15 @@ public class Citizen {
 			return false;
 		if (protectionGear != other.protectionGear)
 			return false;
-		if (!underParty.equals(other.underParty))
-			return false;
 		if (underQuarantine != other.underQuarantine)
 			return false;
 		return true;
 	}
 
-	public Party getUnderParty() {
-		return underParty;
-	}
-
 	@Override
 	public String toString() {
 		return "Citizen [name=" + name + ", id=" + id + ", birthYear=" + birthYear + ", ballotBox=" + ballotBox
-				+ ", underParty=" + underParty + ", underQuarantine=" + underQuarantine + ", protectionGear="
-				+ protectionGear + "]";
+				+ ", underQuarantine=" + underQuarantine + ", protectionGear=" + protectionGear + "]";
 	}
 
 }

@@ -1,6 +1,7 @@
 package blocks;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class BBox {
 	static int id;
@@ -8,14 +9,15 @@ public class BBox {
 	protected String adress;
 	protected Citizen[] allowedToVoteHere;
 	protected Party[] castedVotes;
+	protected int numOfCastedVotes;
 	protected double percentageOfVotes;
-	private int citVoted;
 	private int numOfCitizenWhoVote;
 	private int numOfCitizenWhoVoteLogic;
+	protected int numOfCastedVotesLogic;
 	private int citVotedLogic;
 
 	public static int getId() {
-		return id-3;
+		return id - 3;
 	}
 
 	public String getAdress() {
@@ -26,10 +28,11 @@ public class BBox {
 		this.adress = adress;
 		this.thisId = id;
 		this.percentageOfVotes = 0;
-		this.citVoted = 0;
 		this.numOfCitizenWhoVote = 0;
 		this.numOfCitizenWhoVoteLogic = 1;
 		this.citVotedLogic = 1;
+		this.numOfCastedVotes = 0;
+		this.numOfCastedVotesLogic = 1;
 		this.allowedToVoteHere = new Citizen[numOfCitizenWhoVoteLogic];
 		this.castedVotes = new Party[citVotedLogic];
 		id++;
@@ -47,20 +50,28 @@ public class BBox {
 		this.adress = copy.adress;
 		this.allowedToVoteHere = copy.allowedToVoteHere.clone();
 		this.castedVotes = copy.castedVotes.clone();
-		this.citVoted = copy.citVoted;
 		this.numOfCitizenWhoVote = copy.numOfCitizenWhoVote;
 		this.numOfCitizenWhoVoteLogic = copy.numOfCitizenWhoVoteLogic;
 		this.citVotedLogic = copy.citVotedLogic;
 	}
 
-	public String vote(Citizen voter, Party toParty) {
-		for (int i = 0; i < numOfCitizenWhoVote; i++) {
-			if (castedVotes[i] == null) {
-				castedVotes[i] = toParty;
-				citVoted++;
-			}
+	public Voter convertToVoter(Citizen cit) {
+
+		Voter temp = new Voter(cit);
+		return temp;
+
+	}
+
+	public String vote(Voter voter) {
+		if (!(numOfCastedVotes >= numOfCastedVotesLogic)) {
+
+			castedVotes[numOfCastedVotes] = voter.getVote();
+			numOfCastedVotes++;
+		} else {
+			numOfCastedVotesLogic *= 2;
+			castedVotes = Arrays.copyOf(castedVotes, numOfCastedVotesLogic);
 		}
-		return voter.getName() + " voter for " + toParty.getClass().getSimpleName();
+		return voter.getName() + " voter for " + voter.getVote().getClass().getSimpleName();
 
 	}
 
@@ -68,7 +79,9 @@ public class BBox {
 		if (!(numOfCitizenWhoVote >= numOfCitizenWhoVoteLogic)) {
 
 			this.allowedToVoteHere[numOfCitizenWhoVote] = new Citizen(voter);
+			this.allowedToVoteHere[numOfCitizenWhoVote].setBallotBox(this);
 			numOfCitizenWhoVote++;
+
 		} else {
 			numOfCitizenWhoVoteLogic *= 2;
 			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoVoteLogic);
@@ -76,7 +89,7 @@ public class BBox {
 		}
 	}
 
-	public int countVotes(Party[] list, Party countThis) {
+	private int countVotes(Party[] list, Party countThis) {
 		int counter = 0;
 		for (Party party : list) {
 			if (countThis.equals(party))
@@ -96,6 +109,28 @@ public class BBox {
 			}
 		}
 		return buf.toString();
+	}
+
+	public String showRes(Party[] partys) {
+		StringBuffer buf = new StringBuffer();
+		if (numOfCitizenWhoVote>0) {
+			
+		
+		buf.append("Precentage of votes:" + (double)numOfCastedVotes / numOfCitizenWhoVote+"\n");
+		for (Party party : partys) {
+			if (party != null) {
+				percentageOfVotes = countVotes(this.castedVotes, party) / numOfCitizenWhoVote;
+				buf.append("Votes to " + party.getName() + ":"
+						+ percentageOfVotes+"\n");
+			}
+		}
+		return buf.toString();
+		}
+		return "";
+	}
+
+	public Citizen[] getAllowedToVoteHere() {
+		return allowedToVoteHere;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package blocks;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Elections {
 	private LocalDate date;
@@ -31,9 +32,9 @@ public class Elections {
 		this.electoralPad = new Citizen[numOfCitizenLogic];
 		this.partys = new Party[numOfPartysLogic];
 		this.ballotBoxes = new BBox[numOfBBOxLogic];
-		startPartys();
-		startBoxes();
-		startPad();
+//		startPartys();
+//		startBoxes();
+//		startPad();
 	}
 
 	public Elections(Elections copy) {
@@ -50,7 +51,7 @@ public class Elections {
 
 	public void startPad() {
 		for (int i = 1; i < 6; i++) {
-			Citizen temp = addCitizen("John " + i, i * 11111111, 1990 + i, null, null, false, false, false);
+			Citizen temp = addCitizen("John " + i, i * 11111111, 1990 + i, null, false, false);
 		}
 	}
 
@@ -64,6 +65,60 @@ public class Elections {
 		addNewBBox(1, "123.St");
 		addNewBBox(2, "234.St");
 		addNewBBox(0, "345.St");
+	}
+
+	public Voter makeVoter(Citizen citizen) {
+		return new Voter(citizen);
+	}
+
+	public void vote(Scanner scan) {
+		boolean isVoting;
+		for (BBox bBox : ballotBoxes) {
+			if (bBox != null) {
+
+				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
+					if (citizen != null) {
+
+						System.out.println(citizen.getName() + " Would you like to vote?	");
+						isVoting = scan.nextBoolean();
+						scan.nextLine();
+						if (isVoting) {
+							Voter temp = new Voter(citizen);
+							System.out.println("To whom would you like to vote?");
+							String voteTo = scan.nextLine();
+							Party voteToParty = search(voteTo);
+							temp.Vote(voteToParty);
+							bBox.vote(temp);
+							citizen = temp;
+						}
+					}
+				}
+
+			}
+
+		}
+	}
+
+	public String showRes() {
+		StringBuffer buf = new StringBuffer();
+		for (BBox bBox : ballotBoxes) {
+			if (bBox != null) {
+
+				buf.append(bBox.showRes(partys)+"\n");
+			}
+		}
+		return buf.toString();
+	}
+
+	public Party search(String dest) {
+		for (Party party : partys) {
+			if (party != null) {
+				if (party.compareName(dest) == 0) {
+					return party;
+				}
+			}
+		}
+		return null;
 	}
 
 	public boolean checkCapacity(int size, int sizeLogic) { // Q:Do we have room?
@@ -95,9 +150,7 @@ public class Elections {
 		return null;
 	}
 
-	public boolean addNewParty(String name, String wing) {
-		if (name.length() == 0 || wing.length() == 0)
-			return false;
+	public void addNewParty(String name, String wing) {
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
 			partys[numOfPartys] = new Party(name, wing);
 			numOfPartys++;
@@ -106,7 +159,17 @@ public class Elections {
 			partys = Arrays.copyOf(partys, numOfPartysLogic);
 			addNewParty(name, wing);
 		}
-		return true;
+	}
+
+	public void addNewParty(Party other) {
+		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
+			partys[numOfPartys] = new Party(other);
+			numOfPartys++;
+		} else {
+			numOfPartysLogic *= 2;
+			partys = Arrays.copyOf(partys, numOfPartysLogic);
+			addNewParty(other);
+		}
 	}
 
 	public int getNumOfPartys() {
@@ -120,7 +183,10 @@ public class Elections {
 	public String showAllBBox() {
 		StringBuffer buf = new StringBuffer();
 		for (BBox bBox : ballotBoxes) {
-			buf.append(bBox.toString());
+			if (bBox != null) {
+
+				buf.append(bBox.toString() + "\n");
+			}
 		}
 		return buf.toString();
 	}
@@ -128,7 +194,10 @@ public class Elections {
 	public String showAllPartys() {
 		StringBuffer buf = new StringBuffer();
 		for (Party party : partys) {
-			buf.append(party.toString());
+			if (party != null) {
+
+				buf.append(party.toString());
+			}
 		}
 		return buf.toString();
 	}
@@ -144,9 +213,10 @@ public class Elections {
 		return buf.toString();
 	}
 
-	public void setRepresentative(Citizen subj, Party party) {
-		party.addRepresentative(subj);
-		subj.setParty(party);
+	public void setRepresentative(Citizen subj, String partyName) {
+		Party temp = search(partyName);
+		temp.addRep(subj);
+
 	}
 
 	public void addNewBBox(int type, String adress) { // coronaBox 1 armyBox 2 bBox 0
@@ -228,32 +298,31 @@ public class Elections {
 
 	}
 
-	public boolean addCitizenGroup(Citizen[] subj) {
-		if (!checkCapacity(numOfCitizen, numOfCitizenLogic))
-			return false;
-		int i = 0;
-		while (i < subj.length) {
-			if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
-				if (electoralPad[numOfCitizen] == null) {
-					Citizen tempCit = new Citizen(subj[i]);
-					electoralPad[numOfCitizen] = tempCit;
-					placeCitInBox(tempCit);
-					numOfCitizen++;
-					i++;
-				}
-			} else {
-				return false;
-			}
-		}
-		return true;
-	}
+//	public boolean addCitizenGroup(Citizen[] subj) {
+//		if (!checkCapacity(numOfCitizen, numOfCitizenLogic))
+//			return false;
+//		int i = 0;
+//		while (i < subj.length) {
+//			if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
+//				if (electoralPad[numOfCitizen] == null) {
+//					Citizen tempCit = new Citizen(subj[i]);
+//					electoralPad[numOfCitizen] = tempCit;
+//					placeCitInBox(tempCit);
+//					numOfCitizen++;
+//					i++;
+//				}
+//			} else {
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 
-	public Citizen addCitizen(String name, int id, int birthYear, BBox ballotBox, Party underParty,
-			boolean underQuarantine, boolean protectionGear, boolean activeVoter) {
+	public Citizen addCitizen(String name, int id, int birthYear, BBox ballotBox, boolean underQuarantine,
+			boolean protectionGear) {
 		if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
 
-			Citizen tempCit = new Citizen(name, id, birthYear, underParty, underQuarantine, protectionGear,
-					activeVoter);
+			Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
 			electoralPad[numOfCitizen] = tempCit;
 			placeCitInBox(tempCit);
 			numOfCitizen++;
@@ -261,7 +330,7 @@ public class Elections {
 		} else {
 			numOfCitizenLogic *= 2;// working with this ref so didnt create a func
 			electoralPad = Arrays.copyOf(electoralPad, numOfCitizenLogic);
-			return addCitizen(name, id, birthYear, ballotBox, underParty, underQuarantine, protectionGear, activeVoter);
+			return addCitizen(name, id, birthYear, ballotBox, underQuarantine, protectionGear);
 
 		}
 	}
