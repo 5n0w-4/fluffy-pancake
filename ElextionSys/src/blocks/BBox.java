@@ -113,15 +113,14 @@ public class BBox {
 
 	public String showRes(Party[] partys) {
 		StringBuffer buf = new StringBuffer();
-		if (numOfCitizenWhoVote>0) {
+		if (numOfCitizenWhoVote>0) {//TODO: exeption **div by zero** to be replaced later
 			
 		
 		buf.append("Precentage of votes:" + (double)numOfCastedVotes / numOfCitizenWhoVote+"\n");
 		for (Party party : partys) {
 			if (party != null) {
-				percentageOfVotes = countVotes(this.castedVotes, party) / numOfCitizenWhoVote;
 				buf.append("Votes to " + party.getName() + ":"
-						+ percentageOfVotes+"\n");
+						+ countVotes(this.castedVotes, party)+"\\"+numOfCitizenWhoVote+"\n");
 			}
 		}
 		return buf.toString();

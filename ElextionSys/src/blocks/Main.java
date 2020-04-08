@@ -22,7 +22,7 @@ public class Main {
 		Citizen[] testCit = new Citizen[6];
 		testCit[0] = new Citizen("shlomy", 1, 1966, true, true);
 		testCit[1] = new Citizen("yossi", 2, 1959, false, true);
-		testCit[2] = new Citizen("hagit", 3, 1987, false, true);
+		testCit[2] = new Citizen("hagit", 3, 1999, false, true);
 		testCit[3] = new Citizen("orly", 4, 1980, true, true);
 		testCit[4] = new Citizen("amir", 5, 1990, false, true);
 		testCit[5] = new Citizen("moti", 6, 1975, false, true);

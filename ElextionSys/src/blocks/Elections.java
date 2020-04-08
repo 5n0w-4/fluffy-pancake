@@ -67,7 +67,7 @@ public class Elections {
 		addNewBBox(0, "345.St");
 	}
 
-	public Voter makeVoter(Citizen citizen) {
+	public Voter makeVoter(Citizen citizen) {  //maybe to remove
 		return new Voter(citizen);
 	}
 
@@ -103,8 +103,8 @@ public class Elections {
 		StringBuffer buf = new StringBuffer();
 		for (BBox bBox : ballotBoxes) {
 			if (bBox != null) {
-
-				buf.append(bBox.showRes(partys)+"\n");
+				buf.append("Results in the ballot box on " + bBox.getAdress() + "St. \n");
+				buf.append(bBox.showRes(partys) + "\n");
 			}
 		}
 		return buf.toString();
@@ -269,16 +269,27 @@ public class Elections {
 		}
 	}
 
-	public void placeCitInBox(Citizen subj) {
-		if (subj.getHealthStatus()) {
-			getBox(1).addToBox(subj);
-		}
-		if (subj.getAge() >= 18 && subj.getAge() <= 21) {
-			getBox(2).addToBox(subj);
-		} else {
+	public void placeCitInBoxAuto(Citizen subj) {
+		
+		if (!(placeCitInBoxAutoHelper(subj))) {
 			getBox(0).addToBox(subj);
 		}
 	}
+	
+	public boolean placeCitInBoxAutoHelper(Citizen subj) {
+		if (subj.getHealthStatus()) {
+			getBox(1).addToBox(subj);
+			return true;
+			
+		}
+		if (subj.getAge() >= 18 && subj.getAge() <= 21) {
+			getBox(2).addToBox(subj);
+			return true;
+			
+		}
+		return false;
+	}
+		
 
 	public boolean addCitizen(Citizen subj) {
 		if (subj.getName() == null || subj.getName().equals(""))
@@ -286,7 +297,7 @@ public class Elections {
 		if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
 			Citizen tempCit = new Citizen(subj);
 			electoralPad[numOfCitizen] = tempCit;
-			placeCitInBox(tempCit);
+			placeCitInBoxAuto(tempCit);
 			numOfCitizen++;
 			return true;
 		} else {
@@ -324,7 +335,7 @@ public class Elections {
 
 			Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
 			electoralPad[numOfCitizen] = tempCit;
-			placeCitInBox(tempCit);
+			placeCitInBoxAuto(tempCit);
 			numOfCitizen++;
 			return tempCit;
 		} else {
