@@ -102,7 +102,7 @@ public class Citizen {
 
 	@Override
 	public String toString() {
-		return "Citizen [name=" + name + ", id=" + id + ", birthYear=" + birthYear + ", ballotBox=" + ballotBox
+		return "Citizen [name=" + name + ", id=" + id + ", birthYear=" + birthYear 
 				+ ", underQuarantine=" + underQuarantine + ", protectionGear=" + protectionGear + "]";
 	}
 

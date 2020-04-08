@@ -103,7 +103,7 @@ public class BBox {
 
 		StringBuffer buf = new StringBuffer();
 		for (Citizen citizen : allowedToVoteHere) {
-			if (citizen != null) {
+			if (citizen instanceof Citizen) {
 
 				buf.append(citizen.toString() + "\n");
 			}

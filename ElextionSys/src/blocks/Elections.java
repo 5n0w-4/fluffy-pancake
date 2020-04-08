@@ -204,6 +204,7 @@ public class Elections {
 
 	public String showAllVoters() {
 		StringBuffer buf = new StringBuffer();
+		
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox) {
 
@@ -289,7 +290,6 @@ public class Elections {
 		}
 		return false;
 	}
-		
 
 	public boolean addCitizen(Citizen subj) {
 		if (subj.getName() == null || subj.getName().equals(""))
@@ -308,26 +308,6 @@ public class Elections {
 		}
 
 	}
-
-//	public boolean addCitizenGroup(Citizen[] subj) {
-//		if (!checkCapacity(numOfCitizen, numOfCitizenLogic))
-//			return false;
-//		int i = 0;
-//		while (i < subj.length) {
-//			if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
-//				if (electoralPad[numOfCitizen] == null) {
-//					Citizen tempCit = new Citizen(subj[i]);
-//					electoralPad[numOfCitizen] = tempCit;
-//					placeCitInBox(tempCit);
-//					numOfCitizen++;
-//					i++;
-//				}
-//			} else {
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
 
 	public Citizen addCitizen(String name, int id, int birthYear, BBox ballotBox, boolean underQuarantine,
 			boolean protectionGear) {

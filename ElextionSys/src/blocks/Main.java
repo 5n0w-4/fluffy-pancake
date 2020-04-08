@@ -75,62 +75,32 @@ public class Main {
 		 * System.out.println(elect.addCitizenGroup(test2));
 		 * System.out.println(elect.showAllVoters());
 		 */
+		Menu menu = new Menu(elect);
 		boolean ok = true;
 		do {
-			System.out.println("hi! welcome (again) to this period of ellections," + "\n"
-					+ " please insert wich option you desire:");
-			System.out.println("1- add ballot box");
-			System.out.println("2- add citizen");
-			System.out.println("3- add party");
-			System.out.println("4- add nominee for specific party");
-			System.out.println("5- show all ballot boxes details ");
-			System.out.println("6- show all citizens details ");
-			System.out.println("7- show all parties details");
-			System.out.println("8- time to elect!");
-			System.out.println("9- show results ");
-			System.out.println("10- exit menu");
-			System.out.println("\n" + "\n" + "\n");
-
+			menu.printMenu();
 			option = scan.next();
 
 			switch (option) {
-
 			case "1": // adding ballot box
 			{
-				System.out.println("are you interested adding corona Ballot Box, Army box, Regular?" + "\n"
-						+ "c- for corona" + "\n" + "a- for army" + "\n" + "r- for Regular");
-				check = scan.next().charAt(0);
-				switch (check) {
-				case 'c':
-					System.out.println("enter BBox adress please:");
-					temp = scan.next();
-					elect.addNewBBox(1, temp);
-					System.out.println("ballot box added succesfully, box id: " + elect.getBboxId(temp) + "\n");
-					continue;
-				case 'a':
-					System.out.println("enter BBox adress please:");
-					temp = scan.next();
-					elect.addNewBBox(2, temp);
-					System.out.println("ballot box added succesfully, box id: " + elect.getBboxId(temp) + "\n");
-					continue;
-				case 'r':
-					System.out.println("enter BBox adress please:");
-					temp = scan.next();
-					elect.addNewBBox(0, temp);
-					System.out.println("ballot box added succesfully, box id: " + elect.getBboxId(temp) + "\n");
-					continue;
-				}
+				break;
 			}
 			case "2":// adding citizen
-				System.out.println("adding Citizen to our system, step 1" + "\n" + "for new citizen enter 1" + "\n"
-						+ "for details about exsicting citizen enter 2");
-				check = scan.next().charAt(0);
-				switch (check) {
-				case '1':
-					System.out.println("enter citizen name please:");
-					System.out.println("enter citizen id please:");
-					System.out.println("enter citizen birth year please:");
-					System.out.println("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes");
+			{
+				menu.addCitizen();
+				break;
+			}
+
+//				System.out.println("adding Citizen to our system, step 1" + "\n" + "for new citizen enter 1" + "\n"
+//						+ "for details about exsicting citizen enter 2");
+//				check = scan.next().charAt(0);
+//				switch (check) {
+//				case '1':
+//					System.out.println("enter citizen name please:");
+//					System.out.println("enter citizen id please:");
+//					System.out.println("enter citizen birth year please:");
+//					System.out.println("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes");
 
 //					Citizen tempCit = new Citizen();
 //					System.out.println("enter citizen name please:");
@@ -176,7 +146,7 @@ public class Main {
 //					System.out.println("enter citizen id please:");
 //					elect.showOnesDetails(scan.nextInt());
 //					continue;
-				}
+				
 
 			case "3":// adding party
 
@@ -214,32 +184,6 @@ public class Main {
 				int tempIndex = elect.findNominee(tempId);
 				System.out.println("Please enter party name:"); //better to create a func that calls a menu which conststs of party options
 				elect.setRepresentative(tempPad[tempIndex], scan.nextLine());
-
-//				System.out
-//						.println("hi, here you can add yourself to our nominies list" + "\n" + "please enter your id:");
-//				int tempId = scan.nextInt();
-//				if (elect.findNominee(tempId) >= 0) {
-//					int tempIndex = elect.findNominee(tempId);
-//					System.out.println(elect.getElectoralPad()[tempIndex].toString());
-//					System.out.println("\n" + "\n" + "hello again! please confirn your details:" + "\n" + "1- confirm"
-//							+ "\n" + "2- not my details");
-//					check = scan.next().charAt(0);
-//					switch (check) {
-//					case '1':
-//
-//						if (elect.getElectoralPad()[tempIndex].getUnderParty()
-//								.addNominee(elect.getElectoralPad()[tempIndex]))
-//							System.out.println("great, Citizen id: " + tempId + " has been added to "
-//									+ elect.getElectoralPad()[tempIndex].getUnderParty().getName() + " nominies list");
-//						break;
-//					case '2':
-//						System.out.println("sorry, please try again");
-//						break;
-//					}
-//				} else {
-//					System.out.println(
-//							"your id is not on our system," + "\n" + "please add yourself to our system first.");
-//				}
 				break;
 			case "5":// show all BBox details
 				System.out.println(elect.showAllBBox());

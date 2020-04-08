@@ -20,4 +20,10 @@ public class Voter extends Citizen {
 		return this.vote;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString()+" [vote=" + vote + "]";
+	}
+	
+
 }
