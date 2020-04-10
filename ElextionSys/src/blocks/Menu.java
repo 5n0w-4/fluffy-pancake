@@ -25,16 +25,9 @@ public class Menu {
 		System.out.println("\n" + "\n" + "\n");
 	}
 
-	public void addBBox(Scanner scan) {
-		int choice;
-		String adress;
-		System.out.println("are you interested adding corona Ballot Box, Army box, Regular?" + "\n" + "1- for corona"
-				+ "\n" + "2- for army" + "\n" + "0- for Regular");
-		choice = scan.nextInt();
-		System.out.println("enter BBox adress please:");
-		adress = scan.next();
-		elections.addNewBBox(choice, adress);
-		System.out.println("ballot box added succesfully, box id: " + elections.getBboxId(adress) + "\n");
+	public void addBBox() {
+		elections.addNewBBox(ScannerWithMsg.scanInt("1- for corona \n 2- for army \n 0- for Regular"), ScannerWithMsg.scanStr("enter BBox adress please:"));
+		System.out.println("ballot box added succesfully");
 
 	}
 
@@ -45,5 +38,27 @@ public class Menu {
 				ScannerWithMsg.scanBool("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes"),
 				ScannerWithMsg.scanBool("Do you have hazmat suit?"));
 		elections.addCitizen(tempCit);
+	}
+	
+	public void addParty() {
+		switch (ScannerWithMsg.scanInt("choose wing direction for the party please \n 1- right \n 2- center \n 3- left")) {
+		case '1':
+			option = "right";
+			break;
+		case '2':
+			option = "center";
+			break;
+		case '3':
+			option = "left";
+			break;
+		}
+
+		System.out.println();
+		System.out.println("adding new party:" + "\n" + " enter name for your party please");
+
+		if (elect.addNewParty(scan.next(), option)) {
+			System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
+					+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
+			System.out.println();
 	}
 }

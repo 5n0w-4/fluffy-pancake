@@ -6,17 +6,18 @@ import java.util.Arrays;
 public class Party  {
 	private String name;
 	private LocalDate creationDate;
-	private String wingDirect;
 
-	enum wing {
+	enum WING {
 		right, left, center
 	};
 
+	WING wingDirect;
 	private Representative[] representatives;
 	private int numOfRepresentatives;
 	private int numOfRepresentativesLogic;
 
-	public void setWing(String choose) {
+	public void setWing(String wingDirect) {
+		this.wingDirect = WING.valueOf(wingDirect);
 
 	}
 	
@@ -47,7 +48,7 @@ public class Party  {
 
 	public Party(String name, String wing) {
 		this.name = name;
-		this.wingDirect = wing;
+		this.wingDirect =  WING.valueOf(wing);
 		this.creationDate = LocalDate.now();
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
@@ -56,7 +57,7 @@ public class Party  {
 	}
 
 	public String getWingDirect() {
-		return wingDirect;
+		return wingDirect.toString();
 	}
 
 	public void setWingDirect(String wingDirect) {

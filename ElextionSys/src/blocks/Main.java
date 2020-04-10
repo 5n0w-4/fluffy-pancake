@@ -86,68 +86,13 @@ public class Main {
 			{
 				break;
 			}
+			
 			case "2":// adding citizen
 			{
 				menu.addCitizen();
 				break;
 			}
-
-//				System.out.println("adding Citizen to our system, step 1" + "\n" + "for new citizen enter 1" + "\n"
-//						+ "for details about exsicting citizen enter 2");
-//				check = scan.next().charAt(0);
-//				switch (check) {
-//				case '1':
-//					System.out.println("enter citizen name please:");
-//					System.out.println("enter citizen id please:");
-//					System.out.println("enter citizen birth year please:");
-//					System.out.println("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes");
-
-//					Citizen tempCit = new Citizen();
-//					System.out.println("enter citizen name please:");
-//					tempCit.setName(scan.next());
-//					System.out.println("enter citizen id please:");
-//					tempCit.setId(scan.nextInt());
-//					System.out.println("enter citizen birth year please:");
-//					tempCit.setBirthYear(scan.nextInt());
-//					System.out.println("choose your party: " + "\n" + "1- halicud" + "\n" + "2-kahol lavan" + "\n" //option 4 is adding a party to citizen
-//							+ "3-haavoda" + "\n" + "4-israel our home");
-//					check = scan.next().charAt(0);
-//					switch (check) {
-//					case '1':
-//						tempCit.setParty(partys[0]);
-//						break;
-//					case '2':
-//						tempCit.setParty(partys[1]);
-//						break;
-//					case '3':
-//						tempCit.setParty(partys[3]);
-//						break;
-//					case '4':
-//						tempCit.setParty(partys[2]);
-//						break;
-//					}
-//
-//					System.out.println("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes");
-//					check = scan.next().charAt(0);
-//					switch (check) {
-//					case '1':
-//						tempCit.setUnderQuarantine(false);
-//						break;
-//					case '2':
-//						tempCit.setUnderQuarantine(true);
-//						break;
-//					}
-//					if (elect.addCitizen(tempCit))
-//						System.out.println("citizen added successfully!");
-//					else
-//						System.out.println("sorry we faced some problem adding you to our system  :(");
-//					continue;
-//				case '2':
-//					System.out.println("enter citizen id please:");
-//					elect.showOnesDetails(scan.nextInt());
-//					continue;
 				
-
 			case "3":// adding party
 
 				System.out.println("adding new party:" + "\n" + " choose wing direction for your party please" + "\n"
@@ -168,14 +113,14 @@ public class Main {
 				System.out.println();
 				System.out.println("adding new party:" + "\n" + " enter name for your party please");
 
-//				if (elect.addNewParty(scan.next(), option)) {
-//					System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
-//							+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
-//					System.out.println();
-//				} else {
-//					System.out.println("oops something went wrong");
-//				}
-//				continue;
+				if (elect.addNewParty(scan.next(), option)) {
+					System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
+							+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
+					System.out.println();
+				} else {
+					System.out.println("oops something went wrong");
+				}
+				continue;
 
 			case "4":// adding nominee
 				System.out.println("Please enter representative id:");
