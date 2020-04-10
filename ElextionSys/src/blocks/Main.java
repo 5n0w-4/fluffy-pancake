@@ -94,34 +94,10 @@ public class Main {
 			}
 				
 			case "3":// adding party
-
-				System.out.println("adding new party:" + "\n" + " choose wing direction for your party please" + "\n"
-						+ "1- right" + "\n" + "2- center" + "\n" + "3- left");
-				check = scan.next().charAt(0);
-				switch (check) {
-				case '1':
-					option = "right";
-					break;
-				case '2':
-					option = "center";
-					break;
-				case '3':
-					option = "left";
-					break;
-				}
-
-				System.out.println();
-				System.out.println("adding new party:" + "\n" + " enter name for your party please");
-
-				if (elect.addNewParty(scan.next(), option)) {
-					System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
-							+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
-					System.out.println();
-				} else {
-					System.out.println("oops something went wrong");
-				}
-				continue;
-
+			{
+				menu.addParty();
+				break;
+			}
 			case "4":// adding nominee
 				System.out.println("Please enter representative id:");
 				int tempId = scan.nextInt();

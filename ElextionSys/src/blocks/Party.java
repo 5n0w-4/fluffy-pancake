@@ -61,7 +61,7 @@ public class Party  {
 	}
 
 	public void setWingDirect(String wingDirect) {
-		this.wingDirect = wingDirect;
+		this.wingDirect = WING.valueOf(wingDirect);
 	}
 
 	public Party(Party copy) {

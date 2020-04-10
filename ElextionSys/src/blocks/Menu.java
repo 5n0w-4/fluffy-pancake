@@ -41,24 +41,7 @@ public class Menu {
 	}
 	
 	public void addParty() {
-		switch (ScannerWithMsg.scanInt("choose wing direction for the party please \n 1- right \n 2- center \n 3- left")) {
-		case '1':
-			option = "right";
-			break;
-		case '2':
-			option = "center";
-			break;
-		case '3':
-			option = "left";
-			break;
-		}
-
-		System.out.println();
-		System.out.println("adding new party:" + "\n" + " enter name for your party please");
-
-		if (elect.addNewParty(scan.next(), option)) {
-			System.out.println("\n" + "party added successfully!" + "  party details:" + "\n"
-					+ elect.getPartys()[(elect.getNumOfPartys() - 1)].toString());
-			System.out.println();
+		elections.addNewParty(ScannerWithMsg.scanStr("adding new party: \n enter name for your party please"), ScannerWithMsg.scanStr("choose wing direction for the party please \n 1- right \n 2- center \n 3- left"));
+	
 	}
 }
