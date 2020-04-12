@@ -1,5 +1,7 @@
 package blocks;
 
+import java.util.Arrays;
+
 public class ArmyBox extends BBox {
 
 	public ArmyBox(String adress) {
@@ -21,4 +23,5 @@ public class ArmyBox extends BBox {
 		}
 		return false;
 	}
+
 }

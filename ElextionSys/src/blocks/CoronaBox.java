@@ -1,5 +1,7 @@
 package blocks;
 
+import java.util.Arrays;
+
 public class CoronaBox extends BBox {
 
 	public CoronaBox(String adress) {
@@ -15,9 +17,10 @@ public class CoronaBox extends BBox {
 	}
 
 	private boolean isUnderQ(Citizen subj) {
-		if (subj.getHealthStatus()) { // True = Infected
+		if (subj.getHealthStatus()) { // True == Infected
 			return true;
 		}
 		return false;
 	}
+
 }

@@ -11,10 +11,10 @@ public class BBox {
 	protected Party[] castedVotes;
 	protected int numOfCastedVotes;
 	protected double percentageOfVotes;
-	private int numOfCitizenWhoVote;
-	private int numOfCitizenWhoVoteLogic;
+	protected int numOfCitizenWhoVote;
+	protected int numOfCitizenWhoVoteLogic;
 	protected int numOfCastedVotesLogic;
-	private int citVotedLogic;
+	protected int citVotedLogic;
 
 	public static int getId() {
 		return id - 3;
@@ -113,17 +113,16 @@ public class BBox {
 
 	public String showRes(Party[] partys) {
 		StringBuffer buf = new StringBuffer();
-		if (numOfCitizenWhoVote>0) {//TODO: exeption **div by zero** to be replaced later
-			
-		
-		buf.append("Precentage of votes:" + (double)numOfCastedVotes / numOfCitizenWhoVote+"\n");
-		for (Party party : partys) {
-			if (party != null) {
-				buf.append("Votes to " + party.getName() + ":"
-						+ countVotes(this.castedVotes, party)+"\\"+numOfCitizenWhoVote+"\n");
+		if (numOfCitizenWhoVote > 0) {// TODO: exeption **div by zero** to be replaced later
+
+			buf.append("Precentage of votes:" + (double) numOfCastedVotes / numOfCitizenWhoVote + "\n");
+			for (Party party : partys) {
+				if (party != null) {
+					buf.append("Votes to " + party.getName() + ":" + countVotes(this.castedVotes, party) + "\\"
+							+ numOfCitizenWhoVote + "\n");
+				}
 			}
-		}
-		return buf.toString();
+			return buf.toString();
 		}
 		return "";
 	}
