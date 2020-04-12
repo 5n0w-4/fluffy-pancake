@@ -9,8 +9,19 @@ public class Citizen {
 	private boolean underQuarantine;
 	private boolean protectionGear;
 
-	public int getId() {
-		return id;
+	public Citizen(Citizen voter) {
+		this(voter.getName(), voter.getId(), voter.getBirthYear(), voter.getQStatus(), voter.getProtectionStatus());
+		this.ballotBox = voter.getBBox();
+	}
+
+	public Citizen(String name, int id, int birthYear, boolean underQuarantine, boolean protectionGear) {
+		this.name = name;
+		this.id = id;
+		this.birthYear = birthYear;
+		this.ballotBox = null;
+		this.underQuarantine = underQuarantine;
+		this.protectionGear = protectionGear;
+	
 	}
 
 	public void setName(String name) {
@@ -19,10 +30,6 @@ public class Citizen {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public void setBirthYear(int birthYear) {
-		this.birthYear = birthYear;
 	}
 
 	public void setBallotBox(BBox ballotBox) {
@@ -37,6 +44,14 @@ public class Citizen {
 		this.protectionGear = protectionGear;
 	}
 
+	public String getName() {
+		return this.name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	public BBox getBBox() {
 		return this.ballotBox;
 	}
@@ -47,25 +62,6 @@ public class Citizen {
 
 	public boolean getQStatus() {
 		return this.underQuarantine;
-	}
-
-	public Citizen(Citizen voter) {
-		this(voter.getName(), voter.getId(), voter.getBirthYear(), voter.getQStatus(), voter.getProtectionStatus());
-		this.ballotBox = voter.getBBox();
-	}
-
-	public Citizen(String name, int id, int birthYear, boolean underQuarantine, boolean protectionGear) {
-		this.name = name;
-		this.id = id;
-		this.birthYear = birthYear;
-		this.ballotBox = null;
-		this.underQuarantine = underQuarantine;
-		this.protectionGear = protectionGear;
-
-	}
-
-	public String getName() {
-		return this.name;
 	}
 
 	public int getAge() {

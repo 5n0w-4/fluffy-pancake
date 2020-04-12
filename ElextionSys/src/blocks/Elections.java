@@ -283,7 +283,15 @@ public class Elections {
 
 	}
 
-	public Party[] getPartys() {
+	public Citizen getCitizenById(int id) {
+		for (BBox bBox : ballotBoxes) {
+			if (bBox.getCitizen(id) instanceof Citizen) {
+				 return bBox.getCitizen(id);
+			}
+		}
+		return null;
+	}
+ 	public Party[] getPartys() {
 		return partys;
 	}
 

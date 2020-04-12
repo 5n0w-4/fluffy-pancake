@@ -16,14 +16,6 @@ public class BBox {
 	protected int numOfCastedVotesLogic;
 	protected int citVotedLogic;
 
-	public static int getId() {
-		return id - 3;
-	}
-
-	public String getAdress() {
-		return adress;
-	}
-
 	public BBox(String adress) {
 		this.adress = adress;
 		this.thisId = id;
@@ -36,13 +28,7 @@ public class BBox {
 		this.allowedToVoteHere = new Citizen[numOfCitizenWhoVoteLogic];
 		this.castedVotes = new Party[citVotedLogic];
 		id++;
-
-	}
-
-	public BBox(String adress, Citizen[] allowedToVoteHere) {
-		this(adress);
-		this.allowedToVoteHere = allowedToVoteHere;
-
+	
 	}
 
 	public BBox(BBox copy) {
@@ -55,11 +41,35 @@ public class BBox {
 		this.citVotedLogic = copy.citVotedLogic;
 	}
 
+	public void addToBox(Citizen voter) {
+		if (!(numOfCitizenWhoVote >= numOfCitizenWhoVoteLogic)) {
+	
+			this.allowedToVoteHere[numOfCitizenWhoVote] = new Citizen(voter);
+			this.allowedToVoteHere[numOfCitizenWhoVote].setBallotBox(this);
+			numOfCitizenWhoVote++;
+	
+		} else {
+			numOfCitizenWhoVoteLogic *= 2;
+			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoVoteLogic);
+			addToBox(voter);
+		}
+	}
+
 	public Voter convertToVoter(Citizen cit) {
 
 		Voter temp = new Voter(cit);
 		return temp;
 
+	}
+
+	private int countVotes(Party[] list, Party countThis) {
+		int counter = 0;
+		for (Party party : list) {
+			if (countThis.equals(party))
+				counter++;
+	
+		}
+		return counter;
 	}
 
 	public String vote(Voter voter) {
@@ -73,30 +83,6 @@ public class BBox {
 		}
 		return voter.getName() + " voter for " + voter.getVote().getClass().getSimpleName();
 
-	}
-
-	public void addToBox(Citizen voter) {
-		if (!(numOfCitizenWhoVote >= numOfCitizenWhoVoteLogic)) {
-
-			this.allowedToVoteHere[numOfCitizenWhoVote] = new Citizen(voter);
-			this.allowedToVoteHere[numOfCitizenWhoVote].setBallotBox(this);
-			numOfCitizenWhoVote++;
-
-		} else {
-			numOfCitizenWhoVoteLogic *= 2;
-			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoVoteLogic);
-			addToBox(voter);
-		}
-	}
-
-	private int countVotes(Party[] list, Party countThis) {
-		int counter = 0;
-		for (Party party : list) {
-			if (countThis.equals(party))
-				counter++;
-
-		}
-		return counter;
 	}
 
 	public String showVoters() {
@@ -129,6 +115,19 @@ public class BBox {
 
 	public Citizen[] getAllowedToVoteHere() {
 		return allowedToVoteHere;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
+	public Citizen getCitizen(int id) { //get cit with comparator(like search by value)
+		for (Citizen citizen : allowedToVoteHere) { //will implement later
+			if (citizen.getId() == id) {
+				return citizen;
+			}
+		}
+		return null;
 	}
 
 	@Override

@@ -38,19 +38,12 @@ public class Main {
 
 		// Ballot boxes
 
-//		BBox northTlv = new BBox("mivtza kadesh 38");
-//		BBox centerTlv = new BBox("eben gabirol 35");
-//		BBox southTlv = new BBox("hkovshim 28");
-//		CoronaBox Shiba = new CoronaBox("derech shiba 2");
-//		ArmyBox Hakiria = new ArmyBox("classified");
-
 		elect.addNewBBox(0, "mivtza kadesh 38");
 		elect.addNewBBox(0, "eben gabirol 35");
 		elect.addNewBBox(0, "hkovshim 28");
 		elect.addNewBBox(1, "derech shiba 2");
 		elect.addNewBBox(2, "classified");
-		
-		
+
 		for (Party party : partys) {
 			elect.addNewParty(party);
 		}
@@ -65,16 +58,6 @@ public class Main {
 		elect.setRepresentative(testNom2[4], "israel our home");
 		elect.setRepresentative(testNom2[5], "Haavoda");
 
-	
-
-		// adding citizens
-//		elect.addCitizenGroup(testCit);
-//		elect.addCitizenGroup(testNom2);
-		/*
-		 * System.out.println(elect.addCitizenGroup(test));
-		 * System.out.println(elect.addCitizenGroup(test2));
-		 * System.out.println(elect.showAllVoters());
-		 */
 		Menu menu = new Menu(elect);
 		boolean ok = true;
 		do {
@@ -83,28 +66,22 @@ public class Main {
 
 			switch (option) {
 			case "1": // adding ballot box
-			{
+
+				menu.addBBox();
 				break;
-			}
-			
+
 			case "2":// adding citizen
-			{
+
 				menu.addCitizen();
 				break;
-			}
-				
+
 			case "3":// adding party
-			{
+
 				menu.addParty();
 				break;
-			}
+
 			case "4":// adding nominee
-				System.out.println("Please enter representative id:");
-				int tempId = scan.nextInt();
-				Citizen[] tempPad = elect.getElectoralPad();
-//				int tempIndex = elect.findNominee(tempId);
-				System.out.println("Please enter party name:"); //better to create a func that calls a menu which conststs of party options
-//				elect.setRepresentative(tempPad[tempIndex], scan.nextLine());
+				menu.addRepresentative();
 				break;
 			case "5":// show all BBox details
 				System.out.println(elect.showAllBBox());
@@ -117,7 +94,7 @@ public class Main {
 				System.out.println(elect.showAllPartys());
 				break;
 			case "8":// electing
-				
+
 				elect.vote(scan);
 				break;
 			case "9":// show results

@@ -26,12 +26,13 @@ public class Menu {
 	}
 
 	public void addBBox() {
-		elections.addNewBBox(ScannerWithMsg.scanInt("1- for corona \n 2- for army \n 0- for Regular"), ScannerWithMsg.scanStr("enter BBox adress please:"));
+		elections.addNewBBox(ScannerWithMsg.scanInt("1- for corona \n 2- for army \n 0- for Regular"),
+				ScannerWithMsg.scanStr("enter BBox adress please:"));
 		System.out.println("ballot box added succesfully");
 
 	}
 
-	public void addCitizen() {
+	public void addCitizen() {//redundant lines ---> can insert it all to addCitizen , should I??
 		Citizen tempCit = new Citizen(ScannerWithMsg.scanStr("enter citizen name please:"),
 				ScannerWithMsg.scanInt("enter citizen id please:"),
 				ScannerWithMsg.scanInt("enter citizen birth year please:"),
@@ -39,9 +40,16 @@ public class Menu {
 				ScannerWithMsg.scanBool("Do you have hazmat suit?"));
 		elections.addCitizen(tempCit);
 	}
-	
+
 	public void addParty() {
-		elections.addNewParty(ScannerWithMsg.scanStr("adding new party: \n enter name for your party please"), ScannerWithMsg.scanStr("choose wing direction for the party please \n 1- right \n 2- center \n 3- left"));
+		elections.addNewParty(ScannerWithMsg.scanStr("adding new party: \n enter name for your party please"),
+				ScannerWithMsg
+						.scanStr("choose wing direction for the party please \n 1- right \n 2- center \n 3- left"));
+
+	}
 	
+	public void addRepresentative() {
+		Citizen tempCit = elections.getCitizenById(ScannerWithMsg.scanInt("Please enter representative id:"));
+		elections.setRepresentative(tempCit, ScannerWithMsg.scanStr("Please enter party name:"));
 	}
 }

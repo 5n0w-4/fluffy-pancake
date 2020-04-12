@@ -12,10 +12,6 @@ public class CoronaBox extends BBox {
 		super(copy);
 	}
 
-	public CoronaBox(String adress, Citizen[] allowedToVoteHere) {
-		super(adress, allowedToVoteHere);
-	}
-
 	private boolean isUnderQ(Citizen subj) {
 		if (subj.getHealthStatus()) { // True == Infected
 			return true;
