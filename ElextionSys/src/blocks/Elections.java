@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import blocks.Party.WING;
+
 public class Elections {
 	private LocalDate date;
-	private Citizen[] electoralPad;
 	private Party[] partys;
 	private BBox[] ballotBoxes;
 	private int numOfCitizen;
@@ -25,14 +26,12 @@ public class Elections {
 		this.numOfCitizenLogic = 1;
 		this.numOfBBOxLogic = 1;
 		this.numOfPartysLogic = 1;
-		this.electoralPad = new Citizen[numOfCitizenLogic];
 		this.partys = new Party[numOfPartysLogic];
 		this.ballotBoxes = new BBox[numOfBBOxLogic];
 
 	}
 
 	public Elections(Elections copy) {
-		this.electoralPad = copy.electoralPad;
 		this.partys = copy.partys;
 		this.ballotBoxes = copy.ballotBoxes;
 		this.numOfCitizen = copy.numOfCitizen;
@@ -43,105 +42,60 @@ public class Elections {
 		this.numOfBBOxLogic = copy.numOfBBOxLogic;
 	}
 
-	public boolean addCitizen(Citizen subj) {
-		if (subj.getName() == null || subj.getName().equals(""))
-			return false;
-		if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
-			Citizen tempCit = new Citizen(subj);
-			electoralPad[numOfCitizen] = tempCit;
-			placeCitInBoxAuto(tempCit);
-			numOfCitizen++;
-			return true;
-		} else {
-			numOfCitizenLogic *= 2; // working with this ref so didnt create a func
-			electoralPad = Arrays.copyOf(electoralPad, numOfCitizenLogic);
-			addCitizen(subj);
-			return true;
-		}
+	public void addCitizen(Citizen subj) {
+		Citizen tempCit = new Citizen(subj);
+		placeCitInBoxAuto(tempCit);
+		numOfCitizen++;
 
 	}
 
-	public Citizen addCitizen(String name, int id, int birthYear, BBox ballotBox, boolean underQuarantine,
+	public void addCitizen(String name, int id, int birthYear, BBox ballotBox, boolean underQuarantine,
 			boolean protectionGear) {
-		if (checkCapacity(numOfCitizen, numOfCitizenLogic)) {
 
-			Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
-			electoralPad[numOfCitizen] = tempCit;
-			placeCitInBoxAuto(tempCit);
-			numOfCitizen++;
-			return tempCit;
-		} else {
-			numOfCitizenLogic *= 2;// working with this ref so didnt create a func
-			electoralPad = Arrays.copyOf(electoralPad, numOfCitizenLogic);
-			return addCitizen(name, id, birthYear, ballotBox, underQuarantine, protectionGear);
+		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
+		placeCitInBoxAuto(tempCit);
+		numOfCitizen++;
 
-		}
 	}
 
-	public void addNewBBox(int type, String adress) { // coronaBox 1 armyBox 2 bBox 0
+	public void addCoronaBox(String adress) {
 		if (checkCapacity(numOfBBOx, numOfBBOxLogic)) {
 
-			switch (type) {
-			case 1:
-				CoronaBox cBox = new CoronaBox(adress);
-				ballotBoxes[numOfBBOx] = cBox;
-				break;
-			case 2:
-				ArmyBox aBox = new ArmyBox(adress);
-				ballotBoxes[numOfBBOx] = aBox;
-				break;
-			case 0:
-				BBox bBox = new BBox(adress);
-				ballotBoxes[numOfBBOx] = bBox;
-				break;
-			}
+			CoronaBox cBox = new CoronaBox(adress);
+			ballotBoxes[numOfBBOx] = cBox;
 			numOfBBOx++;
 		} else {
 			numOfBBOxLogic *= 2;// working with this ref so didnt create a func
 			ballotBoxes = Arrays.copyOf(ballotBoxes, numOfBBOxLogic);
-			addNewBBox(type, adress);
+			addCoronaBox(adress);
 		}
 	}
 
-	public void addNewBBox(int type, BBox other) { // coronaBox 1 armyBox 2 bBox 0
+	public void addArmyBox(String adress) {
 		if (checkCapacity(numOfBBOx, numOfBBOxLogic)) {
 
-			switch (type) {
-			case 1:
-				CoronaBox cBox = new CoronaBox(other.getAdress());
-				ballotBoxes[numOfBBOx] = cBox;
-				break;
-			case 2:
-				ArmyBox aBox = new ArmyBox(other.getAdress());
-				ballotBoxes[numOfBBOx] = aBox;
-				break;
-			case 0:
-				BBox bBox = new BBox(other.getAdress());
-				ballotBoxes[numOfBBOx] = bBox;
-				break;
-			}
+			ArmyBox cBox = new ArmyBox(adress);
+			ballotBoxes[numOfBBOx] = cBox;
 			numOfBBOx++;
 		} else {
 			numOfBBOxLogic *= 2;// working with this ref so didnt create a func
 			ballotBoxes = Arrays.copyOf(ballotBoxes, numOfBBOxLogic);
-			addNewBBox(type, other.getAdress());
+			addArmyBox(adress);
 		}
 	}
 
-//	public BBox getBox(Citizen citizen) { // coronaBox 1 armyBox 2 bBox 0
-//		for (BBox bBox : ballotBoxes) {
-//			if (bBox instanceof CoronaBox && citizen.getQStatus()) {
-//				return bBox;
-//			}
-//			if (bBox instanceof ArmyBox && citizen.getAge() > 18 && citizen.getAge() < 21) {
-//				return bBox;
-//			}
-//			if (bBox instanceof BBox) {
-//				return bBox;
-//			}
-//		}
-//		return null;
-//	}
+	public void addBBox(String adress) {
+		if (checkCapacity(numOfBBOx, numOfBBOxLogic)) {
+
+			BBox cBox = new BBox(adress);
+			ballotBoxes[numOfBBOx] = cBox;
+			numOfBBOx++;
+		} else {
+			numOfBBOxLogic *= 2;// working with this ref so didnt create a func
+			ballotBoxes = Arrays.copyOf(ballotBoxes, numOfBBOxLogic);
+			addBBox(adress);
+		}
+	}
 
 	public void placeCitInBoxAuto(Citizen citizen) { // would like to phrase as try ---> (add to regular box) catch(1)
 														// {cit infected} ---> add to coronaBox catch(2) {cit is
@@ -160,11 +114,7 @@ public class Elections {
 		}
 	}
 
-	public Voter makeVoter(Citizen citizen) { // maybe to remove
-		return new Voter(citizen);
-	}
-
-	public void addNewParty(String name, String wing) {
+	public void addNewParty(String name, WING wing) {
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
 			partys[numOfPartys] = new Party(name, wing);
 			numOfPartys++;
@@ -174,15 +124,14 @@ public class Elections {
 			addNewParty(name, wing);
 		}
 	}
-
-	public void addNewParty(Party other) {
+	public void addNewParty(Party party) {
 		if (checkCapacity(numOfPartys, numOfPartysLogic)) {
-			partys[numOfPartys] = new Party(other);
+			partys[numOfPartys] = new Party(party);
 			numOfPartys++;
 		} else {
 			numOfPartysLogic *= 2;
 			partys = Arrays.copyOf(partys, numOfPartysLogic);
-			addNewParty(other);
+			addNewParty(party);
 		}
 	}
 
@@ -200,9 +149,8 @@ public class Elections {
 	public String showAllPartys() {
 		StringBuffer buf = new StringBuffer();
 		for (Party party : partys) {
-			if (party != null) {
-
-				buf.append(party.toString());
+			if (party instanceof Party) {
+				buf.append(party.toString()+"\n");
 			}
 		}
 		return buf.toString();
@@ -214,7 +162,7 @@ public class Elections {
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox) {
 
-				buf.append(bBox.getAdress()+ "\n"+bBox.showVoters() + "\n");
+				buf.append(bBox.showVoters());
 			}
 		}
 		return buf.toString();
@@ -224,51 +172,30 @@ public class Elections {
 		StringBuffer buf = new StringBuffer();
 		for (BBox bBox : ballotBoxes) {
 			if (bBox != null) {
-				buf.append("Results in the ballot box on " + bBox.getAdress() + "St. \n");
+				buf.append("Results in the ballot box on " + bBox.getAdress() + " St. \n");
 				buf.append(bBox.showRes(partys) + "\n");
 			}
 		}
 		return buf.toString();
 	}
 
-	public void vote(Scanner scan) {
-		boolean isVoting;
-		for (BBox bBox : ballotBoxes) {
-			if (bBox != null) {
+	public void vote(Citizen citizen, BBox bBox, Party toParty) {// add exceptions
 
-				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
-					if (citizen != null) {
+		citizen.vote(toParty);
+		bBox.vote(citizen);
 
-						System.out.println(citizen.getName() + " Would you like to vote?	");
-						isVoting = scan.nextBoolean();
-						scan.nextLine();
-						if (isVoting) {
-							Voter temp = new Voter(citizen);
-							System.out.println("To whom would you like to vote?");
-							String voteTo = scan.nextLine();
-							Party voteToParty = search(voteTo);
-							temp.Vote(voteToParty);
-							bBox.vote(temp);
-							citizen = temp;
-						}
-					}
-				}
-
-			}
-
-		}
 	}
 
-	public Party search(String dest) {
-		for (Party party : partys) {
-			if (party != null) {
-				if (party.compareName(dest) == 0) {
-					return party;
-				}
-			}
-		}
-		return null;
-	}
+//	public Party search(String dest) {
+//		for (Party party : partys) {
+//			if (party != null) {
+//				if (party.compareName(dest) == 0) {
+//					return party;
+//				}
+//			}
+//		}
+//		return null;
+//	}
 
 	public boolean checkCapacity(int size, int sizeLogic) { // Q:Do we have room?
 		if (!(size >= sizeLogic)) {
@@ -277,30 +204,32 @@ public class Elections {
 		return false;
 	}
 
-	public void setRepresentative(Citizen subj, String partyName) {
-		Party temp = search(partyName);
-		temp.addRep(subj);
+	public void setRepresentative(Citizen subj, Party party) {
+		party.addRep(subj);
 
 	}
 
 	public Citizen getCitizenById(int id) {
 		for (BBox bBox : ballotBoxes) {
-			if (bBox.getCitizen(id) instanceof Citizen) {
-				 return bBox.getCitizen(id);
+			if (bBox instanceof BBox) {
+				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
+					if (citizen instanceof Citizen) {
+						if (citizen.getId() == id) {
+							return citizen;
+						}
+					}
+				}
 			}
 		}
-		return null;
+		return null; // no such citizen
 	}
- 	public Party[] getPartys() {
+
+	public Party[] getPartys() {
 		return partys;
 	}
 
 	public int getNumOfPartys() {
 		return numOfPartys;
-	}
-
-	public Citizen[] getElectoralPad() {
-		return electoralPad;
 	}
 
 	public BBox getBBox() {
@@ -329,4 +258,9 @@ public class Elections {
 		}
 		return null;
 	}
+
+	public BBox[] getAllBBox() {
+		return this.ballotBoxes;
+	}
+
 }

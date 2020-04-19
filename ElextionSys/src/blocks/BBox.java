@@ -55,13 +55,6 @@ public class BBox {
 		}
 	}
 
-	public Voter convertToVoter(Citizen cit) {
-
-		Voter temp = new Voter(cit);
-		return temp;
-
-	}
-
 	private int countVotes(Party[] list, Party countThis) {
 		int counter = 0;
 		for (Party party : list) {
@@ -72,7 +65,7 @@ public class BBox {
 		return counter;
 	}
 
-	public String vote(Voter voter) {
+	public String vote(Citizen voter) {
 		if (!(numOfCastedVotes >= numOfCastedVotesLogic)) {
 
 			castedVotes[numOfCastedVotes] = voter.getVote();
@@ -122,9 +115,13 @@ public class BBox {
 	}
 
 	public Citizen getCitizen(int id) { //get cit with comparator(like search by value)
-		for (Citizen citizen : allowedToVoteHere) { //will implement later
+		for (Citizen citizen : allowedToVoteHere) {
+			if (citizen instanceof Citizen) {
+				
+														//will implement later
 			if (citizen.getId() == id) {
 				return citizen;
+			}
 			}
 		}
 		return null;
@@ -153,9 +150,7 @@ public class BBox {
 
 	@Override
 	public String toString() {
-		return "BBox [adress=" + adress + ", allowedToVoteHere=" + Arrays.toString(allowedToVoteHere)
-				+ ", percentageOfVotes=" + percentageOfVotes + ", numOfCitizenWhoVote=" + numOfCitizenWhoVote
-				+ ", numOfCitizenWhoVoteLogic=" + numOfCitizenWhoVoteLogic + "]";
+		return "Adress:" + adress + "\t  Percentage Of Votes:" + percentageOfVotes;
 	}
 
 }

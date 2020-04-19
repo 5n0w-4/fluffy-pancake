@@ -2,6 +2,8 @@ package blocks;
 
 import java.util.Scanner;
 
+import blocks.Party.WING;
+
 public class Menu {
 	Elections elections;
 
@@ -24,32 +26,84 @@ public class Menu {
 		System.out.println("10- exit menu");
 		System.out.println("\n" + "\n" + "\n");
 	}
-
 	public void addBBox() {
-		elections.addNewBBox(ScannerWithMsg.scanInt("1- for corona \n 2- for army \n 0- for Regular"),
-				ScannerWithMsg.scanStr("enter BBox adress please:"));
-		System.out.println("ballot box added succesfully");
+		switch (ScannerWithMsg.scanInt("1- for corona \n2- for army \n0- for Regular")) {
+		case 1:
+			elections.addCoronaBox(ScannerWithMsg.scanStr("Enter the location of the ballot box:"));
+			break;
 
+		case 2:
+			elections.addArmyBox(ScannerWithMsg.scanStr("Enter the location of the ballot box:"));
+			break;
+			
+		case 0:
+			elections.addBBox(ScannerWithMsg.scanStr("Enter the location of the ballot box:"));
+			break;
+		}	
 	}
 
-	public void addCitizen() {//redundant lines ---> can insert it all to addCitizen , should I??
+	public void addCitizen() {// redundant lines ---> can insert it all to addCitizen , should I??
 		Citizen tempCit = new Citizen(ScannerWithMsg.scanStr("enter citizen name please:"),
 				ScannerWithMsg.scanInt("enter citizen id please:"),
-				ScannerWithMsg.scanInt("enter citizen birth year please:"),
-				ScannerWithMsg.scanBool("are you under quarantine?" + "\n" + "1- no" + "\n" + "2- yes"),
-				ScannerWithMsg.scanBool("Do you have hazmat suit?"));
+				ScannerWithMsg.scanInt("enter your birth year please:"), yesNo("are you under quarantine?"),
+				yesNo("Do you have hazmat suit?"));
 		elections.addCitizen(tempCit);
 	}
 
 	public void addParty() {
 		elections.addNewParty(ScannerWithMsg.scanStr("adding new party: \n enter name for your party please"),
-				ScannerWithMsg
-						.scanStr("choose wing direction for the party please \n 1- right \n 2- center \n 3- left"));
+				wingPick("choose wing direction for the party"));
 
 	}
-	
+
 	public void addRepresentative() {
 		Citizen tempCit = elections.getCitizenById(ScannerWithMsg.scanInt("Please enter representative id:"));
-		elections.setRepresentative(tempCit, ScannerWithMsg.scanStr("Please enter party name:"));
+		elections.setRepresentative(tempCit, partyPick());
+	}
+
+	public Party partyPick() {
+		for (int i = 0; i < elections.getPartys().length; i++) {
+			if (elections.getPartys()[i] instanceof Party) {
+				
+			
+			System.out.println((i + 1) + " " + elections.getPartys()[i].getName());
+			}
+		}
+		return elections.getPartys()[ScannerWithMsg.scanInt("") - 1];
+	}
+	public WING wingPick(String msg) {
+		System.out.println(msg);
+		for (int i = 0; i < WING.values().length; i++) {
+			System.out.println((i+1)+" "+ WING.values()[i].toString());
+		}
+		return WING.values()[ScannerWithMsg.scanInt("")-1];
+	}
+	
+
+
+	public boolean yesNo(String msg) {
+		System.out.println(msg);
+		if (ScannerWithMsg.scanInt("1-Yes \n 2-No") == 1) {
+			return true;
+		} else
+			return false;
+
+	}
+
+	public void voteAll() {
+
+		for (BBox bBox : elections.getAllBBox()) {
+			if (bBox instanceof BBox) {
+
+				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
+					if (citizen instanceof Citizen) {
+
+						if (yesNo(citizen.getName() + " Would you like to vote?")) {
+							elections.vote(citizen, bBox, partyPick());
+						}
+					}
+				}
+			}
+		}
 	}
 }

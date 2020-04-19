@@ -2,6 +2,8 @@ package blocks;
 
 import java.util.Scanner;
 
+import blocks.Party.WING;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -13,10 +15,10 @@ public class Main {
 		// hard coding of few citizens, parties, and bbox
 		// parties
 		Party[] partys = new Party[4];
-		partys[0] = new Party("Halicud", "right");
-		partys[1] = new Party("Kahol-lavan", "center");
-		partys[2] = new Party("israel our home", "right");
-		partys[3] = new Party("Haavoda", "left");
+		partys[0] = new Party("Halicud", WING.right);
+		partys[1] = new Party("Kahol-lavan", WING.center);
+		partys[2] = new Party("IL our home", WING.right);
+		partys[3] = new Party("Haavoda", WING.left);
 
 		// citizens
 		Citizen[] testCit = new Citizen[6];
@@ -37,12 +39,12 @@ public class Main {
 		testNom2[5] = new Citizen("Amir Peretz", 12, 1952, false, true);
 
 		// Ballot boxes
+		elect.addBBox("mivtza kadesh 38");
+		elect.addBBox("eben gabirol 35");
+		elect.addBBox("hkovshim 28");
+		elect.addCoronaBox("derech shiba 2");
+		elect.addArmyBox("classified");
 
-		elect.addNewBBox(0, "mivtza kadesh 38");
-		elect.addNewBBox(0, "eben gabirol 35");
-		elect.addNewBBox(0, "hkovshim 28");
-		elect.addNewBBox(1, "derech shiba 2");
-		elect.addNewBBox(2, "classified");
 
 		for (Party party : partys) {
 			elect.addNewParty(party);
@@ -51,12 +53,9 @@ public class Main {
 			elect.addCitizen(citizen);
 		}
 
-		elect.setRepresentative(testNom2[0], "Halicud");
-		elect.setRepresentative(testNom2[1], "Halicud");
-		elect.setRepresentative(testNom2[2], "Kahol-lavan");
-		elect.setRepresentative(testNom2[3], "Kahol-lavan");
-		elect.setRepresentative(testNom2[4], "israel our home");
-		elect.setRepresentative(testNom2[5], "Haavoda");
+		elect.setRepresentative(testNom2[0], partys[0]);
+
+		elect.setRepresentative(testNom2[5], partys[3]);
 
 		Menu menu = new Menu(elect);
 		boolean ok = true;
@@ -95,7 +94,7 @@ public class Main {
 				break;
 			case "8":// electing
 
-				elect.vote(scan);
+				menu.voteAll();
 				break;
 			case "9":// show results
 				System.out.println(elect.showRes());

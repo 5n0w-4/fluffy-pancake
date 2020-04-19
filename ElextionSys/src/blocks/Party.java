@@ -3,7 +3,7 @@ package blocks;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-public class Party  {
+public class Party {
 	private String name;
 	private LocalDate creationDate;
 
@@ -20,22 +20,19 @@ public class Party  {
 		this.wingDirect = WING.valueOf(wingDirect);
 
 	}
-	
+
 	public int compareName(String other) {
-		if (this.name.compareTo(other)==0) {
+		if (this.name.compareTo(other) == 0) {
 			return 1;
 		}
 		return 0;
 	}
-	
-	
 
 	public void addRep(Citizen someOne) {
 		if (numOfRepresentatives < numOfRepresentativesLogic) {
 			representatives[numOfRepresentatives] = new Representative(someOne);
 			numOfRepresentatives++;
-		}
-		else {
+		} else {
 			numOfRepresentativesLogic *= 2;
 			representatives = Arrays.copyOf(representatives, numOfRepresentativesLogic);
 			addRep(someOne);
@@ -46,9 +43,9 @@ public class Party  {
 		return name;
 	}
 
-	public Party(String name, String wing) {
+	public Party(String name, WING wing) {
 		this.name = name;
-		this.wingDirect =  WING.valueOf(wing);
+		this.wingDirect = wing;
 		this.creationDate = LocalDate.now();
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
@@ -69,12 +66,26 @@ public class Party  {
 		this.creationDate = copy.creationDate;
 		this.numOfRepresentatives = copy.numOfRepresentatives;
 		this.numOfRepresentativesLogic = copy.numOfRepresentativesLogic;
+		this.wingDirect = copy.wingDirect;
 		this.representatives = copy.representatives.clone();
 	}
 
 	public void addRepresentative(Citizen subj) {
-		representatives[numOfRepresentatives] = (Representative)subj;
+		representatives[numOfRepresentatives] = (Representative) subj;
 		numOfRepresentatives++;
+	}
+
+	public String[] getRepNames() {
+		String[] temp = new String[representatives.length];
+		int i = 0;
+		for (Citizen citizen : representatives) {
+			if (citizen instanceof Citizen) {
+
+				temp[i] = citizen.getName();
+				i++;
+			}
+		}
+		return temp;
 	}
 
 	@Override
@@ -98,9 +109,8 @@ public class Party  {
 
 	@Override
 	public String toString() {
-		return "Party [name=" + name + ", creationDate=" + creationDate.toString() + ", representatives="
-				+ Arrays.toString(representatives) + ", numOfRepresentatives=" + numOfRepresentatives
-				+ ", numOfRepresentativesLogic=" + numOfRepresentativesLogic + " ,wingDirect=" + wingDirect + "]";
+		return "Party name:" + name + "\t Founded on:" + creationDate.toString() + "\t Represented by:"
+				+ Arrays.toString(getRepNames()) + "\t  Political direction:" + wingDirect.toString();
 	}
 
 }

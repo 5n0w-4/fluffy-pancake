@@ -6,6 +6,7 @@ public class Citizen {
 	private int id;
 	private int birthYear;
 	private BBox ballotBox;
+	private Party vote;
 	private boolean underQuarantine;
 	private boolean protectionGear;
 
@@ -75,6 +76,14 @@ public class Citizen {
 	public boolean getProtectionStatus() {
 		return protectionGear;
 	}
+	
+	public void vote(Party voteTo) {
+		this.vote = voteTo;
+		
+	}
+	public Party getVote() {
+		return this.vote;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -98,8 +107,8 @@ public class Citizen {
 
 	@Override
 	public String toString() {
-		return "Citizen [name=" + name + ", id=" + id + ", birthYear=" + birthYear 
-				+ ", underQuarantine=" + underQuarantine + ", protectionGear=" + protectionGear + "]";
+		return "Name:" + name + " \t Id:" + id + "\t Age:" + getAge() 
+				+ "\t Infected:" + underQuarantine + "\t Got mask:" + protectionGear;
 	}
 
 }

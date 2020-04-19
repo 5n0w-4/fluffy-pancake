@@ -7,7 +7,7 @@ public class ScannerWithMsg {
 	
 	public static String scanStr(String msg) {
 		System.out.println(msg);
-		return scan.nextLine();
+		return scan.next();
 	}
 	
 	public static int scanInt(String msg) {
