@@ -9,24 +9,22 @@ public class BBox {
 	protected String adress;
 	protected Citizen[] allowedToVoteHere;
 	protected Party[] castedVotes;
-	protected int numOfCastedVotes;
+	protected int numOfCastedVotes;  //double?
 	protected double percentageOfVotes;
-	protected int numOfCitizenWhoVote;
-	protected int numOfCitizenWhoVoteLogic;
+	protected int numOfCitizenWhoCanVote;  //double?
+	protected int numOfCitizenWhoCanVoteLogic;
 	protected int numOfCastedVotesLogic;
-	protected int citVotedLogic;
 
 	public BBox(String adress) {
 		this.adress = adress;
 		this.thisId = id;
 		this.percentageOfVotes = 0;
-		this.numOfCitizenWhoVote = 0;
-		this.numOfCitizenWhoVoteLogic = 1;
-		this.citVotedLogic = 1;
+		this.numOfCitizenWhoCanVote = 0;
+		this.numOfCitizenWhoCanVoteLogic = 1;
 		this.numOfCastedVotes = 0;
 		this.numOfCastedVotesLogic = 1;
-		this.allowedToVoteHere = new Citizen[numOfCitizenWhoVoteLogic];
-		this.castedVotes = new Party[citVotedLogic];
+		this.allowedToVoteHere = new Citizen[numOfCitizenWhoCanVoteLogic];
+		this.castedVotes = new Party[numOfCastedVotesLogic];
 		id++;
 	
 	}
@@ -36,21 +34,20 @@ public class BBox {
 		this.adress = copy.adress;
 		this.allowedToVoteHere = copy.allowedToVoteHere.clone();
 		this.castedVotes = copy.castedVotes.clone();
-		this.numOfCitizenWhoVote = copy.numOfCitizenWhoVote;
-		this.numOfCitizenWhoVoteLogic = copy.numOfCitizenWhoVoteLogic;
-		this.citVotedLogic = copy.citVotedLogic;
+		this.numOfCitizenWhoCanVote = copy.numOfCitizenWhoCanVote;
+		this.numOfCitizenWhoCanVoteLogic = copy.numOfCitizenWhoCanVoteLogic;
 	}
 
 	public void addToBox(Citizen voter) {
-		if (!(numOfCitizenWhoVote >= numOfCitizenWhoVoteLogic)) {
+		if (!(numOfCitizenWhoCanVote >= numOfCitizenWhoCanVoteLogic)) {
 	
-			this.allowedToVoteHere[numOfCitizenWhoVote] = new Citizen(voter);
-			this.allowedToVoteHere[numOfCitizenWhoVote].setBallotBox(this);
-			numOfCitizenWhoVote++;
+			this.allowedToVoteHere[numOfCitizenWhoCanVote] = new Citizen(voter);
+			this.allowedToVoteHere[numOfCitizenWhoCanVote].setBallotBox(this);
+			numOfCitizenWhoCanVote++;
 	
 		} else {
-			numOfCitizenWhoVoteLogic *= 2;
-			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoVoteLogic);
+			numOfCitizenWhoCanVoteLogic *= 2;
+			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoCanVoteLogic);
 			addToBox(voter);
 		}
 	}
@@ -92,13 +89,13 @@ public class BBox {
 
 	public String showRes(Party[] partys) {
 		StringBuffer buf = new StringBuffer();
-		if (numOfCitizenWhoVote > 0) {// TODO: exeption **div by zero** to be replaced later
+		if (numOfCitizenWhoCanVote > 0) {// TODO: exeption **div by zero** to be replaced later
 
-			buf.append("Precentage of votes:" + (double) numOfCastedVotes / numOfCitizenWhoVote + "\n");
+			buf.append("Precentage of votes:" + (double) numOfCastedVotes / numOfCitizenWhoCanVote + "\n");
 			for (Party party : partys) {
 				if (party != null) {
 					buf.append("Votes to " + party.getName() + ":" + countVotes(this.castedVotes, party) + "\\"
-							+ numOfCitizenWhoVote + "\n");
+							+ numOfCitizenWhoCanVote + "\n");
 				}
 			}
 			return buf.toString();
@@ -126,6 +123,38 @@ public class BBox {
 		}
 		return null;
 	}
+	public Party[] getCastedVotes() {
+		return castedVotes;
+	}
+
+	
+	public int getNumOfCastedVotes() {
+		return numOfCastedVotes;
+	}
+
+	public double getPercentageOfVotes() {
+		return percentageOfVotes;
+	}
+
+	public int getNumOfCitizenWhoVote() {
+		return numOfCitizenWhoCanVote;
+	}
+
+	public int getNumOfCitizenWhoVoteLogic() {
+		return numOfCitizenWhoCanVoteLogic;
+	}
+
+	public int getNumOfCastedVotesLogic() {
+		return numOfCastedVotesLogic;
+	}
+	
+	public boolean isAdress(String adress) {
+		if (this.adress.equals(adress)) {
+			return true;
+		}
+		return false;
+	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -139,9 +168,9 @@ public class BBox {
 			return false;
 		if (!Arrays.equals(allowedToVoteHere, other.allowedToVoteHere))
 			return false;
-		if (numOfCitizenWhoVote != other.numOfCitizenWhoVote)
+		if (numOfCitizenWhoCanVote != other.numOfCitizenWhoCanVote)
 			return false;
-		if (numOfCitizenWhoVoteLogic != other.numOfCitizenWhoVoteLogic)
+		if (numOfCitizenWhoCanVoteLogic != other.numOfCitizenWhoCanVoteLogic)
 			return false;
 		if (Double.doubleToLongBits(percentageOfVotes) != Double.doubleToLongBits(other.percentageOfVotes))
 			return false;
@@ -152,5 +181,6 @@ public class BBox {
 	public String toString() {
 		return "Adress:" + adress + "\t  Percentage Of Votes:" + percentageOfVotes;
 	}
+	
 
 }

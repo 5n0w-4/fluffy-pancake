@@ -49,11 +49,19 @@ public class Elections {
 
 	}
 
-	public void addCitizen(String name, int id, int birthYear, BBox ballotBox, boolean underQuarantine,
+	public void addCitizen(String name, int id, int birthYear, boolean underQuarantine,
 			boolean protectionGear) {
 
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
 		placeCitInBoxAuto(tempCit);
+		numOfCitizen++;
+
+	}
+	public void addCitizen(String name, int id, int birthYear, boolean underQuarantine,
+			boolean protectionGear,String adress) { 
+
+		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
+		placeCitInBox(tempCit, adress);
 		numOfCitizen++;
 
 	}
@@ -97,6 +105,14 @@ public class Elections {
 		}
 	}
 
+	public void placeCitInBox(Citizen citizen, String adress) {
+		for (BBox bBox : ballotBoxes) {
+			if (bBox instanceof BBox && bBox.isAdress(adress)) {
+				bBox.addToBox(citizen);
+			}
+		}
+	}
+	
 	public void placeCitInBoxAuto(Citizen citizen) { // would like to phrase as try ---> (add to regular box) catch(1)
 														// {cit infected} ---> add to coronaBox catch(2) {cit is
 														// solider} ---> add to ArmyBox, finall ---> ?self test?
@@ -186,17 +202,6 @@ public class Elections {
 
 	}
 
-//	public Party search(String dest) {
-//		for (Party party : partys) {
-//			if (party != null) {
-//				if (party.compareName(dest) == 0) {
-//					return party;
-//				}
-//			}
-//		}
-//		return null;
-//	}
-
 	public boolean checkCapacity(int size, int sizeLogic) { // Q:Do we have room?
 		if (!(size >= sizeLogic)) {
 			return true;
@@ -209,6 +214,18 @@ public class Elections {
 
 	}
 
+	public Party getPartyByName(String Name) {
+		for (Party party : partys) {
+			if (party instanceof Party) {
+				if(party.getName().equals(Name)) {
+					return party;
+				}
+			}
+		}
+		return null;//no such party
+	}
+	
+	
 	public Citizen getCitizenById(int id) {
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox) {
@@ -236,6 +253,13 @@ public class Elections {
 
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox)
+				return bBox;
+		}
+		return null;
+	}
+	public BBox getBBoxByAdress(String adress) {
+		for (BBox bBox : ballotBoxes) {
+			if (bBox instanceof BBox && bBox.getAdress().equals(adress))
 				return bBox;
 		}
 		return null;

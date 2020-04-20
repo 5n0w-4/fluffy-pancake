@@ -7,7 +7,7 @@ public class Party {
 	private String name;
 	private LocalDate creationDate;
 
-	enum WING {
+	public enum WING {
 		right, left, center
 	};
 
@@ -86,6 +86,24 @@ public class Party {
 			}
 		}
 		return temp;
+	}
+	
+	
+
+	public LocalDate getCreationDate() {
+		return creationDate;
+	}
+
+	public Representative[] getRepresentatives() {
+		return representatives;
+	}
+
+	public int getNumOfRepresentatives() {
+		return numOfRepresentatives;
+	}
+
+	public int getNumOfRepresentativesLogic() {
+		return numOfRepresentativesLogic;
 	}
 
 	@Override
