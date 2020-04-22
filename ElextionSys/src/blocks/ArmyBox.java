@@ -18,5 +18,25 @@ public class ArmyBox extends BBox {
 		}
 		return false;
 	}
+	
+	@Override
+	public String vote(Citizen voter) {
+		if (isInArmy(voter)) {
+
+			if (!(numOfCastedVotes >= numOfCastedVotesLogic)) {
+
+				castedVotes[numOfCastedVotes] = voter.getVote();
+				numOfCastedVotes++;
+			} else {
+				numOfCastedVotesLogic *= 2;
+				castedVotes = Arrays.copyOf(castedVotes, numOfCastedVotesLogic);
+			}
+			return voter.getName() + " voter for " + voter.getVote().getName();
+		}
+		return "Cant vote here";
+
+	}
+	
+	
 
 }

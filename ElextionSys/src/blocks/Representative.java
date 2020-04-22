@@ -1,17 +1,14 @@
 package blocks;
 
-
 public class Representative extends Citizen {
 	private Party underParty;
-
-
 
 	public Representative(Citizen voter) {
 		super(voter);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Representative(String name, int id, int birthYear, boolean underQuarantine, boolean protectionGear) {
+	public Representative(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGear) {
 		super(name, id, birthYear, underQuarantine, protectionGear);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,5 +21,9 @@ public class Representative extends Citizen {
 		this.underParty = underParty;
 	}
 
-	
+	@Override
+	public String toString() {
+		return super.getName() + "represents " + underParty;
+	}
+
 }

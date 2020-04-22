@@ -1,7 +1,6 @@
 package blocks;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class BBox {
 	static int id;
@@ -9,9 +8,9 @@ public class BBox {
 	protected String adress;
 	protected Citizen[] allowedToVoteHere;
 	protected Party[] castedVotes;
-	protected int numOfCastedVotes;  //double?
+	protected int numOfCastedVotes; // double?
 	protected double percentageOfVotes;
-	protected int numOfCitizenWhoCanVote;  //double?
+	protected int numOfCitizenWhoCanVote; // double?
 	protected int numOfCitizenWhoCanVoteLogic;
 	protected int numOfCastedVotesLogic;
 
@@ -26,7 +25,7 @@ public class BBox {
 		this.allowedToVoteHere = new Citizen[numOfCitizenWhoCanVoteLogic];
 		this.castedVotes = new Party[numOfCastedVotesLogic];
 		id++;
-	
+
 	}
 
 	public BBox(BBox copy) {
@@ -40,11 +39,11 @@ public class BBox {
 
 	public void addToBox(Citizen voter) {
 		if (!(numOfCitizenWhoCanVote >= numOfCitizenWhoCanVoteLogic)) {
-	
+
 			this.allowedToVoteHere[numOfCitizenWhoCanVote] = new Citizen(voter);
 			this.allowedToVoteHere[numOfCitizenWhoCanVote].setBallotBox(this);
 			numOfCitizenWhoCanVote++;
-	
+
 		} else {
 			numOfCitizenWhoCanVoteLogic *= 2;
 			allowedToVoteHere = Arrays.copyOf(allowedToVoteHere, numOfCitizenWhoCanVoteLogic);
@@ -57,7 +56,7 @@ public class BBox {
 		for (Party party : list) {
 			if (countThis.equals(party))
 				counter++;
-	
+
 		}
 		return counter;
 	}
@@ -71,7 +70,7 @@ public class BBox {
 			numOfCastedVotesLogic *= 2;
 			castedVotes = Arrays.copyOf(castedVotes, numOfCastedVotesLogic);
 		}
-		return voter.getName() + " voter for " + voter.getVote().getClass().getSimpleName();
+		return voter.getName() + " voter for " + voter.getVote().getName();
 
 	}
 
@@ -111,23 +110,23 @@ public class BBox {
 		return adress;
 	}
 
-	public Citizen getCitizen(int id) { //get cit with comparator(like search by value)
+	public Citizen getCitizenById(String id) { // get cit with comparator(like search by value)
 		for (Citizen citizen : allowedToVoteHere) {
 			if (citizen instanceof Citizen) {
-				
-														//will implement later
-			if (citizen.getId() == id) {
-				return citizen;
-			}
+
+				// will implement later
+				if (citizen.getId().equals(id)) {
+					return citizen;
+				}
 			}
 		}
 		return null;
 	}
+	
 	public Party[] getCastedVotes() {
 		return castedVotes;
 	}
 
-	
 	public int getNumOfCastedVotes() {
 		return numOfCastedVotes;
 	}
@@ -147,14 +146,13 @@ public class BBox {
 	public int getNumOfCastedVotesLogic() {
 		return numOfCastedVotesLogic;
 	}
-	
-	public boolean isAdress(String adress) {
+
+	public boolean isAdress(String adress) {  //REMOVE?
 		if (this.adress.equals(adress)) {
 			return true;
 		}
 		return false;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -181,6 +179,5 @@ public class BBox {
 	public String toString() {
 		return "Adress:" + adress + "\t  Percentage Of Votes:" + percentageOfVotes;
 	}
-	
 
 }

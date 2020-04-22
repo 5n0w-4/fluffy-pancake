@@ -7,7 +7,7 @@ public class TestRunner {
 
 	public static void main(String[] args) {
 
-		org.junit.runner.Result result = JUnitCore.runClasses(ElectionTests.class);
+		org.junit.runner.Result result = JUnitCore.runClasses(AllTests.class);
 		
 		
 		for (Failure fail : result.getFailures()) {

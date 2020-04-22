@@ -3,8 +3,8 @@ package blocks;
 public class Citizen {
 
 	private String name;
-	private int id;
-	private int birthYear;
+	private String id;
+	private String birthYear;
 	private BBox ballotBox;
 	private Party vote;
 	private boolean underQuarantine;
@@ -15,21 +15,21 @@ public class Citizen {
 		this.ballotBox = voter.getBBox();
 	}
 
-	public Citizen(String name, int id, int birthYear, boolean underQuarantine, boolean protectionGear) {
+	public Citizen(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGear) {
 		this.name = name;
 		this.id = id;
 		this.birthYear = birthYear;
 		this.ballotBox = null;
 		this.underQuarantine = underQuarantine;
 		this.protectionGear = protectionGear;
-	
+
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -49,7 +49,7 @@ public class Citizen {
 		return this.name;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -57,7 +57,7 @@ public class Citizen {
 		return this.ballotBox;
 	}
 
-	public int getBirthYear() {
+	public String getBirthYear() {
 		return this.birthYear;
 	}
 
@@ -66,7 +66,7 @@ public class Citizen {
 	}
 
 	public int getAge() {
-		return 2020 - birthYear;
+		return 2020 - Integer.parseInt(birthYear);
 	}
 
 	public boolean getHealthStatus() {
@@ -76,11 +76,11 @@ public class Citizen {
 	public boolean getProtectionStatus() {
 		return protectionGear;
 	}
-	
+
 	public void vote(Party voteTo) {
 		this.vote = voteTo;
-		
 	}
+
 	public Party getVote() {
 		return this.vote;
 	}
@@ -107,8 +107,8 @@ public class Citizen {
 
 	@Override
 	public String toString() {
-		return "Name:" + name + " \t Id:" + id + "\t Age:" + getAge() 
-				+ "\t Infected:" + underQuarantine + "\t Got mask:" + protectionGear;
+		return "Name:" + name + " \t Id:" + id + "\t Age:" + getAge() + "\t Infected:" + underQuarantine
+				+ "\t Got mask:" + protectionGear;
 	}
 
 }

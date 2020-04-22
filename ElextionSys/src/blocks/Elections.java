@@ -2,9 +2,7 @@ package blocks;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Scanner;
 
-import blocks.Party.WING;
 
 public class Elections {
 	private LocalDate date;
@@ -49,7 +47,7 @@ public class Elections {
 
 	}
 
-	public void addCitizen(String name, int id, int birthYear, boolean underQuarantine,
+	public void addCitizen(String name, String id, String birthYear, boolean underQuarantine,
 			boolean protectionGear) {
 
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
@@ -57,7 +55,7 @@ public class Elections {
 		numOfCitizen++;
 
 	}
-	public void addCitizen(String name, int id, int birthYear, boolean underQuarantine,
+	public void addCitizen(String name, String id, String birthYear, boolean underQuarantine,
 			boolean protectionGear,String adress) { 
 
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine, protectionGear);
@@ -196,7 +194,6 @@ public class Elections {
 	}
 
 	public void vote(Citizen citizen, BBox bBox, Party toParty) {// add exceptions
-
 		citizen.vote(toParty);
 		bBox.vote(citizen);
 
@@ -214,31 +211,20 @@ public class Elections {
 
 	}
 
-	public Party getPartyByName(String Name) {
-		for (Party party : partys) {
-			if (party instanceof Party) {
-				if(party.getName().equals(Name)) {
-					return party;
-				}
-			}
-		}
-		return null;//no such party
-	}
-	
-	
-	public Citizen getCitizenById(int id) {
+	public Citizen getCitizenById(String id) {
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox) {
-				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
-					if (citizen instanceof Citizen) {
-						if (citizen.getId() == id) {
-							return citizen;
-						}
-					}
+				if (bBox.getCitizenById(id) instanceof Citizen) {
+					return bBox.getCitizenById(id);
 				}
+				
 			}
 		}
 		return null; // no such citizen
+	}
+	
+	public LocalDate getDate() {
+		return this.date;
 	}
 
 	public Party[] getPartys() {
@@ -249,14 +235,17 @@ public class Elections {
 		return numOfPartys;
 	}
 
-	public BBox getBBox() {
-
-		for (BBox bBox : ballotBoxes) {
-			if (bBox instanceof BBox)
-				return bBox;
+	public Party getPartyByName(String Name) {
+		for (Party party : partys) {
+			if (party instanceof Party) {
+				if(party.getName().equals(Name)) {
+					return party;
+				}
+			}
 		}
-		return null;
+		return null;//no such party
 	}
+
 	public BBox getBBoxByAdress(String adress) {
 		for (BBox bBox : ballotBoxes) {
 			if (bBox instanceof BBox && bBox.getAdress().equals(adress))
@@ -265,6 +254,14 @@ public class Elections {
 		return null;
 	}
 
+	public BBox getBBox() {
+
+		for (BBox bBox : ballotBoxes) {
+			if (bBox instanceof BBox)
+				return bBox;
+		}
+		return null;
+	}
 	public CoronaBox getCoronaBox() {
 
 		for (BBox bBox : ballotBoxes) {
