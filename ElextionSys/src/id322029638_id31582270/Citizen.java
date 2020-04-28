@@ -1,27 +1,29 @@
-package blocks;
+package id322029638_id31582270;
 
-public class Citizen {
+import java.awt.Window.Type;
+
+public class Citizen implements CitizenInerface {
 
 	private String name;
 	private String id;
 	private String birthYear;
-	private BBox ballotBox;
+	private BBox<Citizen> votesAtBallotBox;
 	private Party vote;
 	private boolean underQuarantine;
 	private boolean protectionGear;
 
 	public Citizen(Citizen voter) {
-		this(voter.getName(), voter.getId(), voter.getBirthYear(), voter.getQStatus(), voter.getProtectionStatus());
-		this.ballotBox = voter.getBBox();
+		this(voter.getName(), voter.getId(), voter.getBirthYear(), voter.getQStatus(),voter.isProtectionGear());
+		this.votesAtBallotBox = voter.getBBox();
 	}
 
-	public Citizen(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGear) {
+	public Citizen(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGea) {
 		this.name = name;
 		this.id = id;
 		this.birthYear = birthYear;
-		this.ballotBox = null;
+		this.votesAtBallotBox = null;
 		this.underQuarantine = underQuarantine;
-		this.protectionGear = protectionGear;
+		this.protectionGear = protectionGea;
 
 	}
 
@@ -32,18 +34,15 @@ public class Citizen {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+@Override
 	public void setBallotBox(BBox ballotBox) {
-		this.ballotBox = ballotBox;
+		this.votesAtBallotBox = ballotBox;
 	}
 
 	public void setUnderQuarantine(boolean underQuarantine) {
 		this.underQuarantine = underQuarantine;
 	}
 
-	public void setProtectionGear(boolean protectionGear) {
-		this.protectionGear = protectionGear;
-	}
 
 	public String getName() {
 		return this.name;
@@ -52,9 +51,9 @@ public class Citizen {
 	public String getId() {
 		return id;
 	}
-
+@Override
 	public BBox getBBox() {
-		return this.ballotBox;
+		return this.votesAtBallotBox;
 	}
 
 	public String getBirthYear() {
@@ -64,7 +63,7 @@ public class Citizen {
 	public boolean getQStatus() {
 		return this.underQuarantine;
 	}
-
+@Override
 	public int getAge() {
 		return 2020 - Integer.parseInt(birthYear);
 	}
@@ -73,16 +72,37 @@ public class Citizen {
 		return underQuarantine;
 	}
 
-	public boolean getProtectionStatus() {
-		return protectionGear;
-	}
-
+@Override
 	public void vote(Party voteTo) {
 		this.vote = voteTo;
 	}
-
+@Override
 	public Party getVote() {
 		return this.vote;
+	}
+	@Override
+	public boolean canVote() {
+		if (this.getAge()>18) {
+			return true;
+		}
+		return false;
+		
+		
+	}
+	
+	public boolean isInArmy() {
+		if (this.getAge()>18&&this.getAge()<21) {
+			return true;
+		}
+		return false;
+	}
+@Override
+	public boolean isProtectionGear() {
+		return protectionGear;
+	}
+
+	public void setProtectionGear(boolean protectionGear) {
+		this.protectionGear = protectionGear;
 	}
 
 	@Override
@@ -90,15 +110,13 @@ public class Citizen {
 		if (!(obj instanceof Citizen))
 			return false;
 		Citizen other = (Citizen) obj;
-		if (!ballotBox.equals(other.ballotBox))
+		if (!votesAtBallotBox.equals(other.votesAtBallotBox))
 			return false;
 		if (birthYear != other.birthYear)
 			return false;
 		if (id != other.id)
 			return false;
 		if (!name.equals(other.name))
-			return false;
-		if (protectionGear != other.protectionGear)
 			return false;
 		if (underQuarantine != other.underQuarantine)
 			return false;
@@ -108,7 +126,7 @@ public class Citizen {
 	@Override
 	public String toString() {
 		return "Name:" + name + " \t Id:" + id + "\t Age:" + getAge() + "\t Infected:" + underQuarantine
-				+ "\t Got mask:" + protectionGear;
+				+ "\t Got mask:";
 	}
 
 }

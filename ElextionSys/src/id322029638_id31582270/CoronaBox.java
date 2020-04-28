@@ -1,4 +1,4 @@
-package blocks;
+package id322029638_id31582270;
 
 import java.util.Arrays;
 
@@ -30,6 +30,7 @@ public class CoronaBox extends BBox {
 			} else {
 				numOfCastedVotesLogic *= 2;
 				castedVotes = Arrays.copyOf(castedVotes, numOfCastedVotesLogic);
+				this.vote(voter);
 			}
 			return voter.getName() + " voter for " + voter.getVote().getName();
 		}

@@ -1,4 +1,7 @@
-package blocks;
+//Ivan Kalinovski - 322029638
+//Yoav - 315822270
+
+package id322029638_id31582270;
 
 import java.util.Scanner;
 

@@ -1,4 +1,6 @@
-package blocks;
+package id322029638_id31582270;
+
+import helpers.Set;
 
 public class Menu {
 	Elections elections;
@@ -59,13 +61,14 @@ public class Menu {
 	}
 
 	public Party partyPick() {
-		for (int i = 0; i < elections.getPartys().length; i++) {
-			if (elections.getPartys()[i] instanceof Party) {
+		for (int i = 0; i < elections.getPartys().lenght(); i++) {
+			if (elections.getPartys().get(i) instanceof Party) {
+				Party temp = (Party) elections.getPartys().get(i);
 
-				System.out.println((i + 1) + " " + elections.getPartys()[i].getName());
+				System.out.println((i + 1) + " " + temp.getName());
 			}
 		}
-		return elections.getPartys()[ScannerWithMsg.scanInt("") - 1];
+		return (Party) elections.getPartys().get(ScannerWithMsg.scanInt("") - 1);
 	}
 
 	public WING wingPick(String msg) {
@@ -101,29 +104,28 @@ public class Menu {
 
 	}
 
-	public void voteCit() {
-		elections.vote(elections.getCitizenById(ScannerWithMsg.scanStr("Enter citizen id:")),
-				elections.getBBoxByAdress(ScannerWithMsg.scanStr("Enter ballot box adress:")),
-				partyPick());
-	}
+//	public void voteCit() {
+//		elections.vote(elections.getCitizenById(ScannerWithMsg.scanStr("Enter citizen id:")),
+//				elections.getBBoxByAdress(ScannerWithMsg.scanStr("Enter ballot box adress:")),
+//				partyPick());
+//	}
 
-	public void voteAll() {
-		for (BBox bBox : elections.getAllBBox()) {
-			if (bBox instanceof BBox) {
-				if (bBox instanceof CoronaBox) 
-					bBox = (CoronaBox)bBox;
-				if (bBox instanceof ArmyBox) 
-					bBox = (ArmyBox)bBox;
-
-				for (Citizen citizen : bBox.getAllowedToVoteHere()) {
-					if (citizen instanceof Citizen) {
-
-						if (yesNo(citizen.getName() + " Would you like to vote?")) {
-							elections.vote(citizen, bBox, partyPick());
+	public <T extends Citizen> void voteAll() {
+		while (true) {
+			int count = 0;
+			for (int i = 0; i < elections.getAllBBox().lenght(); i++) {
+				Set<BBox<T>> temp = (Set<BBox<T>>) elections.getAllBBox().get(i);
+				for (BBox<T> bBox : temp) {
+					for (T voter : bBox.getAllowedToVoteHere()) {
+						if (voter != null) {
+							if (yesNo(voter.getName() + " Would you like to vote?")) {
+								elections.vote(voter, bBox, partyPick());
+							}
 						}
 					}
 				}
 			}
 		}
+
 	}
 }
