@@ -2,7 +2,6 @@ package id322029638_id31582270.logic;
 
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
-
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.CoronoaPatient;
 import id322029638_id31582270.population.InfectedSolider;
@@ -36,7 +35,9 @@ public class Elections {
 	public <T extends Voter> void addCitizen(String name, String id, String birthYear, boolean underQuarantine) {
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine);
 		T temp = allocate(tempCit);
-		placeCitInBoxAuto(temp);
+		if (temp!=null) {
+			placeCitInBoxAuto(temp);
+		}
 
 	}
 
@@ -58,7 +59,7 @@ public class Elections {
 			}
 			return (T) voter;
 		}
-		return (T) citizen;
+		return  null;
 
 	}
 
@@ -84,10 +85,20 @@ public class Elections {
 		this.getBox(subj).addToBox(subj);
 
 	}
+	
+	public <T extends Voter> void addBox(String adress,T voter) {
+		
+		boxes.add(new BBox<T>((adress), (Class<T>) voter.getClass()));
+		
+	}
 
-	public <T extends Voter> void placeCitInBoxAuto(T voter) { // would like to phrase as try ---> (add to regular//
-																// box) catch(1)
+	public <T extends Voter> void placeCitInBoxAuto(T voter) { //exceptions: boxMissing ---> ADDbox
+																
 		BBox<T> temp = this.getBox(voter);
+		if (temp==null) {
+			this.addBox(scannerWithMsg.ScannerWithMsg.scanStr("Enter adress:"), voter);
+			temp = this.getBox(voter);
+		}
 		temp.addToBox(voter);
 
 	}
