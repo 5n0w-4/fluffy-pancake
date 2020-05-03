@@ -14,7 +14,7 @@ public class ArraysTest {
 	public void CitArrTest() {
 		elections.addBBox("Place No A");
 		for (int i = 0; i < 100; i++) {
-			elections.addCitizen("John "+i, "i", "1990", false, true);
+			elections.addCitizen("John "+i, "i", "1990", false);
 		}
 	}
 	
@@ -39,8 +39,8 @@ public class ArraysTest {
 		elections.addBBox("Place No A");
 		elections.addNewParty("party A", id322029638_id31582270.logic.WING.center);
 		for (int i = 0; i < 100; i++) {
-			Citizen temp = new Citizen("John "+i, "i", "1990", false, true);
-			elections.addCitizen("John "+i, "i", "1990", false, true);
+			Citizen temp = new Citizen("John "+i, "i", "1990", false);
+			elections.addCitizen("John "+i, "i", "1990", false);
 			
 		}
 	}

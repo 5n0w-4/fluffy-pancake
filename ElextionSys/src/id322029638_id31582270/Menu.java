@@ -1,15 +1,11 @@
 package id322029638_id31582270;
 
-import java.util.concurrent.Callable;
 
 import id322029638_id31582270.logic.BBox;
 import id322029638_id31582270.logic.Elections;
 import id322029638_id31582270.logic.Party;
 import id322029638_id31582270.logic.WING;
 import id322029638_id31582270.population.Citizen;
-import id322029638_id31582270.population.CoronoaPatient;
-import id322029638_id31582270.population.InfectedSolider;
-import id322029638_id31582270.population.Solider;
 import id322029638_id31582270.population.Voter;
 import menu.PartyPick;
 import menu.YesNo;
@@ -117,11 +113,6 @@ public class Menu {
 
 	}
 
-//	public void voteCit() {
-//		elections.vote(elections.getCitizenById(ScannerWithMsg.scanStr("Enter citizen id:")),
-//				elections.getBBoxByAdress(ScannerWithMsg.scanStr("Enter ballot box adress:")),
-//				partyPick());
-//	}
 
 	public void vote() throws Exception {
 		PartyPick picker = new PartyPick();

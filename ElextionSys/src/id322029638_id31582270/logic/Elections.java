@@ -1,14 +1,8 @@
 package id322029638_id31582270.logic;
 
-import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
-import java.util.Scanner;
 import java.util.concurrent.Callable;
 
-import javax.swing.plaf.SliderUI;
-
-import id322029638_id31582270.interfaces.SickMarker;
-import id322029638_id31582270.interfaces.SoliderMarker;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.CoronoaPatient;
 import id322029638_id31582270.population.InfectedSolider;
@@ -51,9 +45,9 @@ public class Elections {
 			Voter voter = new Voter(citizen, true, true);
 
 			if (citizen.isInArmy()) {
-				Solider solider = new Solider(voter, false);
+				Solider solider = new Solider(voter, true);
 				if (citizen.isInfected()) {
-					InfectedSolider infectedSolider = new InfectedSolider(voter, 0, false);
+					InfectedSolider infectedSolider = new InfectedSolider(voter, 0, true);
 					return (T) infectedSolider;
 				}
 				return (T) solider;
@@ -223,7 +217,7 @@ public class Elections {
 		}
 	}
 
-	private <T extends Voter> BBox<T> getBox(T type) {
+	public <T extends Voter> BBox<T> getBox(T type) {
 		Class<T> myType;
 		for (BBox<?> bBox : boxes) {
 			if (bBox != null) {
