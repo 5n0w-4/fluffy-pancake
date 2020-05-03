@@ -1,10 +1,11 @@
-package id322029638_id31582270;
+package id322029638_id31582270.logic;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.Representative;
+import id322029638_id31582270.population.Voter;
 
 public class Party {
 	WING wingDirect;
@@ -38,9 +39,9 @@ public class Party {
 
 	}
 
-	public void addRep(Citizen someOne) {
+	public void addRep(Voter someOne) {
 		if (numOfRepresentatives < numOfRepresentativesLogic) {
-			representatives[numOfRepresentatives] = new Representative(someOne);
+			representatives[numOfRepresentatives] = new Representative(someOne,this);
 			numOfRepresentatives++;
 		} else {
 			numOfRepresentativesLogic *= 2;

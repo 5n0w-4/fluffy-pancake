@@ -1,31 +1,20 @@
 package id322029638_id31582270.population;
 
-import org.hamcrest.core.IsNot;
 
-import id322029638_id31582270.BBox;
+import id322029638_id31582270.interfaces.SickMarker;
 
-public class CoronoaPatient extends Citizen {
-	private BBox<CoronoaPatient> votesAtBallotBox;
+public class CoronoaPatient extends Voter implements SickMarker {
 	private int daysInfected;
 
-	public CoronoaPatient(Citizen voter) {
+	public CoronoaPatient(Voter voter, int daysInfected) {
 		super(voter);
+		this.setDaysInfected(daysInfected);
 	}
-
-
-	
-	public CoronoaPatient(String name, String id, String birthYear, boolean underQuarantine,boolean protectionGear) {
-		super(name, id, birthYear, underQuarantine,protectionGear);
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
+@Override
 	public int getDaysInfected() {
 		return daysInfected;
 	}
-
+@Override
 	public void setDaysInfected(int daysInfected) {
 		this.daysInfected = daysInfected;
 	}

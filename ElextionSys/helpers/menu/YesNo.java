@@ -2,7 +2,7 @@ package menu;
 
 import java.util.concurrent.Callable;
 
-import id322029638_id31582270.ScannerWithMsg;
+import scannerWithMsg.ScannerWithMsg;
 
 public class YesNo implements Callable<Boolean> {
 	

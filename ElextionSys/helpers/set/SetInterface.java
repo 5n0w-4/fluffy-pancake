@@ -1,6 +1,6 @@
-package helpers.set;
+package set;
 
-import id322029638_id31582270.BBox;
+import id322029638_id31582270.logic.BBox;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.Solider;
 

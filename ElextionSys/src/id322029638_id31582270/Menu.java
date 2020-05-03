@@ -2,12 +2,21 @@ package id322029638_id31582270;
 
 import java.util.concurrent.Callable;
 
-import helpers.set.Set;
+import id322029638_id31582270.logic.BBox;
+import id322029638_id31582270.logic.Elections;
+import id322029638_id31582270.logic.Party;
+import id322029638_id31582270.logic.WING;
 import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.CoronoaPatient;
+import id322029638_id31582270.population.InfectedSolider;
+import id322029638_id31582270.population.Solider;
+import id322029638_id31582270.population.Voter;
 import menu.PartyPick;
 import menu.YesNo;
+import scannerWithMsg.ScannerWithMsg;
+import set.Set;
 
-public class Menu{
+public class Menu {
 	Elections elections;
 
 	public Menu(Elections elections) {
@@ -49,8 +58,7 @@ public class Menu{
 	public void addCitizen() {// redundant lines ---> can insert it all to addCitizen , should I??
 		Citizen tempCit = new Citizen(ScannerWithMsg.scanStr("enter citizen name please:"),
 				ScannerWithMsg.scanStr("enter citizen id please:"),
-				ScannerWithMsg.scanStr("enter your birth year please:"), yesNo("are you under quarantine?"),
-				yesNo("Do you have hazmat suit?"));
+				ScannerWithMsg.scanStr("enter your birth year please:"), yesNo("are you under quarantine?"));
 		elections.addCitizen(tempCit);
 	}
 
@@ -60,8 +68,8 @@ public class Menu{
 
 	}
 
-	public void addRepresentative() {
-		Citizen tempCit = elections.getCitizenById(ScannerWithMsg.scanStr("Please enter representative id:"));
+	public<T extends Voter> void addRepresentative() {
+		T tempCit = elections.getCitizenById(ScannerWithMsg.scanStr("Please enter representative id:"));
 		elections.setRepresentative(tempCit, partyPick());
 	}
 
@@ -115,35 +123,32 @@ public class Menu{
 //				partyPick());
 //	}
 
-	
 	public void vote() throws Exception {
 		PartyPick picker = new PartyPick();
 		picker.load(elections.getPartys());
-		
+
 		YesNo isVoting = new YesNo();
 		isVoting.load("Would you like to vote?");
-		
-		
+
 		elections.getData(picker, isVoting);
 		elections.countVotes();
 	}
-	public <T extends Citizen> void startVoting() throws Exception {
+
+	public <T extends Voter> void startVoting() throws Exception {
 		PartyPick picker = new PartyPick();
 		picker.load(elections.getPartys());
-		for (Set<BBox<T>> set : elections.getAllBoxes()) {
-			if (set != null) {
-				for (BBox<T> bBox : set) {
-					if (bBox != null) {
-						for (T subj : bBox.getAllowedToVoteHere()) {
-							if (subj != null) {
-								if (yesNo(subj.getName() + " Would you like to vote?")) {
-									subj.setVoting(true);
-									
-									subj.vote(picker.call());
-									;
-								}
-							}
+		for (BBox<?> box : elections.getAllBoxes()) {
+			if (box != null) {
+
+				for (Voter subj : box.getAllowedToVoteHere()) {
+					if (subj != null) {
+						if (yesNo(subj.getName() + " Would you like to vote?")) {
+							subj.setVoting(true);
+
+							subj.vote(picker.call());
+							;
 						}
+
 					}
 				}
 			}

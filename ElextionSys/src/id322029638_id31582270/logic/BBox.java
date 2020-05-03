@@ -1,15 +1,17 @@
-package id322029638_id31582270;
+package id322029638_id31582270.logic;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.function.IntConsumer;
 
-import helpers.set.Set;
+import id322029638_id31582270.interfaces.BBoxInterface;
 import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.Voter;
 import menu.YesNo;
+import set.Set;
 
-public class BBox<T extends Citizen> implements BBoxInterface<T> {
+public class BBox<T extends Voter> implements BBoxInterface<T> {
 	static int id;
 	protected int thisId;
 	protected String adress;
@@ -19,8 +21,10 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 	protected double percentageOfVotes;
 	protected int numOfCitizenWhoCanVote; // double?
 	protected int numOfCastedVotesLogic;
+	protected Citizen type;
+	protected Class typeOfThisBox;
 
-	public BBox(String adress) {
+	public BBox(String adress,Class<T> cla22) {
 		this.adress = adress;
 		this.thisId = id;
 		this.percentageOfVotes = 0;
@@ -29,6 +33,7 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 		this.numOfCastedVotesLogic = 1;
 		this.allowedToVoteHere = new Set<T>();
 		this.castedVotes = new Party[numOfCastedVotesLogic];
+		this.typeOfThisBox = cla22;
 		id++;
 
 	}
@@ -43,8 +48,8 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 
 	@Override
 	public void addToBox(T voter) {
-		this.allowedToVoteHere.add((T) new Citizen(voter));
-		this.allowedToVoteHere.getRecent().setBallotBox(this);
+		this.allowedToVoteHere.add(voter);
+		this.allowedToVoteHere.getRecent().setVotesAtBallotBox(this);
 		numOfCitizenWhoCanVote++;
 
 	}
@@ -52,7 +57,7 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 	public void countVotes() {
 		for (T t : allowedToVoteHere) {
 			if (t != null) {
-				this.addVote(t, t.getVote());
+				this.addVote(t, t.getMyVote());
 			}
 		}
 	}
@@ -72,7 +77,7 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 	public void addVote(T from, Party toParty) {
 		if (!(numOfCastedVotes >= numOfCastedVotesLogic)) {
 
-			castedVotes[numOfCastedVotes] = from.getVote();
+			castedVotes[numOfCastedVotes] = from.getMyVote();
 			numOfCastedVotes++;
 		} else {
 			numOfCastedVotesLogic *= 2;
@@ -99,7 +104,7 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 		for (T t : allowedToVoteHere) {
 			if (t != null) {
 
-				this.addVote(t, t.getVote());
+				this.addVote(t, t.getMyVote());
 			}
 		}
 
@@ -134,7 +139,7 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 	}
 
 	public Set<T> getAllowedToVoteHere() {
-		return allowedToVoteHere;
+		return (Set<T>) allowedToVoteHere;
 	}
 
 	public String getAdress() {
@@ -179,6 +184,16 @@ public class BBox<T extends Citizen> implements BBoxInterface<T> {
 			return true;
 		}
 		return false;
+	}
+	public T myType() {
+		this.type = new Citizen("starter","123","1990",false);
+		return (T)this.type;
+	}
+	
+	
+
+	public Class getTypeOfThisBox() {
+		return typeOfThisBox;
 	}
 
 	@Override

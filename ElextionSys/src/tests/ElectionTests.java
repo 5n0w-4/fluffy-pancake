@@ -12,9 +12,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import id322029638_id31582270.BBox;
-import id322029638_id31582270.Elections;
-import id322029638_id31582270.Party;
+import id322029638_id31582270.logic.BBox;
+import id322029638_id31582270.logic.Elections;
+import id322029638_id31582270.logic.Party;
 import id322029638_id31582270.population.Citizen;
 
 public class ElectionTests {
@@ -34,26 +34,42 @@ public class ElectionTests {
 		elections.addArmyBox("classified");
 
 		// 6 Citizen
-		elections.addCitizen("shlomy", "1", "1966", true, false, "derech shiba 2");
-		elections.addCitizen("yossi", "2", "1959", false, true, "mivtza kadesh 38");
-		elections.addCitizen("hagit", "3", "2001", false, true, "classified");
-		elections.addCitizen("orly", "4", "1980", true, true, "derech shiba 2");
-		elections.addCitizen("amir", "5", "2001", false, true, "classified");
-		elections.addCitizen("moti", "6", "2002", false, true, "classified");
+//		elections.addCitizen("shlomy", "1", "1966", true, false, "derech shiba 2");
+//		elections.addCitizen("yossi", "2", "1959", false, true, "mivtza kadesh 38");
+//		elections.addCitizen("hagit", "3", "2001", false, true, "classified");
+//		elections.addCitizen("orly", "4", "1980", true, true, "derech shiba 2");
+//		elections.addCitizen("amir", "5", "2001", false, true, "classified");
+//		elections.addCitizen("moti", "6", "2002", false, true, "classified");
+//
+//		// 6 Representatives
+//		elections.addCitizen("Bibi", "7", "1949", true, true, "derech shiba 2");
+//		elections.addCitizen("Gidon Saar", "8", "1966", false, true, "eben gabirol 35");
+//		elections.addCitizen("Beni Gantz", "9", "1959", false, true, "eben gabirol 35");
+//		elections.addCitizen("Gabi Ashkenazi", "10", "1954", false, true, "mivtza kadesh 38");
+//		elections.addCitizen("Avigdor Liberman", "11", "1958", false, true, "eben gabirol 35");
+//		elections.addCitizen("Amir Peretz", "12", "1952", false, true, "mivtza kadesh 38");
+		
+		//Without adress ----> for referance check older versions ----> will be fixed later
+		elections.addCitizen("shlomy", "1", "1966", true, false);
+		elections.addCitizen("yossi", "2", "1959", false, true);
+		elections.addCitizen("hagit", "3", "2001", false, true);
+		elections.addCitizen("orly", "4", "1980", true, true);
+		elections.addCitizen("amir", "5", "2001", false, true);
+		elections.addCitizen("moti", "6", "2002", false, true);
 
 		// 6 Representatives
-		elections.addCitizen("Bibi", "7", "1949", true, true, "derech shiba 2");
-		elections.addCitizen("Gidon Saar", "8", "1966", false, true, "eben gabirol 35");
-		elections.addCitizen("Beni Gantz", "9", "1959", false, true, "eben gabirol 35");
-		elections.addCitizen("Gabi Ashkenazi", "10", "1954", false, true, "mivtza kadesh 38");
-		elections.addCitizen("Avigdor Liberman", "11", "1958", false, true, "eben gabirol 35");
-		elections.addCitizen("Amir Peretz", "12", "1952", false, true, "mivtza kadesh 38");
+		elections.addCitizen("Bibi", "7", "1949", true, true);
+		elections.addCitizen("Gidon Saar", "8", "1966", false, true);
+		elections.addCitizen("Beni Gantz", "9", "1959", false, true);
+		elections.addCitizen("Gabi Ashkenazi", "10", "1954", false, true);
+		elections.addCitizen("Avigdor Liberman", "11", "1958", false, true);
+		elections.addCitizen("Amir Peretz", "12", "1952", false, true);
 
 		// 4 Partys
-		elections.addNewParty("Halicud", id322029638_id31582270.WING.right);
-		elections.addNewParty("Kahol-lavan", id322029638_id31582270.WING.center);
-		elections.addNewParty("IL our home", id322029638_id31582270.WING.right);
-		elections.addNewParty("Haavoda", id322029638_id31582270.WING.left);
+		elections.addNewParty("Halicud", id322029638_id31582270.logic.WING.right);
+		elections.addNewParty("Kahol-lavan", id322029638_id31582270.logic.WING.center);
+		elections.addNewParty("IL our home", id322029638_id31582270.logic.WING.right);
+		elections.addNewParty("Haavoda", id322029638_id31582270.logic.WING.left);
 
 		// Add the representatives
 		System.out.println(elections.getCitizenById("7"));
@@ -79,8 +95,8 @@ public class ElectionTests {
 
 	@Test
 	void checkArrays() {// contains at least 1 element
-		assertTrue(elections.getPartys()[0] instanceof Party);
-		assertTrue(elections.getAllBBox()[0] instanceof BBox);
+		assertTrue(elections.getPartys().get(0) instanceof Party);
+		assertTrue(elections.get] instanceof BBox);
 		for (BBox bBox : elections.getAllBBox()) {
 			if (bBox instanceof BBox) {
 				assertTrue(bBox.getAllowedToVoteHere()[0] instanceof Citizen);

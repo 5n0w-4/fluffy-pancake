@@ -1,4 +1,4 @@
-package id322029638_id31582270;
+package scannerWithMsg;
 
 import java.util.Scanner;
 

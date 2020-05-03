@@ -2,9 +2,9 @@ package menu;
 
 import java.util.concurrent.Callable;
 
-import helpers.set.Set;
-import id322029638_id31582270.Party;
-import id322029638_id31582270.ScannerWithMsg;
+import id322029638_id31582270.logic.Party;
+import scannerWithMsg.ScannerWithMsg;
+import set.Set;
 
 public class PartyPick implements Callable<Party> {
 	Set<Party> partys;

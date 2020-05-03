@@ -1,13 +1,24 @@
 package id322029638_id31582270.population;
 
+import id322029638_id31582270.interfaces.SickMarker;
 import id322029638_id31582270.interfaces.SoliderMarker;
 
-public class Solider extends Voter implements SoliderMarker {
+public class InfectedSolider extends Voter implements SickMarker, SoliderMarker {
+	private int daysInfected;
 	boolean carryWeapon;
 
-	public Solider(Voter voter, boolean carryWeapon) {
+	public InfectedSolider(Voter voter, int daysInfected, boolean carryWeapon) {
 		super(voter);
-		this.setCarryWeapon(carryWeapon);
+		this.daysInfected = daysInfected;
+		this.carryWeapon = carryWeapon;
+	}
+@Override
+	public int getDaysInfected() {
+		return daysInfected;
+	}
+@Override
+	public void setDaysInfected(int daysInfected) {
+		this.daysInfected = daysInfected;
 	}
 
 	public boolean isCarryWeapon() {
@@ -25,13 +36,4 @@ public class Solider extends Voter implements SoliderMarker {
 	public void setCarryWeapon(boolean carryWeapon) {
 		this.carryWeapon = carryWeapon;
 	}
-
-	@Override
-	public boolean canVote() {
-		if (!(this.isCarryWeapon())) {
-			return true;
-		}
-		return false;
-	}
-
 }

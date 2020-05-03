@@ -5,7 +5,11 @@ package id322029638_id31582270;
 
 import java.util.Scanner;
 
+import id322029638_id31582270.logic.Elections;
+import id322029638_id31582270.logic.Party;
+import id322029638_id31582270.logic.WING;
 import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.Voter;
 
 public class Main {
 
@@ -24,21 +28,21 @@ public class Main {
 
 		// citizens
 		Citizen[] testCit = new Citizen[6];
-		testCit[0] = new Citizen("shlomy", "1", "1966", true, true);
-		testCit[1] = new Citizen("yossi", "2", "1959", false, true);
-		testCit[2] = new Citizen("hagit", "3", "2001", false, true);
-		testCit[3] = new Citizen("orly", "4", "1980", true, true);
-		testCit[4] = new Citizen("amir", "5", "1990", false, true);
-		testCit[5] = new Citizen("moti", "6", "1975", false, true);
+		testCit[0] = new Citizen("shlomy", "1", "1966", true);
+		testCit[1] = new Citizen("yossi", "2", "1959", false);
+		testCit[2] = new Citizen("hagit", "3", "2001", false);
+		testCit[3] = new Citizen("orly", "4", "1980", true);
+		testCit[4] = new Citizen("amir", "5", "1990", false);
+		testCit[5] = new Citizen("moti", "6", "1975", false);
 
 		// nominees
 		Citizen[] testNom2 = new Citizen[6];
-		testNom2[0] = new Citizen("Bibi", "7", "1949", false, true);
-		testNom2[1] = new Citizen("Gidon Saar", "8", "1966", false, true);
-		testNom2[2] = new Citizen("Beni Gantz", "9", "1959", false, true);
-		testNom2[3] = new Citizen("Gabi Ashkenazi", "10", "1954", false, true);
-		testNom2[4] = new Citizen("Avigdor Liberman", "11", "1958", false, true);
-		testNom2[5] = new Citizen("Amir Peretz", "12", "1952", false, true);
+		testNom2[0] = new Citizen("Bibi", "7", "1949", false);
+		testNom2[1] = new Citizen("Gidon Saar", "8", "1966", false);
+		testNom2[2] = new Citizen("Beni Gantz", "9", "1959", false);
+		testNom2[3] = new Citizen("Gabi Ashkenazi", "10", "1954", false);
+		testNom2[4] = new Citizen("Avigdor Liberman", "11", "1958", false);
+		testNom2[5] = new Citizen("Amir Peretz", "12", "1952", false);
 
 		// Ballot boxes
 		elect.addBBox("mivtza kadesh 38");
@@ -54,9 +58,9 @@ public class Main {
 			elect.addCitizen(citizen);
 		}
 
-		elect.setRepresentative(testNom2[0], partys[0]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("2"),true,true), partys[0]);
 
-		elect.setRepresentative(testNom2[5], partys[3]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("3"),true,true), partys[3]);
 
 		Menu menu = new Menu(elect);
 		boolean ok = true;

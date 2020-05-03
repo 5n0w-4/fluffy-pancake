@@ -1,19 +1,25 @@
 package id322029638_id31582270.population;
 
-import id322029638_id31582270.Party;
+import id322029638_id31582270.logic.Party;
 
-public class Representative extends Citizen {
+public class Representative extends Voter {
 	private Party underParty;
 
-	public Representative(Citizen voter) {
+	
+
+
+	public Representative(Voter voter, Party underParty) {
 		super(voter);
-		// TODO Auto-generated constructor stub
+		this.setUnderParty(underParty);
+	}
+	
+
+	public Representative(Representative copy) {
+		super((Voter)copy);
+		this.setUnderParty(copy.getUnderParty());
+
 	}
 
-	public Representative(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGear) {
-		super(name, id, birthYear, underQuarantine, protectionGear);
-		// TODO Auto-generated constructor stub
-	}
 
 	public Party getUnderParty() {
 		return underParty;

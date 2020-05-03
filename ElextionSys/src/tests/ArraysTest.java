@@ -2,9 +2,9 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 
-import id322029638_id31582270.BBox;
-import id322029638_id31582270.Elections;
-import id322029638_id31582270.Party;
+import id322029638_id31582270.logic.BBox;
+import id322029638_id31582270.logic.Elections;
+import id322029638_id31582270.logic.Party;
 import id322029638_id31582270.population.Citizen;
 
 public class ArraysTest {
@@ -21,7 +21,7 @@ public class ArraysTest {
 	@Test	
 	public void PartyArrTest() {
 		for (int i = 0; i < 100; i++) {
-			elections.addNewParty("party "+i, id322029638_id31582270.WING.center);
+			elections.addNewParty("party "+i, id322029638_id31582270.logic.WING.center);
 		}
 	}
 	
@@ -37,7 +37,7 @@ public class ArraysTest {
 	@Test
 	public void CastedVotesTest() {
 		elections.addBBox("Place No A");
-		elections.addNewParty("party A", id322029638_id31582270.WING.center);
+		elections.addNewParty("party A", id322029638_id31582270.logic.WING.center);
 		for (int i = 0; i < 100; i++) {
 			Citizen temp = new Citizen("John "+i, "i", "1990", false, true);
 			elections.addCitizen("John "+i, "i", "1990", false, true);
