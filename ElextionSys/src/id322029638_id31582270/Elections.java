@@ -1,10 +1,15 @@
 package id322029638_id31582270;
 
 import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.concurrent.Callable;
 
 import javax.swing.plaf.SliderUI;
 
-import helpers.Set;
+import helpers.set.Set;
+import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.CoronoaPatient;
+import id322029638_id31582270.population.Solider;
 
 public class Elections {
 	private LocalDate date;
@@ -12,6 +17,8 @@ public class Elections {
 	private Set<BBox<Citizen>> normBoxes; // 0
 	private Set<BBox<CoronoaPatient>> coronaBoxes; // 1
 	private Set<BBox<Solider>> armyBoxes; // 2
+	@SuppressWarnings("rawtypes")
+	private Set[] allBoxes = new Set[3]; // tables of box types 0::1::2
 
 	public Elections() {
 		this.date = LocalDate.now();
@@ -19,6 +26,9 @@ public class Elections {
 		this.normBoxes = new Set<BBox<Citizen>>();
 		this.coronaBoxes = new Set<BBox<CoronoaPatient>>();
 		this.armyBoxes = new Set<BBox<Solider>>();
+		allBoxes[0] = normBoxes;
+		allBoxes[1] = coronaBoxes;
+		allBoxes[2] = armyBoxes;
 
 	}
 
@@ -29,12 +39,13 @@ public class Elections {
 	}
 
 	public <T extends Citizen> void addCitizen(Citizen subj) {
-		T tempCit = (T) new Citizen(subj);
+		Citizen tempCit = new Citizen(subj);
 		placeCitInBoxAuto(tempCit);
 
 	}
 
-	public <T extends Citizen> void addCitizen(String name, String id, String birthYear, boolean underQuarantine, boolean protectionGear) {
+	public <T extends Citizen> void addCitizen(String name, String id, String birthYear, boolean underQuarantine,
+			boolean protectionGear) {
 
 		T tempCit = (T) new Citizen(name, id, birthYear, underQuarantine, protectionGear);
 		placeCitInBoxAuto(tempCit);
@@ -73,27 +84,10 @@ public class Elections {
 //		}
 //	}
 
-	public<T extends Citizen> void placeCitInBoxAuto(T voter) { // would like to phrase as try ---> (add to regular
-		// box) catch(1)
-// {cit infected} ---> add to coronaBox catch(2) {cit is
-// solider} ---> add to ArmyBox, finall ---> ?self test?
-//if (!(voter.getQStatus() || (voter.getAge() > 18 && voter.getAge() < 21))) { // negative logic, would like
-//								// to phrase as exceptions.
-//getBBox().addToBox(voter);
-//
-//}
-//
-//if (voter.getQStatus() && !(voter.getAge() > 18 && voter.getAge() < 21)) {
-//getCoronaBox().addToBox(voter);
-//}
-//if (voter.getAge() > 18 && voter.getAge() < 21) {
-//getArmyBox().addToBox(voter);
-//}
-//
-//
+	public <T extends Citizen> void placeCitInBoxAuto(T voter) { // would like to phrase as try ---> (add to regular// box) catch(1)
 		BBox<T> temp = this.getBBox(voter);
 		temp.addToBox(voter);
-		
+
 	}
 
 	public void addNewParty(String name, WING wing) {
@@ -150,9 +144,17 @@ public class Elections {
 		return buf.toString();
 	}
 
-	public String vote(Citizen citizen, BBox bBox, Party toParty) {// add exceptions
-		citizen.vote(toParty);
-		return bBox.vote(citizen);
+	public <T extends Citizen> void countVotes() {// add exceptions
+		for (Set<BBox<T>> set : allBoxes) {
+			int index = 0;
+			if (set != null) {
+				for (BBox<T> box : set) {
+					if (box != null) {
+						box.countVotes();
+					}
+				}
+			}
+		}
 
 	}
 
@@ -213,31 +215,42 @@ public class Elections {
 		return null;
 	}
 
-	public <T extends Citizen> BBox<T> getBox() {
+	public <T extends Citizen> void getData(Callable<Party> partyPicker, Callable<Boolean> yesNo) throws Exception {
+		for (Set<BBox<T>> set : allBoxes) {
+			for (BBox<T> bBox : set) {
+				if (bBox != null) {
+					bBox.getData(partyPicker, yesNo);
+				}
+			}
+		}
+	}
 
-		return (BBox<T>)normBoxes.getRecent();
+	public <T extends Citizen> void vote() {
+		for (Set<BBox<T>> set : allBoxes) {
+			for (BBox<T> box : set) {
+				box.voteAll();
+			}
+		}
+	}
+
+	private <T extends Citizen> BBox<T> getBox() {
+
+		return (BBox<T>) normBoxes.getRecent();
 	}
 
 	public <T extends Citizen> BBox<T> getCoronaBox() {
 
-		return (BBox<T>)coronaBoxes.getRecent();
+		return (BBox<T>) coronaBoxes.getRecent();
 	}
 
-	public  <T extends Citizen> BBox<T> getArmyBox() {
+	public <T extends Citizen> BBox<T> getArmyBox() {
 
-		return (BBox<T>)armyBoxes.getRecent();
+		return (BBox<T>) armyBoxes.getRecent();
 	}
 
-//	public  Set<BBox<?>> getAllCoronaBox() {
-//		return coronaBoxes;
-//	}
-//	
-//	public  Set<BBox<?>> getAllArmyBox() {
-//		return armyBoxes;
-//	}
-//	
-//	public  Set<BBox<?>> getAllBBox() {
-//		return normBoxes;
-//	}
+	public Set[] getAllBoxes() {
+		return allBoxes;
+	}
+
 
 }

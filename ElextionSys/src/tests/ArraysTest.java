@@ -3,9 +3,9 @@ package tests;
 import org.junit.jupiter.api.Test;
 
 import id322029638_id31582270.BBox;
-import id322029638_id31582270.Citizen;
 import id322029638_id31582270.Elections;
 import id322029638_id31582270.Party;
+import id322029638_id31582270.population.Citizen;
 
 public class ArraysTest {
 	Elections elections = new Elections();
@@ -36,10 +36,12 @@ public class ArraysTest {
 	
 	@Test
 	public void CastedVotesTest() {
-		BBox tempBox = new BBox("Place No A");
-		Party tempParty = new Party("party A", id322029638_id31582270.WING.center);
+		elections.addBBox("Place No A");
+		elections.addNewParty("party A", id322029638_id31582270.WING.center);
 		for (int i = 0; i < 100; i++) {
-			elections.vote(new Citizen("John "+i, "i", "1990", false, true), tempBox, tempParty);
+			Citizen temp = new Citizen("John "+i, "i", "1990", false, true);
+			elections.addCitizen("John "+i, "i", "1990", false, true);
+			
 		}
 	}
 

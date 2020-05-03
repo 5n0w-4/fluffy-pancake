@@ -1,5 +1,6 @@
-package id322029638_id31582270;
+package id322029638_id31582270.population;
 
+import id322029638_id31582270.BBox;
 
 public class Solider extends Citizen {
 	private BBox<Solider> votesAtBallotBox;

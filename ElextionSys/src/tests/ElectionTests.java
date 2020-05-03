@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import id322029638_id31582270.BBox;
-import id322029638_id31582270.Citizen;
 import id322029638_id31582270.Elections;
 import id322029638_id31582270.Party;
+import id322029638_id31582270.population.Citizen;
 
 public class ElectionTests {
 	Elections elections = new Elections();

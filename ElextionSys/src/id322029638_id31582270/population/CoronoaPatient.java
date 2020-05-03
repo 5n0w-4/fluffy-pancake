@@ -1,6 +1,8 @@
-package id322029638_id31582270;
+package id322029638_id31582270.population;
 
 import org.hamcrest.core.IsNot;
+
+import id322029638_id31582270.BBox;
 
 public class CoronoaPatient extends Citizen {
 	private BBox<CoronoaPatient> votesAtBallotBox;

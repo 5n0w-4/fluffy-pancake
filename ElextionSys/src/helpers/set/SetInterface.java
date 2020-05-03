@@ -1,8 +1,8 @@
-package helpers;
+package helpers.set;
 
 import id322029638_id31582270.BBox;
-import id322029638_id31582270.Citizen;
-import id322029638_id31582270.Solider;
+import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.Solider;
 
 public interface SetInterface<T> {
 	void add(T val);

@@ -1,6 +1,10 @@
-package id322029638_id31582270;
+package id322029638_id31582270.population;
 
 import java.awt.Window.Type;
+
+import id322029638_id31582270.BBox;
+import id322029638_id31582270.CitizenInerface;
+import id322029638_id31582270.Party;
 
 public class Citizen implements CitizenInerface {
 
@@ -8,7 +12,8 @@ public class Citizen implements CitizenInerface {
 	private String id;
 	private String birthYear;
 	private BBox<Citizen> votesAtBallotBox;
-	private Party vote;
+	private Party myVote;
+	private boolean isVoting;
 	private boolean underQuarantine;
 	private boolean protectionGear;
 
@@ -24,6 +29,7 @@ public class Citizen implements CitizenInerface {
 		this.votesAtBallotBox = null;
 		this.underQuarantine = underQuarantine;
 		this.protectionGear = protectionGea;
+		this.isVoting = false;
 
 	}
 
@@ -74,11 +80,11 @@ public class Citizen implements CitizenInerface {
 
 @Override
 	public void vote(Party voteTo) {
-		this.vote = voteTo;
+		this.myVote = voteTo;
 	}
 @Override
 	public Party getVote() {
-		return this.vote;
+		return this.myVote;
 	}
 	@Override
 	public boolean canVote() {
@@ -103,6 +109,16 @@ public class Citizen implements CitizenInerface {
 
 	public void setProtectionGear(boolean protectionGear) {
 		this.protectionGear = protectionGear;
+	}
+	
+	
+
+	public boolean isVoting() {
+		return isVoting;
+	}
+
+	public void setVoting(boolean isVoting) {
+		this.isVoting = isVoting;
 	}
 
 	@Override

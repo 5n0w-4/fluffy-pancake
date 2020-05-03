@@ -1,4 +1,4 @@
-package helpers;
+package helpers.set;
 
 public class Test {
 

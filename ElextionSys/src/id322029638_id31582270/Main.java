@@ -5,9 +5,11 @@ package id322029638_id31582270;
 
 import java.util.Scanner;
 
+import id322029638_id31582270.population.Citizen;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Scanner scan = new Scanner(System.in);
 		String option;
 
@@ -92,7 +94,7 @@ public class Main {
 				break;
 				
 			case "8":// electing
-				menu.voteAll();
+				menu.vote();
 				break;
 				
 			case "9":// show results

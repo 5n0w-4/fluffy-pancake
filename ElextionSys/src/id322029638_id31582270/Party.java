@@ -3,6 +3,9 @@ package id322029638_id31582270;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import id322029638_id31582270.population.Citizen;
+import id322029638_id31582270.population.Representative;
+
 public class Party {
 	WING wingDirect;
 	private String name;

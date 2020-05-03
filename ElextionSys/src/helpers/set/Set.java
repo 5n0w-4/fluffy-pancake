@@ -1,10 +1,10 @@
-package helpers;
+package helpers.set;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
 import id322029638_id31582270.BBox;
-import id322029638_id31582270.Citizen;
+import id322029638_id31582270.population.Citizen;
 
 public class Set<T> implements SetInterface<T>, Iterable<T> {
 

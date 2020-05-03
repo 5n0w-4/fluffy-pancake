@@ -1,8 +1,13 @@
 package id322029638_id31582270;
 
-import helpers.Set;
+import java.util.concurrent.Callable;
 
-public class Menu {
+import helpers.set.Set;
+import id322029638_id31582270.population.Citizen;
+import menu.PartyPick;
+import menu.YesNo;
+
+public class Menu{
 	Elections elections;
 
 	public Menu(Elections elections) {
@@ -110,22 +115,40 @@ public class Menu {
 //				partyPick());
 //	}
 
-	public <T extends Citizen> void voteAll() {
-		while (true) {
-			int count = 0;
-			for (int i = 0; i < elections.getAllBBox().lenght(); i++) {
-				Set<BBox<T>> temp = (Set<BBox<T>>) elections.getAllBBox().get(i);
-				for (BBox<T> bBox : temp) {
-					for (T voter : bBox.getAllowedToVoteHere()) {
-						if (voter != null) {
-							if (yesNo(voter.getName() + " Would you like to vote?")) {
-								elections.vote(voter, bBox, partyPick());
+	
+	public void vote() throws Exception {
+		PartyPick picker = new PartyPick();
+		picker.load(elections.getPartys());
+		
+		YesNo isVoting = new YesNo();
+		isVoting.load("Would you like to vote?");
+		
+		
+		elections.getData(picker, isVoting);
+		elections.countVotes();
+	}
+	public <T extends Citizen> void startVoting() throws Exception {
+		PartyPick picker = new PartyPick();
+		picker.load(elections.getPartys());
+		for (Set<BBox<T>> set : elections.getAllBoxes()) {
+			if (set != null) {
+				for (BBox<T> bBox : set) {
+					if (bBox != null) {
+						for (T subj : bBox.getAllowedToVoteHere()) {
+							if (subj != null) {
+								if (yesNo(subj.getName() + " Would you like to vote?")) {
+									subj.setVoting(true);
+									
+									subj.vote(picker.call());
+									;
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-
+		elections.countVotes();
 	}
+
 }
