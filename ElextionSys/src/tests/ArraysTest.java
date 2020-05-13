@@ -15,6 +15,9 @@ public class ArraysTest {
 		elections.addBBox("Place No A");
 		for (int i = 0; i < 100; i++) {
 			elections.addCitizen("John "+i, "i", "1990", false);
+			if (i == 90) {
+				elections.addCitizen("John "+i, "i", "1990", false);
+			}
 		}
 	}
 	

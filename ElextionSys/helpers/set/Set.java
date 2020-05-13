@@ -70,23 +70,6 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 		index = -1;
 
 	}
-
-	@Override
-	public int containsInstance(T val) {
-		int index = 0;
-		for (T t : arr) {
-			if (t != null && t instanceof Citizen) {
-
-				return index;
-
-			}
-			index++;
-		}
-		return -1;
-
-	}
-	
-	
 	
 
 
@@ -138,7 +121,6 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
 		return new SetItarator<T>(this);
 	}
 

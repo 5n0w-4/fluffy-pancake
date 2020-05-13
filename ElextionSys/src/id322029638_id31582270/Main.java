@@ -5,6 +5,8 @@ package id322029638_id31582270;
 
 import java.util.Scanner;
 
+import exceptions.Invalid_Age;
+import exceptions.Invalid_Id;
 import id322029638_id31582270.logic.Elections;
 import id322029638_id31582270.logic.Party;
 import id322029638_id31582270.logic.WING;
@@ -58,9 +60,9 @@ public class Main {
 			elect.addCitizen(citizen);
 		}
 
-		elect.setRepresentative(new Voter(elect.getCitizenById("2"),true,true), partys[0]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("2"), true, true), partys[0]);
 
-		elect.setRepresentative(new Voter(elect.getCitizenById("3"),true,true), partys[3]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("3"), true, true), partys[3]);
 
 		Menu menu = new Menu(elect);
 		boolean ok = true;
@@ -72,10 +74,23 @@ public class Main {
 			case "1": // adding ballot box
 				menu.addBBox();
 				break;
-				
+
 			case "2":// adding citizen
-				menu.addCitizen();
-				break;
+				try {
+					menu.addCitizen();
+					break;
+				} catch (Invalid_Age e) {
+					System.out.println(
+							"Citizen is " + (2020 - Integer.parseInt(e.getAge()) + " years old. He can't vote yet.")); // move
+																														// the
+																														// msg
+																														// into
+																														// exception.
+					break;
+				} catch (Invalid_Id e) {
+					System.out.println(e.getId() + " is invalid./n ID must contain 9 symbols and consist of 0-9.");
+					break;
+				}
 
 			case "3":// adding party
 				menu.addParty();
@@ -84,27 +99,27 @@ public class Main {
 			case "4":// adding nominee
 				menu.addRepresentative();
 				break;
-				
+
 			case "5":// show all BBox details
 				menu.printAllBBox();
 				break;
-				
+
 			case "6":// show all citizens details
 				menu.printAllCitizen();
 				break;
-				
+
 			case "7":// show all parties details
 				menu.printAllPartys();
 				break;
-				
+
 			case "8":// electing
 				menu.vote();
 				break;
-				
+
 			case "9":// show results
 				menu.printElectionResult();
 				break;
-				
+
 			case "10":
 				ok = false;
 				scan.close();

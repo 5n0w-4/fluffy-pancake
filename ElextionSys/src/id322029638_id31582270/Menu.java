@@ -1,6 +1,7 @@
 package id322029638_id31582270;
 
-
+import exceptions.Invalid_Age;
+import exceptions.Invalid_Id;
 import id322029638_id31582270.logic.BBox;
 import id322029638_id31582270.logic.Elections;
 import id322029638_id31582270.logic.Party;
@@ -51,11 +52,23 @@ public class Menu {
 		}
 	}
 
-	public void addCitizen() {// redundant lines ---> can insert it all to addCitizen , should I??
+	public void addCitizen() throws Invalid_Age, Invalid_Id {// redundant lines ---> can insert it all to addCitizen ,
+																// should I??
 		Citizen tempCit = new Citizen(ScannerWithMsg.scanStr("enter citizen name please:"),
 				ScannerWithMsg.scanStr("enter citizen id please:"),
 				ScannerWithMsg.scanStr("enter your birth year please:"), yesNo("are you under quarantine?"));
-		elections.addCitizen(tempCit);
+		if (Integer.parseInt(tempCit.getBirthYear()) > 2002)
+			throw new Invalid_Age(tempCit.getBirthYear());
+
+		else if (tempCit.getId().length() != 9)
+			throw new Invalid_Id(tempCit.getId());
+
+		else if (!tempCit.getId().matches("[0-9]+"))
+			throw new Invalid_Id(tempCit.getId());
+
+		else {
+			elections.addCitizen(tempCit);
+		}
 	}
 
 	public void addParty() {
@@ -64,7 +77,7 @@ public class Menu {
 
 	}
 
-	public<T extends Voter> void addRepresentative() {
+	public <T extends Voter> void addRepresentative() {
 		T tempCit = elections.getCitizenById(ScannerWithMsg.scanStr("Please enter representative id:"));
 		elections.setRepresentative(tempCit, partyPick());
 	}
@@ -112,7 +125,6 @@ public class Menu {
 			return false;
 
 	}
-
 
 	public void vote() throws Exception {
 		PartyPick picker = new PartyPick();

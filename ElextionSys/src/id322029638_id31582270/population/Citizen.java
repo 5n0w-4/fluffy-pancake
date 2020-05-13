@@ -73,22 +73,21 @@ public class Citizen implements CitizenInterface {
 		}
 		return false;
 	}
-	
-	
-
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Citizen))
-			return false;
-		Citizen other = (Citizen) obj;
-		if (birthYear != other.birthYear)
-			return false;
-		if (id != other.id)
-			return false;
-		if (!name.equals(other.name))
-			return false;
-		return true;
+		try {
+			Citizen other = (Citizen) obj;
+			if (id == other.getId())
+				return true;
+
+		} catch (Exception e) {
+			if (e == new NullPointerException()) {
+				return false;
+			}
+		}
+		return false;
+
 	}
 
 	@Override

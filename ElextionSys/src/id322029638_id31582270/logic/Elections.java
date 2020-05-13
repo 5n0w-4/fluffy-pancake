@@ -35,7 +35,7 @@ public class Elections {
 	public <T extends Voter> void addCitizen(String name, String id, String birthYear, boolean underQuarantine) {
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine);
 		T temp = allocate(tempCit);
-		if (temp!=null) {
+		if (temp != null) {
 			placeCitInBoxAuto(temp);
 		}
 
@@ -59,7 +59,7 @@ public class Elections {
 			}
 			return (T) voter;
 		}
-		return  null;
+		return null;
 
 	}
 
@@ -85,17 +85,17 @@ public class Elections {
 		this.getBox(subj).addToBox(subj);
 
 	}
-	
-	public <T extends Voter> void addBox(String adress,T voter) {
-		
+
+	public <T extends Voter> void addBox(String adress, T voter) {
+
 		boxes.add(new BBox<T>((adress), (Class<T>) voter.getClass()));
-		
+
 	}
 
-	public <T extends Voter> void placeCitInBoxAuto(T voter) { //exceptions: boxMissing ---> ADDbox
-																
+	public <T extends Voter> void placeCitInBoxAuto(T voter) { // exceptions: boxMissing ---> ADDbox
+
 		BBox<T> temp = this.getBox(voter);
-		if (temp==null) {
+		if (temp == null) {
 			this.addBox(scannerWithMsg.ScannerWithMsg.scanStr("Enter adress:"), voter);
 			temp = this.getBox(voter);
 		}
@@ -171,11 +171,11 @@ public class Elections {
 
 	}
 
-	public<T extends Voter> T getCitizenById(String id) {
+	public <T extends Voter> T getCitizenById(String id) {
 		for (BBox bBox : boxes) {
 			if (bBox instanceof BBox) {
 				if (bBox.getById(id) instanceof Citizen) {
-					return (T)bBox.getById(id);
+					return (T) bBox.getById(id);
 				}
 
 			}
@@ -202,14 +202,6 @@ public class Elections {
 		return null;// no such party
 	}
 
-//	public BBox getBBoxByAdress(String adress) {
-//		for (BBox bBox : normBoxes) {
-//			if (bBox instanceof BBox && bBox.getAdress().equals(adress))
-//				return bBox;
-//		}
-//		return null;
-//	}
-
 	public <T extends Citizen> void getData(Callable<Party> partyPicker, Callable<Boolean> yesNo) throws Exception {
 		for (BBox<?> bBox : boxes) {
 
@@ -229,11 +221,8 @@ public class Elections {
 	}
 
 	public <T extends Voter> BBox<T> getBox(T type) {
-		Class<T> myType;
 		for (BBox<?> bBox : boxes) {
 			if (bBox != null) {
-
-//			Class<T> persistentClass = (ParameterizedType) bBox.getAllowedToVoteHere().getClass().getGenericSuperclass()
 				System.out.println(type.getClass());
 				if (bBox.getTypeOfThisBox() == type.getClass()) {
 					return (BBox<T>) bBox;

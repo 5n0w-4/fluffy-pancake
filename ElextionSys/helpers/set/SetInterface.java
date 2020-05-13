@@ -14,7 +14,6 @@ public interface SetInterface<T> {
 	T getRecent();
 	void clear();
 	int lenght();
-	int containsInstance(T val);
 	int contains(T val);//return index
 	boolean isEmpty();
 	String toString();
