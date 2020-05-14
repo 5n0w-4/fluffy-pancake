@@ -40,15 +40,17 @@ public class Elections {
 		}
 
 	}
+	
 
-	public <T extends Voter> T allocate(Citizen citizen) { // vals for testing
+
+	private <T extends Voter> T allocate(Citizen citizen) { // vals for testing
 		if (citizen.canVote()) {
-			Voter voter = new Voter(citizen, true, true);
+			Voter voter = new Voter(citizen, false, false);
 
 			if (citizen.isInArmy()) {
-				Solider solider = new Solider(voter, true);
+				Solider solider = new Solider(voter, false);
 				if (citizen.isInfected()) {
-					InfectedSolider infectedSolider = new InfectedSolider(voter, 0, true);
+					InfectedSolider infectedSolider = new InfectedSolider(voter, 0, false);
 					return (T) infectedSolider;
 				}
 				return (T) solider;
@@ -204,7 +206,6 @@ public class Elections {
 
 	public <T extends Citizen> void getData(Callable<Party> partyPicker, Callable<Boolean> yesNo) throws Exception {
 		for (BBox<?> bBox : boxes) {
-
 			if (bBox != null) {
 				bBox.getData(partyPicker, yesNo);
 

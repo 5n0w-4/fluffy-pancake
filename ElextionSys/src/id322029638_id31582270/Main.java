@@ -81,11 +81,7 @@ public class Main {
 					break;
 				} catch (Invalid_Age e) {
 					System.out.println(
-							"Citizen is " + (2020 - Integer.parseInt(e.getAge()) + " years old. He can't vote yet.")); // move
-																														// the
-																														// msg
-																														// into
-																														// exception.
+							"Citizen is " + (2020 - Integer.parseInt(e.getAge()) + " years old. He can't vote yet."));
 					break;
 				} catch (Invalid_Id e) {
 					System.out.println(e.getId() + " is invalid./n ID must contain 9 symbols and consist of 0-9.");

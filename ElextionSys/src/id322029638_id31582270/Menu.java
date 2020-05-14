@@ -65,7 +65,6 @@ public class Menu {
 
 		else if (!tempCit.getId().matches("[0-9]+"))
 			throw new Invalid_Id(tempCit.getId());
-
 		else {
 			elections.addCitizen(tempCit);
 		}
