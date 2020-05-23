@@ -50,7 +50,7 @@ public class Main {
 		elect.addBBox("mivtza kadesh 38");
 		elect.addBBox("eben gabirol 35");
 		elect.addBBox("hkovshim 28");
-//		elect.addCoronaBox("derech shiba 2");
+		elect.addCoronaBox("derech shiba 2");
 		elect.addArmyBox("classified");
 
 		for (Party party : partys) {
@@ -109,7 +109,7 @@ public class Main {
 				break;
 
 			case "8":// electing
-				menu.vote();
+				menu.startVoting();
 				break;
 
 			case "9":// show results

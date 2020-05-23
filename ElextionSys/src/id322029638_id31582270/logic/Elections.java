@@ -224,7 +224,6 @@ public class Elections {
 	public <T extends Voter> BBox<T> getBox(T type) {
 		for (BBox<?> bBox : boxes) {
 			if (bBox != null) {
-				System.out.println(type.getClass());
 				if (bBox.getTypeOfThisBox() == type.getClass()) {
 					return (BBox<T>) bBox;
 				}

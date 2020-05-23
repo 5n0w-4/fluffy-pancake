@@ -2,6 +2,8 @@ package id322029638_id31582270;
 
 import id322029638_id31582270.exceptions.Invalid_Age;
 import id322029638_id31582270.exceptions.Invalid_Id;
+import id322029638_id31582270.interfaces.SickMarker;
+import id322029638_id31582270.interfaces.SoliderMarker;
 import id322029638_id31582270.logic.BBox;
 import id322029638_id31582270.logic.Elections;
 import id322029638_id31582270.logic.Party;
@@ -139,17 +141,27 @@ public class Menu {
 	public <T extends Voter> void startVoting() throws Exception {
 		PartyPick picker = new PartyPick();
 		picker.load(elections.getPartys());
+		YesNo yN = new YesNo();
 		for (BBox<?> box : elections.getAllBoxes()) {
 			if (box != null) {
 
 				for (Voter subj : box.getAllowedToVoteHere()) {
 					if (subj != null) {
-						if (yesNo(subj.getName() + " Would you like to vote?")) {
-							subj.setVoting(true);
-
-							subj.vote(picker.call());
-							;
+						yN.load("Would you like to vote?");
+						subj.setVoting(yN.call());
+						
+						if (box instanceof SickMarker) {
+							yN.load("Do you have a mask?");
+							subj.setProtectionGear(yN.call());
 						}
+						
+						if(box instanceof SoliderMarker) {
+							yN.load("Do you have a weapon?");
+							subj.setProtectionGear(yN.call());
+						}
+
+						subj.vote(picker.call());
+						;
 
 					}
 				}
