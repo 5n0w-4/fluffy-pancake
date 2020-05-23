@@ -1,4 +1,4 @@
-package exceptions;
+package id322029638_id31582270.exceptions;
 
 public class Invalid_Id extends Exception {
 	private String id;

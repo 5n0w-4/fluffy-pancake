@@ -5,8 +5,8 @@ package id322029638_id31582270;
 
 import java.util.Scanner;
 
-import exceptions.Invalid_Age;
-import exceptions.Invalid_Id;
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.logic.Elections;
 import id322029638_id31582270.logic.Party;
 import id322029638_id31582270.logic.WING;
