@@ -1,5 +1,7 @@
 package id322029638_id31582270.population;
 
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.interfaces.VoterInterface;
 import id322029638_id31582270.logic.BBox;
 import id322029638_id31582270.logic.Party;
@@ -10,13 +12,13 @@ public class Voter extends Citizen implements VoterInterface {
 	private boolean isVoting;
 	private boolean protectionGear;
 
-	public Voter(Citizen citizen, boolean isVoting, boolean protectionGear) {
+	public Voter(Citizen citizen, boolean isVoting, boolean protectionGear) throws Invalid_Age, Invalid_Id {
 		super(citizen);
 		this.setVoting(isVoting);
 		this.setProtectionGear(protectionGear);
 	}
 
-	public Voter(Voter copy) {
+	public Voter(Voter copy) throws Invalid_Age, Invalid_Id {
 		super(copy);
 		this.votesAtBallotBox = copy.getVotesAtBallotBox();
 		this.myVote = copy.getMyVote();

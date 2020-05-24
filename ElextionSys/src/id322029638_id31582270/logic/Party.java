@@ -3,6 +3,8 @@ package id322029638_id31582270.logic;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.Representative;
 import id322029638_id31582270.population.Voter;
@@ -39,7 +41,7 @@ public class Party {
 
 	}
 
-	public void addRep(Voter someOne) {
+	public void addRep(Voter someOne) throws Invalid_Age, Invalid_Id {
 		if (numOfRepresentatives < numOfRepresentativesLogic) {
 			representatives[numOfRepresentatives] = new Representative(someOne,this);
 			numOfRepresentatives++;

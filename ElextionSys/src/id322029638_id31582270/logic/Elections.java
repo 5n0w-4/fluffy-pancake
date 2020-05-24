@@ -2,11 +2,15 @@ package id322029638_id31582270.logic;
 
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
+
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.CoronoaPatient;
 import id322029638_id31582270.population.InfectedSolider;
 import id322029638_id31582270.population.Solider;
 import id322029638_id31582270.population.Voter;
+import menu.PartyPick;
 import set.Set;
 
 public class Elections {
@@ -26,15 +30,16 @@ public class Elections {
 
 	}
 
-	public <T extends Voter> void addCitizen(Citizen subj) {
+	public <T extends Voter> void addCitizen(Citizen subj) throws Invalid_Age, Invalid_Id {
 		T tempCit = allocate(subj);
 		placeCitInBoxAuto(tempCit);
 
 	}
 
-	public <T extends Voter> void addCitizen(String name, String id, String birthYear, boolean underQuarantine) {
+	public <T extends Voter> void addCitizen(String name, String id, String birthYear, boolean underQuarantine) throws Invalid_Age, Invalid_Id {
 		Citizen tempCit = new Citizen(name, id, birthYear, underQuarantine);
 		T temp = allocate(tempCit);
+		
 		if (temp != null) {
 			placeCitInBoxAuto(temp);
 		}
@@ -43,7 +48,7 @@ public class Elections {
 	
 
 
-	private <T extends Voter> T allocate(Citizen citizen) { // vals for testing
+	public <T extends Voter> T allocate(Citizen citizen) throws Invalid_Age, Invalid_Id { // vals for testing
 		if (citizen.canVote()) {
 			Voter voter = new Voter(citizen, false, false);
 
@@ -168,7 +173,7 @@ public class Elections {
 
 	}
 
-	public void setRepresentative(Voter subj, Party party) {
+	public void setRepresentative(Voter subj, Party party) throws Invalid_Age, Invalid_Id {
 		party.addRep(subj);
 
 	}
@@ -204,14 +209,14 @@ public class Elections {
 		return null;// no such party
 	}
 
-	public <T extends Citizen> void getData(Callable<Party> partyPicker, Callable<Boolean> yesNo) throws Exception {
-		for (BBox<?> bBox : boxes) {
-			if (bBox != null) {
-				bBox.getData(partyPicker, yesNo);
-
-			}
-		}
-	}
+//	public <T extends Citizen> void getData() throws Exception {
+//		for (BBox<?> bBox : boxes) {
+//			if (bBox != null) {
+//				bBox.getData(this.getPartys());
+//
+//			}
+//		}
+//	}
 
 	public <T extends Citizen> void vote() {
 		for (BBox<?> box : boxes) {

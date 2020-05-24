@@ -3,6 +3,8 @@ package id322029638_id31582270.logic;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 import id322029638_id31582270.interfaces.BBoxInterface;
+import id322029638_id31582270.interfaces.SickMarker;
+import id322029638_id31582270.interfaces.SoliderMarker;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.Voter;
 import menu.PartyPick;
@@ -73,23 +75,30 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 			numOfCastedVotes++;
 	}
 
-	public void getData(Set<Party> partyList) throws Exception {
-		PartyPick partyOpt = new PartyPick();
-		partyOpt.load(partyList);
-		
-		YesNo yN = new YesNo();
-		yN.load("Would you like to vote?");
-		for (T t : allowedToVoteHere) {
-			if (t != null) {
-				yN.addName(t.getName());
-				t.setVoting(yN.call());
-				if (t.isVoting()) {
-					t.vote(partyOpt.call());
-				}
-			}
-
-		}
-	}
+//	public void getData() throws Exception {
+////		PartyPick partyOpt = new PartyPick();
+////		partyOpt.load(partyList);
+//		
+//		YesNo yN = new YesNo();
+//		yN.load("Would you like to vote?");
+//		for (T t : allowedToVoteHere) {
+//			if (t != null) {
+//				yN.addName(t.getName());
+//				t.setVoting(yN.call());
+//				if (t instanceof SickMarker) {
+//					yN.load("Do you have a mask?");
+//					t.setProtectionGear(yN.call());
+//				}
+//				if(t instanceof SoliderMarker) {
+//					
+//					yN.load("Do you carry a weapon?");
+//					t.set
+//				}
+//				
+//			}
+//
+//		}
+//	}
 
 	public void voteAll() { // T extends Citizen
 		for (T t : allowedToVoteHere) {

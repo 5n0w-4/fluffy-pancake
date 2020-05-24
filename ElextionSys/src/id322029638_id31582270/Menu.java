@@ -54,22 +54,29 @@ public class Menu {
 		}
 	}
 
-	public void addCitizen() throws Invalid_Age, Invalid_Id {// redundant lines ---> can insert it all to addCitizen ,
-																// should I??
+	public <T extends Voter> T completeVoterInfo(T subj) throws Exception {
+		YesNo yN = new YesNo();
+		if (subj instanceof SickMarker) {
+			yN.load("Do you have a mask?");
+			subj.setProtectionGear(yN.call());
+			((SickMarker) subj).setDaysInfected(ScannerWithMsg.scanInt("For how many day are you sick?"));
+		}
+
+		if (subj instanceof SoliderMarker) {
+			yN.load("Do you have a weapon?");
+			subj.setProtectionGear(yN.call());
+		}
+		return subj;
+	}
+
+	public void addCitizen() throws Invalid_Age, Invalid_Id, Exception {// redundant lines ---> can insert it all to
+																		// addCitizen ,
+		// should I??
 		Citizen tempCit = new Citizen(ScannerWithMsg.scanStr("enter citizen name please:"),
 				ScannerWithMsg.scanStr("enter citizen id please:"),
 				ScannerWithMsg.scanStr("enter your birth year please:"), yesNo("are you under quarantine?"));
-		if (Integer.parseInt(tempCit.getBirthYear()) > 2002)
-			throw new Invalid_Age(tempCit.getBirthYear());
 
-		else if (tempCit.getId().length() != 9)
-			throw new Invalid_Id(tempCit.getId());
-
-		else if (!tempCit.getId().matches("[0-9]+"))
-			throw new Invalid_Id(tempCit.getId());
-		else {
-			elections.addCitizen(tempCit);
-		}
+		elections.addCitizen(this.completeVoterInfo(elections.allocate(tempCit)));
 	}
 
 	public void addParty() {
@@ -78,7 +85,7 @@ public class Menu {
 
 	}
 
-	public <T extends Voter> void addRepresentative() {
+	public <T extends Voter> void addRepresentative() throws Invalid_Age, Invalid_Id {
 		T tempCit = elections.getCitizenById(ScannerWithMsg.scanStr("Please enter representative id:"));
 		elections.setRepresentative(tempCit, partyPick());
 	}
@@ -127,16 +134,16 @@ public class Menu {
 
 	}
 
-	public void vote() throws Exception {
-		PartyPick picker = new PartyPick();
-		picker.load(elections.getPartys());
-
-		YesNo isVoting = new YesNo();
-		isVoting.load("Would you like to vote?");
-
-		elections.getData(picker, isVoting);
-		elections.countVotes();
-	}
+//	public void vote() throws Exception {
+//		PartyPick picker = new PartyPick();
+//		picker.load(elections.getPartys());
+//
+//		YesNo isVoting = new YesNo();
+//		isVoting.load("Would you like to vote?");
+//
+//		elections.getData(picker, isVoting);
+//		elections.countVotes();
+//	}
 
 	public <T extends Voter> void startVoting() throws Exception {
 		PartyPick picker = new PartyPick();
@@ -147,21 +154,14 @@ public class Menu {
 
 				for (Voter subj : box.getAllowedToVoteHere()) {
 					if (subj != null) {
-						yN.load("Would you like to vote?");
+						yN.load("would you like to vote?");
+						yN.addName(subj.getName());
 						subj.setVoting(yN.call());
-						
-						if (box instanceof SickMarker) {
-							yN.load("Do you have a mask?");
-							subj.setProtectionGear(yN.call());
-						}
-						
-						if(box instanceof SoliderMarker) {
-							yN.load("Do you have a weapon?");
-							subj.setProtectionGear(yN.call());
-						}
 
-						subj.vote(picker.call());
-						;
+						if (subj.isVoting()) {
+							subj.vote(picker.call());
+
+						}
 
 					}
 				}

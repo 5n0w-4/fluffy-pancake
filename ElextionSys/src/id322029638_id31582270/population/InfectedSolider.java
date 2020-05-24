@@ -1,5 +1,7 @@
 package id322029638_id31582270.population;
 
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.interfaces.SickMarker;
 import id322029638_id31582270.interfaces.SoliderMarker;
 
@@ -7,7 +9,7 @@ public class InfectedSolider extends Voter implements SickMarker, SoliderMarker 
 	private int daysInfected;
 	boolean carryWeapon;
 
-	public InfectedSolider(Voter voter, int daysInfected, boolean carryWeapon) {
+	public InfectedSolider(Voter voter, int daysInfected, boolean carryWeapon) throws Invalid_Age, Invalid_Id {
 		super(voter);
 		this.daysInfected = daysInfected;
 		this.carryWeapon = carryWeapon;

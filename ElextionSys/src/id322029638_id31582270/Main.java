@@ -30,21 +30,21 @@ public class Main {
 
 		// citizens
 		Citizen[] testCit = new Citizen[6];
-		testCit[0] = new Citizen("shlomy", "1", "1966", true);
-		testCit[1] = new Citizen("yossi", "2", "1959", false);
-		testCit[2] = new Citizen("hagit", "3", "2001", false);
-		testCit[3] = new Citizen("orly", "4", "1980", true);
-		testCit[4] = new Citizen("amir", "5", "1990", false);
-		testCit[5] = new Citizen("moti", "6", "1975", false);
+		testCit[0] = new Citizen("shlomy", "123123123", "1966", true);
+		testCit[1] = new Citizen("yossi", "222222222", "1959", false);
+		testCit[2] = new Citizen("hagit", "333333333", "2001", false);
+		testCit[3] = new Citizen("orly", "444444444", "1980", true);
+		testCit[4] = new Citizen("amir", "555555555", "1990", false);
+		testCit[5] = new Citizen("moti", "666666666", "1975", false);
 
 		// nominees
 		Citizen[] testNom2 = new Citizen[6];
-		testNom2[0] = new Citizen("Bibi", "7", "1949", false);
-		testNom2[1] = new Citizen("Gidon Saar", "8", "1966", false);
-		testNom2[2] = new Citizen("Beni Gantz", "9", "1959", false);
-		testNom2[3] = new Citizen("Gabi Ashkenazi", "10", "1954", false);
-		testNom2[4] = new Citizen("Avigdor Liberman", "11", "1958", false);
-		testNom2[5] = new Citizen("Amir Peretz", "12", "1952", false);
+		testNom2[0] = new Citizen("Bibi", "777777777", "1949", false);
+		testNom2[1] = new Citizen("Gidon Saar", "888888888", "1966", false);
+		testNom2[2] = new Citizen("Beni Gantz", "998998997", "1959", false);
+		testNom2[3] = new Citizen("Gabi Ashkenazi", "101111111", "1954", false);
+		testNom2[4] = new Citizen("Avigdor Liberman", "121211211", "1958", false);
+		testNom2[5] = new Citizen("Amir Peretz", "123123432", "1952", false);
 
 		// Ballot boxes
 		elect.addBBox("mivtza kadesh 38");
@@ -60,9 +60,9 @@ public class Main {
 			elect.addCitizen(citizen);
 		}
 
-		elect.setRepresentative(new Voter(elect.getCitizenById("2"), true, true), partys[0]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("222222222"), true, true), partys[0]);
 
-		elect.setRepresentative(new Voter(elect.getCitizenById("3"), true, true), partys[3]);
+		elect.setRepresentative(new Voter(elect.getCitizenById("333333333"), true, true), partys[3]);
 
 		Menu menu = new Menu(elect);
 		boolean ok = true;

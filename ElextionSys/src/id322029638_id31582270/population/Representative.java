@@ -1,5 +1,7 @@
 package id322029638_id31582270.population;
 
+import id322029638_id31582270.exceptions.Invalid_Age;
+import id322029638_id31582270.exceptions.Invalid_Id;
 import id322029638_id31582270.logic.Party;
 
 public class Representative extends Voter {
@@ -8,13 +10,13 @@ public class Representative extends Voter {
 	
 
 
-	public Representative(Voter voter, Party underParty) {
+	public Representative(Voter voter, Party underParty) throws Invalid_Age, Invalid_Id {
 		super(voter);
 		this.setUnderParty(underParty);
 	}
 	
 
-	public Representative(Representative copy) {
+	public Representative(Representative copy) throws Invalid_Age, Invalid_Id {
 		super((Voter)copy);
 		this.setUnderParty(copy.getUnderParty());
 
