@@ -39,9 +39,6 @@ public class Voter extends Citizen implements VoterInterface {
 		return myVote;
 	}
 
-	public void setMyVote(Party myVote) {
-		this.myVote = myVote;
-	}
 
 	public boolean isVoting() {
 		return isVoting;
@@ -59,29 +56,16 @@ public class Voter extends Citizen implements VoterInterface {
 		this.protectionGear = protectionGear;
 	}
 
-	@Override
-	public boolean canVote() {
-		return true;
-	}
-
-	@Override
-	public boolean isInArmy() {
-		return false;
-	}
-
-	@Override
-	public boolean isInfected() {
-		return false;
-	}
+	
 
 	@Override
 	public void vote(Party voteTo) {
-		this.setMyVote(voteTo);
+		this.myVote = voteTo;
 	}
 
 	@Override
 	public void setIsVoting(boolean isVoting) {
-		this.setIsVoting(isVoting);
+		this.isVoting = isVoting;
 	}
 
 }

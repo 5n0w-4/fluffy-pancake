@@ -9,6 +9,8 @@ import id322029638_id31582270.population.Voter;
 
 public class Party {
 	WING wingDirect;
+	static int id;
+	private int thisId;
 	private String name;
 	private LocalDate creationDate;
 	private Representative[] representatives;
@@ -22,6 +24,8 @@ public class Party {
 		this.numOfRepresentatives = 0;
 		this.numOfRepresentativesLogic = 1;
 		this.representatives = new Representative[numOfRepresentativesLogic];
+		this.thisId = id;
+		id++;
 	
 	}
 
@@ -32,6 +36,7 @@ public class Party {
 		this.numOfRepresentativesLogic = copy.numOfRepresentativesLogic;
 		this.wingDirect = copy.wingDirect;
 		this.representatives = copy.representatives.clone();
+		this.thisId = copy.getThisId();
 	}
 
 	public void setWing(String wingDirect) {
@@ -117,6 +122,15 @@ public class Party {
 		if (!Arrays.equals(representatives, other.representatives))
 			return false;
 		return true;
+	}
+
+	
+	public int getThisId() {
+		return thisId;
+	}
+
+	public void setThisId(int thisId) {
+		this.thisId = thisId;
 	}
 
 	@Override

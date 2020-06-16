@@ -4,36 +4,36 @@ import id322029638_id31582270.interfaces.SickMarker;
 import id322029638_id31582270.interfaces.SoliderMarker;
 
 public class InfectedSolider extends Voter implements SickMarker, SoliderMarker {
-	private int daysInfected;
-	boolean carryWeapon;
+	protected Solider solider;
+	protected CoronoaPatient patient;
 
-	public InfectedSolider(Voter voter, int daysInfected, boolean carryWeapon) {
+	public InfectedSolider(Voter voter) {
 		super(voter);
-		this.daysInfected = daysInfected;
-		this.carryWeapon = carryWeapon;
+		this.solider = new Solider(voter, false);
+		this.patient = new CoronoaPatient(voter, 0);
 	}
 @Override
 	public int getDaysInfected() {
-		return daysInfected;
+		return patient.getDaysInfected();
 	}
 @Override
 	public void setDaysInfected(int daysInfected) {
-		this.daysInfected = daysInfected;
+		this.patient.setDaysInfected(daysInfected);
 	}
-
+@Override
 	public boolean isCarryWeapon() {
-		return carryWeapon;
+		return solider.isCarryWeapon();
 	}
-
 	public void printWeaponStatus() {
-		if (carryWeapon)
+		if (solider.isCarryWeapon())
 			System.out.println("I got my M-16.");
-		if (!carryWeapon)
+		if (!solider.isCarryWeapon())
 			System.out.println("I left my M-16 at the armory.");
 
 	}
 
+	@Override
 	public void setCarryWeapon(boolean carryWeapon) {
-		this.carryWeapon = carryWeapon;
+		this.solider.setCarryWeapon(carryWeapon);
 	}
 }

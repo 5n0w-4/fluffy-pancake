@@ -25,15 +25,18 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 				arr = Arrays.copyOf(arr, arr.length * ENLARGE_BY);
 			}
 			this.index++;
-			arr[this.index] = (T)t;
+			arr[this.index] = (T) t;
 
 		}
 	}
 
 	@Override
 	public void addAll(Set<T> value) {
-		for (T t : value) {
-			this.add(t);
+		if (value != null) {
+
+			for (T t : value) {
+				this.add(t);
+			}
 		}
 	}
 
@@ -60,7 +63,7 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 
 	@Override
 	public T get(int index) {
-		return (T)arr[index];
+		return (T) arr[index];
 	}
 
 	@Override
@@ -70,8 +73,6 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 		index = -1;
 
 	}
-	
-
 
 	@Override
 	public int contains(T val) {
@@ -103,7 +104,7 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 
 	@Override
 	public T getRecent() {
-		return (T)arr[this.index];
+		return (T) arr[this.index];
 	}
 
 	@Override
@@ -123,8 +124,5 @@ public class Set<T> implements SetInterface<T>, Iterable<T> {
 	public Iterator<T> iterator() {
 		return new SetItarator<T>(this);
 	}
-
-
-
 
 }

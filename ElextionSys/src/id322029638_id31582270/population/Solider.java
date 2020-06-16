@@ -9,7 +9,11 @@ public class Solider extends Voter implements SoliderMarker {
 		super(voter);
 		this.setCarryWeapon(carryWeapon);
 	}
-
+	public Solider(Solider copy) {
+		super(copy);
+		this.setCarryWeapon(copy.isCarryWeapon());
+	}
+	@Override
 	public boolean isCarryWeapon() {
 		return carryWeapon;
 	}
@@ -21,7 +25,7 @@ public class Solider extends Voter implements SoliderMarker {
 			System.out.println("I left my M-16 at the armory.");
 
 	}
-
+	@Override
 	public void setCarryWeapon(boolean carryWeapon) {
 		this.carryWeapon = carryWeapon;
 	}

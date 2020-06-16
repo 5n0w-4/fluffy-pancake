@@ -1,24 +1,24 @@
 package id322029638_id31582270.logic;
 
-import java.util.Arrays;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import id322029638_id31582270.interfaces.BBoxInterface;
 import id322029638_id31582270.population.Citizen;
 import id322029638_id31582270.population.Voter;
 import menu.YesNo;
-import set.Set;
 
 public class BBox<T extends Voter> implements BBoxInterface<T> {
 	static int id;
 	protected int thisId;
 	protected String adress;
-	protected Set<T> allowedToVoteHere;
-	protected Party[] castedVotes;
+	protected ArrayList<T> allowedToVoteHere;
+	protected ArrayList<Party> castedVotes;
+	protected ArrayList<ElectionResult> electionRes;
 	protected int numOfCastedVotes; // double?
 	protected double percentageOfVotes;
 	protected int numOfCitizenWhoCanVote; // double?
-	protected int numOfCastedVotesLogic;
 	protected Citizen type;
 	protected Class<?> typeOfThisBox;
 
@@ -28,9 +28,9 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 		this.percentageOfVotes = 0;
 		this.numOfCitizenWhoCanVote = 0;
 		this.numOfCastedVotes = 0;
-		this.numOfCastedVotesLogic = 1;
-		this.allowedToVoteHere = new Set<T>();
-		this.castedVotes = new Party[numOfCastedVotesLogic];
+		this.allowedToVoteHere = new ArrayList<T>();
+		this.castedVotes = new ArrayList<Party>();
+		this.electionRes = new ArrayList<ElectionResult>();
 		this.typeOfThisBox = cla22;
 		id++;
 
@@ -40,47 +40,51 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 		this.thisId = copy.thisId;
 		this.adress = copy.adress;
 		this.allowedToVoteHere.addAll(copy.getAllowedToVoteHere());
-		this.castedVotes = copy.castedVotes.clone();
+		this.castedVotes.addAll(copy.getCastedVotes());
 		this.numOfCitizenWhoCanVote = copy.numOfCitizenWhoCanVote;
 	}
 
 	@Override
-	public void addToBox(T voter) {
-		this.allowedToVoteHere.add(voter);
-		this.allowedToVoteHere.getRecent().setVotesAtBallotBox(this);
+	public void addToBox(T t) {
+		this.allowedToVoteHere.add(t);
+		this.allowedToVoteHere.get(allowedToVoteHere.size()-1).setVotesAtBallotBox(this);
 		numOfCitizenWhoCanVote++;
+
+	}
+	public void removeFromBox(T voter) {
+		this.allowedToVoteHere.remove(voter);
+		numOfCitizenWhoCanVote--;
 
 	}
 
 	public void countVotes() {
 		for (T t : allowedToVoteHere) {
 			if (t != null) {
-				this.addVote(t, t.getMyVote());
+				this.castedVotes.add( t.getMyVote());
 			}
 		}
 	}
 
-	private int countVotes(Party[] list, Party countThis) {
+	public void calcResults(Party countThis) {
 		int counter = 0;
-		for (Party party : list) {
+		for (Party party : castedVotes) {
 			if (party instanceof Party) {
 				if (countThis.getName().equals(party.getName()))
 					counter++;
 			}
 		}
-		return counter;
+		try {
+			percentageOfVotes=(double)counter/this.castedVotes.size();
+			percentageOfVotes=percentageOfVotes*100;
+		} catch (ArithmeticException e) {
+			percentageOfVotes=0;
+		}
+		electionRes.add(new ElectionResult(this,countThis,counter,this.allowedToVoteHere.size(),this.getPercentageOfVotes()));
 	}
 
-	public void addVote(T from, Party toParty) {
-		if (!(numOfCastedVotes >= numOfCastedVotesLogic)) {
-
-			castedVotes[numOfCastedVotes] = from.getMyVote();
-			numOfCastedVotes++;
-		} else {
-			numOfCastedVotesLogic *= 2;
-			castedVotes = Arrays.copyOf(castedVotes, numOfCastedVotesLogic);
-			this.addVote(from, toParty);
-		}
+	public void addVote(String voterID,Party toParty) {
+		this.castedVotes.add(toParty);
+		this.getById(voterID).vote(toParty);
 	}
 
 	public void getData(Callable<?> partyPicker, Callable<?> yesNo) throws Exception {
@@ -100,7 +104,7 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 	public void voteAll() { //T extends Citizen
 		for (T t : allowedToVoteHere) {
 			if (t != null) {
-				this.addVote(t, t.getMyVote());
+				addVote(t.getId(),t.getMyVote());
 			}
 		}
 
@@ -131,14 +135,16 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 
 	}
 
-	public String showRes(Set<Party> partys) {
+	public String showRes(ArrayList<Party> partys) {
 		StringBuffer buf = new StringBuffer();
 		try {
 			buf.append("Precentage of votes:" + this.getVotePrecentage()+ "% \n");
 			for (Party party : partys) {
 				if (party instanceof Party) {
-					buf.append("Votes to " + party.getName() + ":" + countVotes(this.castedVotes, party) + "\\"
-							+ numOfCitizenWhoCanVote + "\n");
+//					ElectionResult workVal = calcResults(party);	///should replace with foreach loop that runs on result array
+//					electionRes.add(workVal);
+//					buf.append("Votes to " + workVal.getParty().getName() + ":" + workVal.getGotVotes() + "\\"
+//							+ workVal.getOutOf() + "\n");
 				}
 			}
 			return buf.toString();
@@ -150,8 +156,8 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 
 	}
 
-	public Set<T> getAllowedToVoteHere() {
-		return (Set<T>) allowedToVoteHere;
+	public ArrayList<T> getAllowedToVoteHere() {
+		return allowedToVoteHere;
 	}
 
 	public String getAdress() {
@@ -170,7 +176,7 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 		return null;
 	}
 
-	public Party[] getCastedVotes() {
+	public ArrayList<Party> getCastedVotes() {
 		return castedVotes;
 	}
 
@@ -186,9 +192,6 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 		return numOfCitizenWhoCanVote;
 	}
 
-	public int getNumOfCastedVotesLogic() {
-		return numOfCastedVotesLogic;
-	}
 
 	public boolean isAdress(String adress) { // REMOVE?
 		if (this.adress.equals(adress)) {
@@ -218,9 +221,16 @@ public class BBox<T extends Voter> implements BBoxInterface<T> {
 		return true;
 	}
 
+	public ArrayList<ElectionResult> getElectionRes() {
+		return electionRes;
+	}
+
 	@Override
 	public String toString() {
 		return "Adress:" + adress + "\t  Percentage Of Votes:" + percentageOfVotes;
 	}
+
+
+
 
 }

@@ -4,22 +4,37 @@ import id322029638_id31582270.interfaces.RepresentativeMarker;
 import id322029638_id31582270.interfaces.SickMarker;
 import id322029638_id31582270.logic.Party;
 
-public class InfectedRepresentative extends Representative implements RepresentativeMarker,SickMarker{
-	private int daysInfected;
+public class InfectedRepresentative extends Voter implements RepresentativeMarker, SickMarker {
 
-	
+	Representative rep;
+	CoronoaPatient patient;
 
-	public InfectedRepresentative(Representative rep, Party underParty, int daysInfected) {
-		super(rep);
-		this.daysInfected = daysInfected;
+	public InfectedRepresentative(Voter subj, Party underParty) {
+		super(subj);
+		rep = new Representative(subj, underParty);
+		patient = new CoronoaPatient(subj, 0);
 	}
+
+	@Override
+	public Party getUnderParty() {
+		return rep.getUnderParty();
+	}
+
+	@Override
+	public void setUnderParty(Party underParty) {
+		rep.setUnderParty(underParty);
+	}
+
 	@Override
 	public int getDaysInfected() {
-		return daysInfected;
+		// TODO Auto-generated method stub
+		return patient.getDaysInfected();
 	}
-@Override
+
+	@Override
 	public void setDaysInfected(int daysInfected) {
-		this.daysInfected = daysInfected;
+		// TODO Auto-generated method stub
+		patient.setDaysInfected(daysInfected);
 	}
 
 }

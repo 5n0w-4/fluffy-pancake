@@ -82,7 +82,7 @@ public class Menu {
 	}
 
 	public Party partyPick() {
-		for (int i = 0; i < elections.getPartys().lenght(); i++) {
+		for (int i = 0; i < elections.getPartys().size(); i++) {
 			if (elections.getPartys().get(i) instanceof Party) {
 				Party temp = (Party) elections.getPartys().get(i);
 

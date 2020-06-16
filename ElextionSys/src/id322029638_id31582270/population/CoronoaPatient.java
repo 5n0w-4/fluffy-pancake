@@ -10,6 +10,10 @@ public class CoronoaPatient extends Voter implements SickMarker {
 		super(voter);
 		this.setDaysInfected(daysInfected);
 	}
+	public CoronoaPatient(CoronoaPatient copy) {
+		super(copy);
+		this.setDaysInfected(copy.getDaysInfected());
+	}
 @Override
 	public int getDaysInfected() {
 		return daysInfected;

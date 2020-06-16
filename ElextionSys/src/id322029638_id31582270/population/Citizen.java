@@ -9,7 +9,6 @@ public class Citizen implements CitizenInterface {
 	private String id;
 	private String birthYear;
 	private boolean underQuarantine;
-//	private BBox<?> ballotType;
 
 	public Citizen(String name, String id, String birthYear, boolean underQuarantine) {
 		this.setName(name);

@@ -1,5 +1,8 @@
 package id322029638_id31582270.interfaces;
 
-public interface RepresentativeMarker {
+import id322029638_id31582270.logic.Party;
 
+public interface RepresentativeMarker {
+	Party getUnderParty();
+	void setUnderParty(Party underParty);
 }
